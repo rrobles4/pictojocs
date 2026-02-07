@@ -85,10 +85,15 @@
         .btn-generar { background-color: var(--color-principal); flex: 2; }
         .btn-imprimir { background-color: var(--color-accio); flex: 1; }
 
+        /* INSTRUCCIONS */
+        .instruccions {
+            background-color: #e8f6f3; border: 1px solid #a2d9ce; color: #16a085;
+            padding: 10px; border-radius: 8px; margin-top: 15px; font-size: 0.9em; text-align: center;
+        }
+
         /* --- ZONA D'IMPRESSIÓ --- */
         #zona-impressio {
             background-color: white; 
-            /* Marge superior de la PRIMERA PÀGINA */
             padding: 15mm; 
             min-height: 297mm; width: 210mm; 
             margin: 0 auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); 
@@ -100,7 +105,7 @@
             grid-template-columns: 120px 1fr 120px; 
             align-items: center;
             margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px;
-            height: 70px; /* ALÇADA FIXA PER ASSEGURAR COINCIDÈNCIA */
+            height: 70px; 
             overflow: hidden;
         }
         .logo-escola { height: 100%; width: auto; max-height: 60px; object-fit: contain; display: none; }
@@ -120,7 +125,7 @@
 
         /* CONFIGURACIÓ ESPECIAL PER AL REVERS (PÀGINA 2) */
         .zona-revers {
-            display: none; /* Per defecte amagat */
+            display: none; 
             margin-top: 50px;
             border-top: 2px dashed #ccc;
             padding-top: 20px;
@@ -156,7 +161,7 @@
             line-height: 1.1;
             font-weight: bold;
             height: 30%;
-            display: flex; align-items: center; justify-content: center;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
         }
 
         /* --- MODS TARGETA (FLASHCARD) --- */
@@ -175,8 +180,11 @@
         .tab-btn { flex: 1; padding: 12px; border: none; background: none; cursor: pointer; font-weight: bold; color: #555; border-bottom: 3px solid transparent; }
         .tab-btn.actiu { border-bottom: 3px solid var(--color-principal); color: var(--color-principal); background: white; }
         .modal-body { padding: 25px; overflow-y: auto; }
+        
         .grup-titol-modal { margin-bottom: 20px; text-align: center; }
-        .nom-editable { width: 100%; font-size: 1.3em; font-weight: bold; text-align: center; border: 2px solid #eee; border-radius: 8px; padding: 8px; }
+        .inputs-container-modal { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .inputs-container-modal input { width: 100%; font-size: 1.1em; text-align: center; border: 2px solid #ddd; padding: 8px; border-radius: 6px; box-sizing: border-box; }
+        
         .cerca-wrapper { display: flex; gap: 8px; margin-bottom: 15px; }
         .btn-cerca-modal { background: var(--color-principal); border-radius: 8px; padding: 10px 20px; font-size: 1em; flex-shrink: 0; color: white; border: none; cursor: pointer; }
         .btn-cerca-wiki { background: var(--color-secundari); }
@@ -194,11 +202,7 @@
             .graella { gap: 8px; }
             .pictograma { border: 3px solid #000; }
             
-            /* Lògica per Targetes (Flashcards) */
             .zona-revers {
-                
-                /* AQUÍ ESTÀ EL TRUC: */
-                /* Forcem que la 2a pàgina tingui EXACTAMENT el mateix padding superior que el contenidor general */
                 padding-top: 15mm !important; 
                 margin-top: 0 !important;
                 border: none !important;
@@ -246,7 +250,7 @@
                 <input type="text" id="curs" placeholder="Ex: 3r A">
             </div>
             <div class="columna" style="flex: 0.5;">
-                <label>Idioma:</label>
+                <label>Idioma (Cerca):</label>
                 <select id="idioma">
                     <option value="ca">Català</option>
                     <option value="es">Castellano</option>
@@ -297,6 +301,10 @@
         <div class="btn-container">
             <button class="btn-generar" onclick="generarDocument()">⚡ Generar</button>
             <button class="btn-imprimir" onclick="window.print()">🖨️ Imprimir</button>
+        </div>
+
+        <div class="instruccions no-print">
+            <strong>💡 Consell:</strong> Pots arrossegar les targetes per reordenar-les. Fes clic a sobre de qualsevol imatge (o text del darrere) per editar-la i <strong>afegir més paraules/idiomes</strong>.
         </div>
 
         <p class="no-print" style="text-align:center; color:#e74c3c; font-size:0.85em; margin-top:15px; margin-bottom:0;">
@@ -354,8 +362,9 @@
             </div>
             <div class="modal-body">
                 <div class="grup-titol-modal">
-                    <label>Títol de la targeta</label>
-                    <input type="text" id="nom-editable" class="nom-editable">
+                    <label style="margin-bottom:10px;">Paraules / Idiomes de la targeta:</label>
+                    <div id="camps-text" class="inputs-container-modal">
+                        </div>
                 </div>
                 <div id="tab-arasaac" class="contingut-tab">
                     <div class="cerca-wrapper"><input id="input-arasaac" onkeyup="if(event.key==='Enter') buscarArasaacModal()"><button class="btn-cerca-modal" onclick="buscarArasaacModal()">🔍 Cerca</button></div>
@@ -462,8 +471,13 @@
             div.className = 'pictograma';
             div.draggable = true; 
             div.dataset.index = index; 
+            // Guardem la paraula inicial com a llista JSON per facilitar edició posterior
+            if (!div.dataset.textos) {
+                div.dataset.textos = JSON.stringify([paraula]);
+            }
             
-            div.addEventListener('click', () => { if(!div.classList.contains('dragging') && tipus === 'front') obrirModal(div); });
+            // Events Drag & Drop + Click (ara per tothom)
+            div.addEventListener('click', () => { if(!div.classList.contains('dragging')) obrirModal(div); });
             div.addEventListener('dragstart', () => { div.classList.add('dragging'); });
             div.addEventListener('dragend', () => { div.classList.remove('dragging'); });
 
@@ -536,24 +550,77 @@
         function obrirModal(el) {
             elementEditant = el;
             const index = el.dataset.index;
-            const nom = document.getElementById(`text-${index}-front`).innerText;
-            document.getElementById('nom-editable').value = nom;
-            document.getElementById('input-arasaac').value = nom;
-            document.getElementById('input-wiki').value = nom;
-            document.getElementById('input-open').value = nom;
+            const mode = document.getElementById('selector-mode').value;
+            
+            // Recuperem textos o inicialitzem
+            let textos = [];
+            // Intentem llegir del dataset, si no, agafem el text visible
+            if (el.dataset.textos) {
+                textos = JSON.parse(el.dataset.textos);
+            } else {
+                textos = [document.getElementById(`text-${index}-front`).innerText];
+            }
+
+            // Generar inputs segons el límit
+            const limit = (mode === 'standard') ? 2 : 5;
+            const container = document.getElementById('camps-text');
+            container.innerHTML = '';
+
+            for(let i=0; i<limit; i++) {
+                let input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = (i===0) ? "Paraula principal" : `Traducció / Paraula ${i+1}`;
+                input.value = textos[i] || ""; // Omplir si existeix
+                input.id = `input-modal-${i}`;
+                container.appendChild(input);
+            }
+
+            // Configurar inputs cerca
+            const primerText = textos[0] || "";
+            document.getElementById('input-arasaac').value = primerText;
+            document.getElementById('input-wiki').value = primerText;
+            document.getElementById('input-open').value = primerText;
+            
             document.getElementById('modal-edicio').style.display = 'flex';
-            canviarPestanya('tab-arasaac'); buscarArasaacModal();
+            canviarPestanya('tab-arasaac'); 
+            if(primerText) buscarArasaacModal();
         }
         function tancarModal() { document.getElementById('modal-edicio').style.display = 'none'; elementEditant=null; }
         
         function guardarTancar() {
             if(elementEditant) {
                 const index = elementEditant.dataset.index;
-                const nouText = document.getElementById('nom-editable').value;
+                const mode = document.getElementById('selector-mode').value;
+                const container = document.getElementById('camps-text');
+                const inputs = container.querySelectorAll('input');
+                
+                let nousTextos = [];
+                inputs.forEach(inp => {
+                    if(inp.value.trim() !== "") nousTextos.push(inp.value.trim());
+                });
+
+                // Si no hi ha res, mantenim buit o un guió
+                if (nousTextos.length === 0) nousTextos = [""];
+
+                // Guardar al dataset de l'element (i del seu parell)
+                // Com que 'elementEditant' és el DIV clicat, hem de trobar el seu parell si existeix
+                // Per simplicitat, busquem tots els divs amb el mateix index
+                const parells = document.querySelectorAll(`.pictograma[data-index="${index}"]`);
+                parells.forEach(div => {
+                    div.dataset.textos = JSON.stringify(nousTextos);
+                });
+
+                // ACTUALITZAR VISUALITZACIÓ
                 const txtFront = document.getElementById(`text-${index}-front`);
                 const txtBack = document.getElementById(`text-${index}-back`);
-                if(txtFront) txtFront.innerText = nouText;
-                if(txtBack) txtBack.innerText = nouText;
+
+                if (mode === 'standard') {
+                    // Separats per barra
+                    if(txtFront) txtFront.innerText = nousTextos.join(" / ");
+                } else {
+                    // Mode targeta: Front res (ocult per CSS), Back llista vertical
+                    if(txtBack) txtBack.innerHTML = nousTextos.join("<br><br>");
+                }
             }
             tancarModal();
         }
@@ -600,4 +667,3 @@
     </script>
 </body>
 </html>
-

@@ -99,7 +99,8 @@
             grid-template-columns: 120px 1fr 120px; 
             align-items: center;
             margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px;
-            height: 70px;
+            height: 70px; /* ALÇADA FIXA IMPORTANT PER ALINEACIÓ */
+            overflow: hidden;
         }
         .logo-escola { height: 100%; width: auto; max-height: 60px; object-fit: contain; display: none; }
         
@@ -194,13 +195,15 @@
             
             /* Lògica per Targetes (Flashcards) */
             .zona-revers {
-                display: block !important; /* Mostrar revers */
-                border: none; margin: 0; padding: 0;
-                page-break-before: always; /* SEMPRE en pàgina nova */
+                display: block !important;
+                /* ELIMINEM MARGES QUE FAN NO COINCIDIR L'ALÇADA */
+                border: none !important; 
+                margin-top: 0 !important; 
+                padding-top: 0 !important;
                 
-                /* TRUC DEL MIRALL: Invertim l'ordre de la graella */
-                /* Això fa que el 1r item surti a la dreta (RTL) */
-                /* En girar el full, coincidirà amb el 1r item del davant (Left) */
+                page-break-before: always; /* Salt de pàgina net */
+                
+                /* TRUC DEL MIRALL */
                 direction: rtl; 
             }
         }
@@ -316,10 +319,7 @@
         <div class="graella" id="contenidor-picts"></div>
 
         <div id="contenidor-revers-wrapper" class="zona-revers">
-            <div class="no-print" style="text-align:center; color:#999; margin-bottom:10px;">--- REVERS DEL FULL (Doble Cara) ---</div>
-            
-            <div class="header-print">
-                <div style="display:flex; justify-content:flex-start;">
+            <div class="header-print" style="direction: ltr;"> <div style="display:flex; justify-content:flex-start;">
                     <img id="logo-visual-back" class="logo-escola" src="" alt="Logo">
                 </div>
                 <div class="titol-print-container">

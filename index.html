@@ -317,6 +317,19 @@
 
         <div id="contenidor-revers-wrapper" class="zona-revers">
             <div class="no-print" style="text-align:center; color:#999; margin-bottom:10px;">--- REVERS DEL FULL (Doble Cara) ---</div>
+            
+            <div class="header-print">
+                <div style="display:flex; justify-content:flex-start;">
+                    <img id="logo-visual-back" class="logo-escola" src="" alt="Logo">
+                </div>
+                <div class="titol-print-container">
+                    <h2 id="titol-resultat-back">Títol del document</h2>
+                </div>
+                <div class="curs-print">
+                    <span id="curs-resultat-back"></span>
+                </div>
+            </div>
+
             <div class="graella" id="contenidor-revers"></div>
         </div>
     </div>
@@ -372,7 +385,6 @@
     <script>
         let idiomaSeleccionat = 'ca';
         let elementEditant = null;
-        let dadesTargetes = []; // Guardem les dades per poder regenerar
 
         // 1. LOGO
         function carregarLogo(input) {
@@ -380,7 +392,11 @@
                 const reader = new FileReader();
                 reader.onload = function(e) { 
                     const img = document.getElementById('logo-visual');
+                    const imgBack = document.getElementById('logo-visual-back'); // Logo revers
+                    
                     img.src = e.target.result; img.style.display = 'block';
+                    imgBack.src = e.target.result; imgBack.style.display = 'block';
+                    
                     const wrp = document.getElementById('wrapper-logo');
                     wrp.classList.add('feteservir'); wrp.innerHTML = "✅ Logo Carregat";
                 }
@@ -396,10 +412,21 @@
             const mode = document.getElementById('selector-mode').value;
             idiomaSeleccionat = document.getElementById('idioma').value;
 
+            // Actualitzem Títol i Curs al Front
             document.getElementById('titol-resultat').innerText = titol;
             const cursEl = document.getElementById('curs-resultat');
-            if (curs.trim()) { cursEl.innerText = curs; cursEl.style.display='block'; }
-            else { cursEl.style.display='none'; }
+            
+            // Actualitzem Títol i Curs al Revers (Back)
+            document.getElementById('titol-resultat-back').innerText = titol;
+            const cursElBack = document.getElementById('curs-resultat-back');
+
+            if (curs.trim()) { 
+                cursEl.innerText = curs; cursEl.style.display='block'; 
+                cursElBack.innerText = curs; cursElBack.style.display='block';
+            } else { 
+                cursEl.style.display='none'; 
+                cursElBack.style.display='none';
+            }
 
             const contenidor = document.getElementById('contenidor-picts');
             const contenidorRevers = document.getElementById('contenidor-revers');
@@ -419,10 +446,8 @@
                 contenidorRevers.classList.remove('mode-targeta-back');
             }
 
-            if (!textParaules.trim()) return; // No alertem si està buit per evitar spam en canviar mode
+            if (!textParaules.trim()) return; 
             const llista = textParaules.split(',').map(p=>p.trim()).filter(p=>p!=='');
-            
-            dadesTargetes = []; // Reiniciem dades
             
             for (let i = 0; i < llista.length; i++) {
                 let paraula = llista[i];
@@ -467,7 +492,7 @@
             return div;
         }
 
-        // DRAG & DROP (Aplicat a ambdós contenidors)
+        // DRAG & DROP
         [document.getElementById('contenidor-picts'), document.getElementById('contenidor-revers')].forEach(cont => {
             cont.addEventListener('dragover', (e) => {
                 e.preventDefault();
@@ -513,7 +538,7 @@
             const imgFront = document.getElementById(`img-${index}-front`);
             const imgBack = document.getElementById(`img-${index}-back`);
             if(imgFront) { imgFront.src = src; imgFront.style.opacity = opacitat; }
-            if(imgBack) { imgBack.src = src; } // Al back l'img està oculta per CSS, però l'actualitzem igual
+            if(imgBack) { imgBack.src = src; } 
         }
 
         function actualitzarEstils() {
@@ -542,8 +567,6 @@
             if(elementEditant) {
                 const index = elementEditant.dataset.index;
                 const nouText = document.getElementById('nom-editable').value;
-                
-                // Actualitzar Front i Back
                 const txtFront = document.getElementById(`text-${index}-front`);
                 const txtBack = document.getElementById(`text-${index}-back`);
                 if(txtFront) txtFront.innerText = nouText;
@@ -592,13 +615,5 @@
             const r = new FileReader(); r.onload=e=>aplicarImatge(e.target.result); if(i.files[0]) r.readAsDataURL(i.files[0]);
         }
     </script>
-<div class="no-print" style="text-align: center; margin-top: 40px; padding: 20px; font-size: 0.8em; color: #666; border-top: 1px solid #eee;">
-    <p style="margin: 0;">Creat per <b>Rafa Robles Fontanet</b></p>
-    <p style="margin: 5px 0;">
-        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" style="color: #4a90e2; text-decoration: none;">
-            <img alt="Llicència de Creative Commons" style="border-width:0; vertical-align: middle;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" />
-            <br />Aquesta obra està subjecta a una llicència de Reconeixement-NoComercial-CompartirIgual 4.0 Internacional de Creative Commons
-        </a>
-    </p>
 </body>
 </html>

@@ -51,7 +51,6 @@
             border-radius: 8px; font-size: 16px; box-sizing: border-box;
         }
 
-        /* ESTIL BOTÓ LOGO */
         .input-logo-wrapper {
             border: 2px dashed #ccc; padding: 8px; border-radius: 8px; 
             text-align: center; cursor: pointer; transition: all 0.3s;
@@ -63,7 +62,6 @@
             background-color: #e8f8f5; color: var(--color-accio); font-weight: bold;
         }
 
-        /* BARRA D'EINES */
         .barra-estils {
             background: #eef2f7; padding: 15px; border-radius: 8px; margin-bottom: 20px;
             border: 1px solid #d1d9e6; 
@@ -73,7 +71,6 @@
         input[type="color"] { border: none; width: 100%; height: 40px; cursor: pointer; background: none; }
         textarea { height: 80px; resize: vertical; }
 
-        /* BOTONS PANELL */
         .btn-container { display: flex; gap: 10px; margin-top: 20px; }
         button {
             border: none; padding: 12px 25px; font-size: 16px; border-radius: 50px;
@@ -85,7 +82,6 @@
         .btn-generar { background-color: var(--color-principal); flex: 2; }
         .btn-imprimir { background-color: var(--color-accio); flex: 1; }
 
-        /* INSTRUCCIONS */
         .instruccions {
             background-color: #e8f6f3; border: 1px solid #a2d9ce; color: #16a085;
             padding: 10px; border-radius: 8px; margin-top: 15px; font-size: 0.9em; text-align: center;
@@ -109,13 +105,10 @@
             overflow: hidden;
         }
         .logo-escola { height: 100%; width: auto; max-height: 60px; object-fit: contain; display: none; }
-        
         .titol-print-container { text-align: center; }
         .titol-print-container h2 { margin: 0; font-size: 1.8em; color: #222; }
-        
         .curs-print { font-size: 1.2em; font-weight: bold; color: #555; text-align: right; }
 
-        /* GRAELLA */
         .graella {
             display: grid; 
             grid-template-columns: repeat(var(--num-columnes), 1fr); 
@@ -123,7 +116,6 @@
             width: 100%;
         }
 
-        /* CONFIGURACIÓ ESPECIAL PER AL REVERS (PÀGINA 2) */
         .zona-revers {
             display: none; 
             margin-top: 50px;
@@ -154,6 +146,7 @@
             width: 100%; height: 70%; object-fit: contain; pointer-events: none;
         }
 
+        /* Text normal (Frontal) */
         .pictograma p {
             margin: 0; width: 100%; text-align: center;
             font-size: calc(var(--mida-font-base) * (1 + (5 - var(--num-columnes)) * 0.25));
@@ -166,51 +159,50 @@
         }
 
         /* --- MODS TARGETA (FLASHCARD) --- */
-        /* Davant: Només Imatge */
         .mode-targeta-front .pictograma img { height: 100%; }
         .mode-targeta-front .pictograma p { display: none; }
 
-        /* Darrere: Només Text */
+        /* --- MILLORA TARGETA DARRERE (BACK) --- */
         .mode-targeta-back .pictograma img { display: none; }
-        .mode-targeta-back .pictograma p { 
-            height: 100%; 
-            font-size: calc(var(--mida-font-base) * 2); 
-            justify-content: center;
-            align-content: center;
-        } 
         
+        /* Contenidor especial per al text del darrere */
+        .contingut-back {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly; /* Clau: reparteix l'espai verticalment */
+            align-items: center;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .fila-paraula {
+            text-align: center;
+            width: 100%;
+            font-family: var(--tipus-font);
+            font-weight: bold;
+            color: var(--color-font);
+            line-height: 1.1;
+        }
+
         /* MODAL */
         #modal-edicio { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
         .modal-contingut { background: white; border-radius: 12px; width: 90%; max-width: 650px; display: flex; flex-direction: column; max-height: 90vh; overflow: hidden; }
-        .modal-tabs { display: flex; background: #f1f1f1; border-bottom: 1px solid #ddd; }
-        .tab-btn { flex: 1; padding: 12px; border: none; background: none; cursor: pointer; font-weight: bold; color: #555; border-bottom: 3px solid transparent; }
+        .modal-tabs { display: flex; background: #f1f1f1; border-bottom: 1px solid #ddd; overflow-x: auto; }
+        .tab-btn { flex: 1; padding: 12px; border: none; background: none; cursor: pointer; font-weight: bold; color: #555; border-bottom: 3px solid transparent; min-width: 80px; }
         .tab-btn.actiu { border-bottom: 3px solid var(--color-principal); color: var(--color-principal); background: white; }
         .modal-body { padding: 25px; overflow-y: auto; }
         
         .grup-titol-modal { margin-bottom: 20px; text-align: center; }
         
-        /* NOUS ESTILS INPUTS MODAL (COMPACTE) */
         .inputs-container-modal { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 10px; 
-            margin-bottom: 15px; 
-            justify-content: center;
+            display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; justify-content: center;
         }
-        
         .inputs-container-modal input { 
-            font-size: 1.1em; 
-            text-align: center; 
-            border: 2px solid #ddd; 
-            padding: 8px; 
-            border-radius: 6px; 
-            box-sizing: border-box; 
+            font-size: 1.1em; text-align: center; border: 2px solid #ddd; padding: 8px; border-radius: 6px; box-sizing: border-box; 
         }
-
-        /* Layout Standard: 2 columnes (50% cadascuna) */
         .layout-standard input { width: 48%; }
-        
-        /* Layout Flashcard: 2 a dalt (48%), 3 a sota (31%) */
         .layout-flashcard input:nth-child(-n+2) { width: 48%; }
         .layout-flashcard input:nth-child(n+3) { width: 31%; }
 
@@ -218,11 +210,26 @@
         .btn-cerca-modal { background: var(--color-principal); border-radius: 8px; padding: 10px 20px; font-size: 1em; flex-shrink: 0; color: white; border: none; cursor: pointer; }
         .btn-cerca-wiki { background: var(--color-secundari); }
         .btn-cerca-open { background: #333; }
+        .btn-cerca-trad { background: #8e44ad; }
+
         .resultats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; margin-top: 15px; }
         .resultats-grid img { width: 100%; height: 90px; object-fit: contain; border: 1px solid #eee; border-radius: 8px; cursor: pointer; padding: 5px; }
         .resultats-grid img:hover { transform: scale(1.05); border-color: var(--color-principal); background: #f0f8ff; }
 
-        /* --- IMPRESSIÓ NETA I LÒGICA DOBLE CARA --- */
+        /* Estils Traducció */
+        .grid-traduccions { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .item-traduccio { 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: #f8f9fa; padding: 10px; border-radius: 8px; border: 1px solid #eee;
+            cursor: pointer; transition: 0.2s;
+        }
+        .item-traduccio:hover { background: #e8f6f3; border-color: #27ae60; }
+        .lang-code { font-weight: bold; color: #555; background: #ddd; padding: 2px 6px; border-radius: 4px; font-size: 0.8em; margin-right: 10px;}
+        .trad-text { font-size: 1.1em; color: #333; }
+        .copy-hint { font-size: 0.8em; color: #27ae60; opacity: 0; transition: 0.2s;}
+        .item-traduccio:hover .copy-hint { opacity: 1; }
+
+        /* --- IMPRESSIÓ NETA --- */
         @media print {
             @page { size: A4 portrait; margin: 0 !important; }
             body { background: white; padding: 0; margin: 0; -webkit-print-color-adjust: exact; }
@@ -230,18 +237,12 @@
             #zona-impressio { padding: 15mm; width: 100%; max-width: 210mm; margin: 0 auto; box-shadow: none; }
             .graella { gap: 8px; }
             .pictograma { border: 3px solid #000; }
-            
             .zona-revers {
-                padding-top: 15mm !important; 
-                margin-top: 0 !important;
-                border: none !important;
-                
-                page-break-before: always; 
-                direction: rtl; /* Mode Mirall */
+                padding-top: 15mm !important; margin-top: 0 !important; border: none !important;
+                page-break-before: always; direction: rtl; 
             }
         }
 
-        /* --- ADAPTACIÓ PER A MÒBILS (RESPONSIVE) --- */
         @media screen and (max-width: 850px) {
             .configuracio { width: auto; margin: 10px; padding: 15px; }
             .fila-flex { flex-direction: column; align-items: stretch; gap: 10px; }
@@ -252,8 +253,6 @@
             .btn-container { flex-direction: column; }
             button { padding: 15px; width: 100%; font-size: 1.1em; }
             .modal-contingut { width: 95%; height: 90vh; max-height: 90vh; }
-            
-            /* En mòbil, tornem a posar els inputs un sota l'altre per comoditat */
             .layout-standard input, .layout-flashcard input { width: 100% !important; }
         }
     </style>
@@ -280,7 +279,7 @@
                 <input type="text" id="curs" placeholder="Ex: 3r A">
             </div>
             <div class="columna" style="flex: 0.8;">
-                <label>Idioma:</label>
+                <label>Idioma (Cerca ARASAAC):</label>
                 <select id="idioma">
                     <option value="ca">Català</option>
                     <option value="es">Castellano</option>
@@ -341,7 +340,7 @@
         </div>
 
         <div class="instruccions no-print">
-            <strong>💡 Consell:</strong> pots arrossegar les targetes per reordenar-les. Pots fer clic a sobre de qualsevol imatge (o text del darrere) per editar-la i afegir més paraules en altres idiomes si és necessari.
+            <strong>💡 Consell:</strong> pots arrossegar les targetes per reordenar-les. També pots fer clic a sobre de qualsevol imatge (o text del darrere) per editar-la i afegir més paraules en altres idiomes si és necessari.
         </div>
 
         <p class="no-print" style="text-align:center; color:#e74c3c; font-size:0.85em; margin-top:15px; margin-bottom:0;">
@@ -393,6 +392,7 @@
         <div class="modal-contingut">
             <div class="modal-tabs">
                 <button class="tab-btn actiu" onclick="canviarPestanya('tab-arasaac')">🧩 ARASAAC</button>
+                <button class="tab-btn" onclick="canviarPestanya('tab-traductor')">🌍 Traductor</button>
                 <button class="tab-btn" onclick="canviarPestanya('tab-wiki')">📷 Wiki</button>
                 <button class="tab-btn" onclick="canviarPestanya('tab-simbols')">✒️ Símbols</button>
                 <button class="tab-btn" onclick="canviarPestanya('tab-pujar')">📤 Pujar/IA</button>
@@ -403,10 +403,20 @@
                     <div id="camps-text" class="inputs-container-modal">
                         </div>
                 </div>
+                
                 <div id="tab-arasaac" class="contingut-tab">
                     <div class="cerca-wrapper"><input id="input-arasaac" onkeyup="if(event.key==='Enter') buscarArasaacModal()"><button class="btn-cerca-modal" onclick="buscarArasaacModal()">🔍 Cerca</button></div>
                     <div id="resultats-arasaac" class="resultats-grid"></div>
                 </div>
+                
+                <div id="tab-traductor" class="contingut-tab" style="display:none;">
+                    <div class="cerca-wrapper">
+                        <button class="btn-cerca-modal btn-cerca-trad" onclick="traduirParaula()" style="width:100%">🌍 Traduir paraula principal</button>
+                    </div>
+                    <p style="font-size:0.85em; color:#777; text-align:center;">Fes clic a una traducció per copiar-la:</p>
+                    <div id="resultats-traductor" class="grid-traduccions"></div>
+                </div>
+
                 <div id="tab-wiki" class="contingut-tab" style="display:none;">
                     <div class="cerca-wrapper"><input id="input-wiki" onkeyup="if(event.key==='Enter') buscarWikiImages()"><button class="btn-cerca-modal btn-cerca-wiki" onclick="buscarWikiImages()">📷 Cerca</button></div>
                     <div id="resultats-wiki" class="resultats-grid"></div>
@@ -427,6 +437,8 @@
             </div>
         </div>
     </div>
+
+    <div id="toast" style="display:none; position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background: #333; color:white; padding: 10px 20px; border-radius: 30px; z-index:2000;">Copiat!</div>
 
     <script>
         let idiomaSeleccionat = 'ca';
@@ -513,7 +525,6 @@
                 div.dataset.textos = JSON.stringify([paraula]);
             }
             
-            // Events
             div.addEventListener('click', () => { if(!div.classList.contains('dragging')) obrirModal(div); });
             div.addEventListener('dragstart', () => { div.classList.add('dragging'); });
             div.addEventListener('dragend', () => { div.classList.remove('dragging'); });
@@ -522,12 +533,28 @@
             img.id = `img-${index}-${tipus}`; 
             img.src = 'https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png'; 
             
-            const p = document.createElement('p');
-            p.id = `text-${index}-${tipus}`;
-            p.innerText = paraula;
+            // Estructura per BACK (Complexa) o FRONT (Simple)
+            if (tipus === 'back') {
+                const containerText = document.createElement('div');
+                containerText.id = `text-${index}-${tipus}`;
+                containerText.className = 'contingut-back';
+                
+                // Creem un span per a la primera paraula
+                const span = document.createElement('div');
+                span.className = 'fila-paraula';
+                span.innerText = paraula;
+                span.style.fontSize = '3em'; // Inicialment gran
+                containerText.appendChild(span);
+                
+                div.appendChild(containerText);
+            } else {
+                const p = document.createElement('p');
+                p.id = `text-${index}-${tipus}`;
+                p.innerText = paraula;
+                div.appendChild(img);
+                div.appendChild(p);
+            }
 
-            div.appendChild(img);
-            div.appendChild(p);
             return div;
         }
 
@@ -554,7 +581,7 @@
             });
         });
 
-        // FUNCIONS ESTIL I API
+        // API I ESTILS
         async function buscarArasaacAuto(text, index) {
             try {
                 const r = await fetch(`https://api.arasaac.org/api/pictograms/${idiomaSeleccionat}/search/${encodeURIComponent(text)}`);
@@ -571,9 +598,8 @@
 
         function actualitzarImatgeTargeta(index, src, opacitat) {
             const imgFront = document.getElementById(`img-${index}-front`);
-            const imgBack = document.getElementById(`img-${index}-back`);
+            // El revers en mode text no té imatge, no cal actualitzar-lo
             if(imgFront) { imgFront.src = src; imgFront.style.opacity = opacitat; }
-            if(imgBack) { imgBack.src = src; } 
         }
 
         function actualitzarEstils() {
@@ -583,7 +609,7 @@
             doc.setProperty('--num-columnes', document.getElementById('selector-columnes').value);
         }
 
-        // MODALS I LÒGICA D'ESCALAT DE FONT I INPUTS
+        // MODALS
         function obrirModal(el) {
             elementEditant = el;
             const index = el.dataset.index;
@@ -593,22 +619,19 @@
             if (el.dataset.textos) {
                 textos = JSON.parse(el.dataset.textos);
             } else {
-                textos = [document.getElementById(`text-${index}-front`).innerText];
+                // Fallback basic
+                const tFront = document.getElementById(`text-${index}-front`);
+                if(tFront) textos = [tFront.innerText];
+                else textos = [""];
             }
 
             const limit = (mode === 'standard') ? 2 : 5;
             const container = document.getElementById('camps-text');
             container.innerHTML = '';
             
-            // Netejar classes antigues
             container.className = 'inputs-container-modal';
-            
-            // Afegir classe segons mode per ajustar CSS Grid/Flex
-            if(mode === 'standard') {
-                container.classList.add('layout-standard');
-            } else {
-                container.classList.add('layout-flashcard');
-            }
+            if(mode === 'standard') container.classList.add('layout-standard');
+            else container.classList.add('layout-flashcard');
 
             for(let i=0; i<limit; i++) {
                 let input = document.createElement('input');
@@ -623,7 +646,8 @@
             document.getElementById('input-arasaac').value = primerText;
             document.getElementById('input-wiki').value = primerText;
             document.getElementById('input-open').value = primerText;
-            
+            document.getElementById('resultats-traductor').innerHTML = ''; // Netejar traduccions prèvies
+
             document.getElementById('modal-edicio').style.display = 'flex';
             canviarPestanya('tab-arasaac'); 
             if(primerText) buscarArasaacModal();
@@ -656,15 +680,23 @@
                     if(txtFront) txtFront.innerText = nousTextos.join(" / ");
                 } else {
                     if(txtBack) {
-                        txtBack.innerHTML = nousTextos.join("<br>");
+                        // RECONSTRUCCIÓ COMPLETA DEL REVERS PER A MIDA DINÀMICA
+                        txtBack.innerHTML = ''; // Esborrem tot
                         
                         const num = nousTextos.length;
-                        let escala = "2em"; 
-                        if (num === 3) escala = "1.5em"; 
-                        if (num === 4) escala = "1.2em"; 
-                        if (num >= 5) escala = "1em"; 
+                        let mida = "3em"; // 1 paraula (Gegant)
+                        if (num === 2) mida = "2.5em";
+                        if (num === 3) mida = "2em";
+                        if (num === 4) mida = "1.6em";
+                        if (num >= 5) mida = "1.3em"; // Ajust per a 5 paraules
 
-                        txtBack.style.fontSize = escala;
+                        nousTextos.forEach(t => {
+                            const divLinia = document.createElement('div');
+                            divLinia.className = 'fila-paraula';
+                            divLinia.innerText = t;
+                            divLinia.style.fontSize = mida;
+                            txtBack.appendChild(divLinia);
+                        });
                     }
                 }
             }
@@ -675,8 +707,12 @@
             document.querySelectorAll('.contingut-tab').forEach(e=>e.style.display='none');
             document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('actiu'));
             document.getElementById(id).style.display='block';
-            const map = {'tab-arasaac':0, 'tab-wiki':1, 'tab-simbols':2, 'tab-pujar':3};
-            document.querySelectorAll('.tab-btn')[map[id]].classList.add('actiu');
+            
+            // Map simple per activar la tab
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(t => {
+                if (t.getAttribute('onclick').includes(id)) t.classList.add('actiu');
+            });
         }
         
         function aplicarImatge(src) { 
@@ -686,7 +722,61 @@
             } 
         }
 
-        // CERQUES
+        // --- SISTEMA DE TRADUCCIÓ ---
+        async function traduirParaula() {
+            const word = document.getElementById('input-modal-0').value;
+            const divRes = document.getElementById('resultats-traductor');
+            
+            if(!word) { divRes.innerHTML = "<p>Escriu una paraula al primer camp.</p>"; return; }
+            
+            divRes.innerHTML = "<p style='text-align:center'>⏳ Traduint...</p>";
+            
+            const langs = [
+                {code:'en', nom:'Anglès'},
+                {code:'es', nom:'Castellà'},
+                {code:'fr', nom:'Francès'},
+                {code:'de', nom:'Alemany'},
+                {code:'it', nom:'Italià'}
+            ];
+
+            let html = "";
+            
+            for (const lang of langs) {
+                try {
+                    // Ús de l'API gratuïta MyMemory (sense clau, limitat, però funcional per a demo)
+                    const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=ca|${lang.code}`);
+                    const data = await res.json();
+                    if(data.responseData && data.responseData.translatedText) {
+                        const traduccio = data.responseData.translatedText;
+                        html += `
+                        <div class="item-traduccio" onclick="copiarText('${traduccio}')">
+                            <div>
+                                <span class="lang-code">${lang.code.toUpperCase()}</span>
+                                <span class="trad-text">${traduccio}</span>
+                            </div>
+                            <span class="copy-hint">📋 Copiar</span>
+                        </div>`;
+                    }
+                } catch(e) { console.log(e); }
+            }
+            
+            if(html === "") html = "<p>No s'ha pogut connectar amb el traductor. Prova-ho més tard.</p>";
+            
+            // Afegim enllaç extern per si de cas
+            html += `<div style="text-align:center; margin-top:10px;"><a href="https://translate.google.com/?sl=auto&text=${encodeURIComponent(word)}" target="_blank" style="color:var(--color-principal);text-decoration:none;font-size:0.9em;">Obre Google Translate ↗</a></div>`;
+
+            divRes.innerHTML = html;
+        }
+
+        function copiarText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.style.display = 'block';
+                setTimeout(()=>toast.style.display='none', 2000);
+            });
+        }
+
+        // CERQUES IMATGES
         async function buscarArasaacModal() {
             const q = document.getElementById('input-arasaac').value;
             renderResultats(await fetch(`https://api.arasaac.org/api/pictograms/${idiomaSeleccionat}/search/${encodeURIComponent(q)}`).then(r=>r.json()).then(d=>d.map(x=>`https://static.arasaac.org/pictograms/${x._id}/${x._id}_300.png`)), 'resultats-arasaac');
@@ -713,5 +803,3 @@
     </script>
 </body>
 </html>
-
-

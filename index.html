@@ -193,32 +193,28 @@
         .modal-tabs { 
             display: flex; 
             background: #f1f1f1; 
-            border-bottom: 2px solid #ddd; /* Vora més visible */
+            border-bottom: 2px solid #ddd; 
             overflow-x: auto;
-            flex-shrink: 0; /* Evita que la barra s'aixafi */
+            flex-shrink: 0; 
         }
         
         /* --- ESTIL CORRECTE PERQUÈ NO ES TALLI ARASAAC --- */
         .tab-btn { 
             flex: 1; 
-            padding: 10px 4px; /* Menys padding lateral */
+            padding: 10px 4px; 
             border: none; 
             background: none; 
             cursor: pointer; 
             font-weight: 600; 
             color: #666; 
             border-bottom: 3px solid transparent; 
-            
-            /* Ajust de mida perquè càpiga bé */
             font-size: 0.9em; 
-            
-            /* Alineació */
             display: flex;
             align-items: center;
             justify-content: center;
-            white-space: nowrap; /* Text en una sola línia sempre */
+            white-space: nowrap; 
             gap: 5px;
-            min-width: auto; /* Deixa que s'ajusti automàticament */
+            min-width: auto; 
         }
 
         .tab-btn.actiu { 
@@ -315,7 +311,7 @@
                 <input type="text" id="curs" placeholder="Ex: 3r A">
             </div>
             <div class="columna" style="flex: 0.8;">
-                <label>Idioma:</label>
+                <label>Idioma (Cerca ARASAAC):</label>
                 <select id="idioma">
                     <option value="ca">Català</option>
                     <option value="es">Castellano</option>
@@ -563,7 +559,13 @@
             
             div.addEventListener('click', () => { if(!div.classList.contains('dragging')) obrirModal(div); });
             div.addEventListener('dragstart', () => { div.classList.add('dragging'); });
-            div.addEventListener('dragend', () => { div.classList.remove('dragging'); });
+            
+            // --- NOVA LÒGICA PER SINCRONITZAR ORDRE ---
+            div.addEventListener('dragend', () => { 
+                div.classList.remove('dragging'); 
+                sincronitzarOrdre(div); 
+            });
+            // -------------------------------------------
 
             const img = document.createElement('img');
             img.id = `img-${index}-${tipus}`; 
@@ -594,12 +596,34 @@
             return div;
         }
 
-        // DRAG & DROP
+        // --- FUNCIÓ DE SINCRONITZACIÓ ---
+        function sincronitzarOrdre(element) {
+            const isFront = element.parentElement.id === 'contenidor-picts';
+            const origen = isFront ? document.getElementById('contenidor-picts') : document.getElementById('contenidor-revers');
+            const desti = isFront ? document.getElementById('contenidor-revers') : document.getElementById('contenidor-picts');
+
+            if (!origen || !desti) return;
+
+            const elementsOrigen = Array.from(origen.children);
+            const ordreIndex = elementsOrigen.map(el => el.dataset.index);
+
+            ordreIndex.forEach(idx => {
+                const elMoure = desti.querySelector(`.pictograma[data-index="${idx}"]`);
+                if (elMoure) {
+                    desti.appendChild(elMoure); 
+                }
+            });
+        }
+        
+        // DRAG & DROP VISUAL
         [document.getElementById('contenidor-picts'), document.getElementById('contenidor-revers')].forEach(cont => {
             cont.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 const dragging = document.querySelector('.dragging');
                 if(!dragging) return;
+                
+                if(dragging.parentElement !== cont) return; 
+
                 const siblings = [...cont.querySelectorAll('.pictograma:not(.dragging)')];
                 let closest = null; let minDistance = Infinity;
                 siblings.forEach(sibling => {
@@ -655,7 +679,6 @@
             if (el.dataset.textos) {
                 textos = JSON.parse(el.dataset.textos);
             } else {
-                // Fallback basic
                 const tFront = document.getElementById(`text-${index}-front`);
                 if(tFront) textos = [tFront.innerText];
                 else textos = [""];
@@ -682,7 +705,7 @@
             document.getElementById('input-arasaac').value = primerText;
             document.getElementById('input-wiki').value = primerText;
             document.getElementById('input-open').value = primerText;
-            document.getElementById('resultats-traductor').innerHTML = ''; // Netejar traduccions prèvies
+            document.getElementById('resultats-traductor').innerHTML = ''; 
 
             document.getElementById('modal-edicio').style.display = 'flex';
             canviarPestanya('tab-arasaac'); 
@@ -716,15 +739,14 @@
                     if(txtFront) txtFront.innerText = nousTextos.join(" / ");
                 } else {
                     if(txtBack) {
-                        // RECONSTRUCCIÓ COMPLETA DEL REVERS PER A MIDA DINÀMICA
-                        txtBack.innerHTML = ''; // Esborrem tot
+                        txtBack.innerHTML = ''; 
                         
                         const num = nousTextos.length;
-                        let mida = "3em"; // 1 paraula (Gegant)
+                        let mida = "3em"; 
                         if (num === 2) mida = "2.5em";
                         if (num === 3) mida = "2em";
                         if (num === 4) mida = "1.6em";
-                        if (num >= 5) mida = "1.3em"; // Ajust per a 5 paraules
+                        if (num >= 5) mida = "1.3em"; 
 
                         nousTextos.forEach(t => {
                             const divLinia = document.createElement('div');
@@ -744,7 +766,6 @@
             document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('actiu'));
             document.getElementById(id).style.display='block';
             
-            // Map simple per activar la tab
             const tabs = document.querySelectorAll('.tab-btn');
             tabs.forEach(t => {
                 if (t.getAttribute('onclick').includes(id)) t.classList.add('actiu');
@@ -758,7 +779,7 @@
             } 
         }
 
-        // --- SISTEMA DE TRADUCCIÓ ---
+        // --- SISTEMA DE TRADUCCIÓ (ACTUALITZAT AMB XINÈS, URDU I ÀRAB) ---
         async function traduirParaula() {
             const word = document.getElementById('input-modal-0').value;
             const divRes = document.getElementById('resultats-traductor');
@@ -767,19 +788,20 @@
             
             divRes.innerHTML = "<p style='text-align:center'>⏳ Traduint...</p>";
             
+            // LLISTA D'IDIOMES ACTUALITZADA
             const langs = [
-                {code:'en', nom:'Anglès'},
                 {code:'es', nom:'Castellà'},
+                {code:'en', nom:'Anglès'},
                 {code:'fr', nom:'Francès'},
-                {code:'de', nom:'Alemany'},
-                {code:'it', nom:'Italià'}
+                {code:'zh', nom:'Xinès'},
+                {code:'ur', nom:'Urdu'},
+                {code:'ar', nom:'Àrab'}
             ];
 
             let html = "";
             
             for (const lang of langs) {
                 try {
-                    // Ús de l'API gratuïta MyMemory (sense clau, limitat, però funcional per a demo)
                     const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=ca|${lang.code}`);
                     const data = await res.json();
                     if(data.responseData && data.responseData.translatedText) {
@@ -787,7 +809,7 @@
                         html += `
                         <div class="item-traduccio" onclick="copiarText('${traduccio}')">
                             <div>
-                                <span class="lang-code">${lang.code.toUpperCase()}</span>
+                                <span class="lang-code">${lang.nom}</span>
                                 <span class="trad-text">${traduccio}</span>
                             </div>
                             <span class="copy-hint">📋 Copiar</span>
@@ -798,7 +820,6 @@
             
             if(html === "") html = "<p>No s'ha pogut connectar amb el traductor. Prova-ho més tard.</p>";
             
-            // Afegim enllaç extern per si de cas
             html += `<div style="text-align:center; margin-top:10px;"><a href="https://translate.google.com/?sl=auto&text=${encodeURIComponent(word)}" target="_blank" style="color:var(--color-principal);text-decoration:none;font-size:0.9em;">Obre Google Translate ↗</a></div>`;
 
             divRes.innerHTML = html;

@@ -9,9 +9,9 @@
     <meta name="license" content="CC BY-NC-SA 4.0">
     <meta name="description" content="Generador de pictogrames, flashcards i dòminos.">
 
-    <title>Generador de Recursos Educatius</title>
+    <title>PictoJocs - Generador de Recursos</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Andika&family=Dancing+Script:wght@400;700&family=Fredoka:wght@400;600&family=Indie+Flower&family=Patrick+Hand&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Andika&family=Dancing+Script:wght@400;700&family=Fredoka:wght@400;600&family=Indie+Flower&family=Patrick+Hand&family=Roboto&family=Comic+Neue:wght@400;700&family=Schoolbell&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         /* --- ESTILS GENERALS --- */
@@ -41,7 +41,7 @@
             margin: 0 auto 20px auto; border-left: 10px solid var(--color-principal);
         }
 
-        h1 { color: #2c3e50; text-align: center; margin-top: 0; font-size: 1.8em; }
+        h1 { color: #2c3e50; text-align: center; margin-top: 0; font-size: 2em; letter-spacing: 1px; }
         
         .fila-flex { display: flex; gap: 20px; margin-bottom: 15px; align-items: flex-end; }
         .columna { flex: 1; }
@@ -91,10 +91,26 @@
         }
         @keyframes popIn { from {transform: scale(0.8); opacity: 0;} to {transform: scale(1); opacity: 1;} }
 
+        /* Consell Verd (Recuperat) */
         .instruccions {
-            background-color: #fff8e1; border: 1px solid #ffe082; color: #d35400;
+            background-color: #e8f6f3; border: 1px solid #a2d9ce; color: #16a085;
             padding: 10px; border-radius: 8px; margin-top: 15px; font-size: 0.9em; text-align: center;
         }
+
+        /* Avís Impressió Suau */
+        .avis-impressio {
+            margin-top: 20px; 
+            padding: 10px 15px; 
+            background-color: #f4f6f7; /* Gris blavós molt suau */
+            border: 1px solid #d5dbdb; 
+            border-radius: 8px;
+            color: #555;
+            font-size: 0.85em;
+            display: flex; flex-direction: column; gap: 5px;
+        }
+        .avis-impressio strong { color: #2c3e50; font-size: 1em; margin-bottom: 2px;}
+        .avis-impressio ul { margin: 0; padding-left: 20px; }
+        .avis-impressio li { margin-bottom: 2px; }
 
         /* --- ZONA D'IMPRESSIÓ --- */
         #zona-impressio {
@@ -176,25 +192,23 @@
 
         /* --- MODE DOMINÓ --- */
         .mode-domino .graella {
-            grid-template-columns: repeat(2, 1fr) !important; /* Sempre 2 columnes */
+            grid-template-columns: repeat(2, 1fr) !important; 
         }
         
         .mode-domino .pictograma {
-            flex-direction: row; /* Horitzontal */
+            flex-direction: row; 
             aspect-ratio: 2.5 / 1; 
             padding: 5px;
-            gap: 0; /* Sense gap, gestionat pel separador */
+            gap: 0; 
         }
 
         .mode-domino .pictograma img {
             width: 48%; height: 90%; order: 1;
         }
 
-        /* Línia vertical negra */
         .separador-domino {
             display: none;
-            width: 2px;
-            height: 90%;
+            width: 2px; height: 90%;
             background-color: #000;
             margin: 0 10px;
             flex-shrink: 0;
@@ -206,7 +220,7 @@
         .mode-domino .text-domino {
             order: 3;
             width: 48%; height: 90%;
-            display: flex; align-items: center; justify-content: center;
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
             text-align: center;
             font-family: var(--tipus-font);
             font-weight: bold;
@@ -230,19 +244,6 @@
             color: var(--color-font); line-height: 1.1; margin: 2px 0;
         }
 
-        /* AVISOS D'IMPRESSIÓ */
-        .avis-impressio {
-            margin-top: 30px; 
-            padding: 15px; 
-            background-color: #ffecec; 
-            border: 1px solid #ffcccc; 
-            border-radius: 8px;
-            color: #c0392b;
-            font-size: 0.9em;
-            line-height: 1.5;
-        }
-        .avis-impressio strong { display: block; margin-bottom: 5px; font-size: 1.1em; }
-
         /* MODAL */
         #modal-edicio { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
         .modal-contingut { background: white; border-radius: 12px; width: 90%; max-width: 650px; display: flex; flex-direction: column; max-height: 90vh; overflow: hidden; }
@@ -252,10 +253,12 @@
         .modal-body { padding: 25px; overflow-y: auto; }
         .grup-titol-modal { margin-bottom: 20px; text-align: center; }
         .inputs-container-modal { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; justify-content: center; }
-        .inputs-container-modal input { font-size: 1.1em; text-align: center; border: 2px solid #ddd; padding: 8px; border-radius: 6px; box-sizing: border-box; }
-        .layout-standard input { width: 48%; }
-        .layout-flashcard input:nth-child(-n+2) { width: 48%; }
-        .layout-flashcard input:nth-child(n+3) { width: 31%; }
+        
+        /* Estils dinàmics inputs modal */
+        .input-text-modal { font-size: 1.1em; text-align: center; border: 2px solid #ddd; padding: 8px; border-radius: 6px; box-sizing: border-box; }
+        .dues-paraules .input-text-modal { width: 48%; }
+        .cinc-paraules .input-text-modal { width: 100%; margin-bottom: 5px; }
+        
         .cerca-wrapper { display: flex; gap: 8px; margin-bottom: 15px; }
         .btn-cerca-modal { background: var(--color-principal); border-radius: 8px; padding: 10px 20px; font-size: 1em; flex-shrink: 0; color: white; border: none; cursor: pointer; }
         .btn-cerca-wiki { background: var(--color-secundari); }
@@ -304,7 +307,7 @@
 <body>
 
     <div class="configuracio">
-        <h1>Generador de Recursos Educatius</h1>
+        <h1>PictoJocs</h1>
         
         <div class="fila-flex">
             <div class="columna" style="flex: 0.6;">
@@ -320,7 +323,7 @@
             </div>
             <div class="columna">
                 <label>Curs:</label>
-                <input type="text" id="curs" placeholder="Ex: 3r A">
+                <input type="text" id="curs" placeholder="Ex: PRI3">
             </div>
             <div class="columna" style="flex: 0.8;">
                 <label>Idioma:</label>
@@ -340,8 +343,8 @@
             <div class="control-estil" style="flex:1;">
                 <label>Mida Paper</label>
                 <select id="mida-paper" onchange="actualitzarEstils()">
-                    <option value="a4">A4 (Estàndard)</option>
-                    <option value="a3">A3 (Gran)</option>
+                    <option value="a4">A4</option>
+                    <option value="a3">A3</option>
                 </select>
             </div>
             <div class="control-estil" style="flex:1;">
@@ -355,6 +358,7 @@
             <div class="control-estil" style="flex:1;">
                 <label>Columnes</label>
                 <select id="selector-columnes" onchange="actualitzarEstils()">
+                    <option value="1">1 (Gegant)</option>
                     <option value="2">2 (Molt Gran)</option>
                     <option value="3" selected>3 (Gran)</option>
                     <option value="4">4 (Mitjana)</option>
@@ -366,6 +370,9 @@
                 <select id="selector-font" onchange="actualitzarEstils()">
                     <option value="'Arial', sans-serif">Arial</option>
                     <option value="'Fredoka', sans-serif">Fredoka</option>
+                    <option value="'Comic Neue', cursive">Comic</option>
+                    <option value="'Schoolbell', cursive">Guix</option>
+                    <option value="'Open Sans', sans-serif">Neta (Open)</option>
                     <option value="'Patrick Hand', cursive">Manual</option>
                     <option value="'Dancing Script', cursive">Lligada</option>
                     <option value="'Andika', sans-serif">Lectoescriptura</option>
@@ -385,14 +392,14 @@
         </div>
 
         <div class="instruccions no-print" id="text-instruccions">
-            <strong>💡 Consell:</strong> Arrossega per reordenar. Fes clic per editar.
+            Consell: Arrossega per reordenar. Fes clic als dibuixos o noms per editar.
         </div>
         
         <div class="avis-impressio no-print">
-            <strong>⚠️ IMPORTANT PER IMPRIMIR:</strong>
-            <ul style="margin:5px 0; padding-left:20px;">
-                <li>Desmarca l'opció <b>"Capçaleres i peus de pàgina"</b> a la configuració d'impressió.</li>
-                <li><b>Targetes Doble Cara:</b> El sistema ja inverteix el revers automàticament. Només has de seleccionar "Imprimir a doble cara" (girar per la vora llarga).</li>
+            <strong>⚠️ Info per imprimir:</strong>
+            <ul>
+                <li>Desmarca <b>"Capçaleres i peus de pàgina"</b>.</li>
+                <li><b>Targetes Doble Cara:</b> El sistema inverteix el revers automàticament. Selecciona "Imprimir a doble cara" (girar per la vora llarga).</li>
             </ul>
         </div>
     </div>
@@ -507,10 +514,10 @@
             
             if (mode === 'domino') {
                 btnMix.style.display = 'flex';
-                instruccions.innerHTML = "<strong>🎲 Mode Dominó:</strong> Clica 'Barrejar fitxes' per desplaçar els textos i crear combinacions diferents.";
+                instruccions.innerHTML = "Consell: Arrossega per reordenar. Fes clic als dibuixos o noms per editar.";
             } else {
                 btnMix.style.display = 'none';
-                instruccions.innerHTML = "<strong>💡 Consell:</strong> Arrossega per reordenar. Fes clic per editar.";
+                instruccions.innerHTML = "Consell: Arrossega per reordenar. Fes clic als dibuixos o noms per editar.";
             }
             generarDocument();
         }
@@ -591,7 +598,7 @@
 
                     const divText = document.createElement('div');
                     divText.className = 'text-domino';
-                    divText.innerText = textMostrar;
+                    divText.innerHTML = `<span class="fila-paraula">${textMostrar}</span>`;
 
                     div.appendChild(img);
                     div.appendChild(separador);
@@ -641,7 +648,7 @@
             
             const btn = document.getElementById('btn-mix');
             btn.innerText = "✅ Fet!";
-            setTimeout(()=> btn.innerText = "🔀 Barrejar fitxes", 1500);
+            setTimeout(()=> btn.innerText = "𔗤 Barrejar fitxes", 1500);
         }
 
         function crearElementTargeta(paraula, index, tipus) {
@@ -667,7 +674,7 @@
             } else {
                 const p = document.createElement('p');
                 p.id = `text-${index}-${tipus}`;
-                p.innerText = paraula;
+                p.innerHTML = `<span class="fila-paraula">${paraula}</span>`;
                 div.appendChild(img);
                 div.appendChild(p);
             }
@@ -761,42 +768,89 @@
             elementEditant = el;
             const index = el.dataset.index;
             const mode = document.getElementById('selector-mode').value;
-            let txtInicial = "";
-            if (mode === 'domino') txtInicial = el.querySelector('.text-domino').innerText;
-            else if (mode === 'targeta') {
-                const txtBack = document.getElementById(`text-${index}-back`);
-                txtInicial = txtBack ? txtBack.innerText.replace(/\n/g, ', ') : "";
-            } else txtInicial = el.querySelector('p').innerText;
-            const container = document.getElementById('camps-text');
-            container.innerHTML = `<input type="text" id="input-modal-0" value="${txtInicial}" placeholder="Text principal">`;
-            let paraulaCerca = el.dataset.original || txtInicial.split(' ')[0]; 
+            let containerTxt = null;
+            
+            // Determinem d'on treiem el text i quantes línies permetem
+            let maxInputs = 2; // Per defecte
+            let classeLayout = "dues-paraules";
+
+            if (mode === 'domino') {
+                containerTxt = el.querySelector('.text-domino');
+            } else if (mode === 'targeta') {
+                containerTxt = document.getElementById(`text-${index}-back`);
+                maxInputs = 5;
+                classeLayout = "cinc-paraules";
+            } else {
+                containerTxt = el.querySelector('p');
+            }
+            
+            // Recollim les paraules existents (separades per divs o br)
+            let paraulesActuals = [];
+            if(containerTxt) {
+                const files = containerTxt.querySelectorAll('.fila-paraula');
+                if(files.length > 0) {
+                    files.forEach(f => paraulesActuals.push(f.innerText));
+                } else {
+                    paraulesActuals.push(containerTxt.innerText);
+                }
+            }
+
+            // Generem Inputs
+            const containerInputs = document.getElementById('camps-text');
+            containerInputs.className = `inputs-container-modal ${classeLayout}`;
+            containerInputs.innerHTML = '';
+            
+            for(let i=0; i<maxInputs; i++) {
+                const val = paraulesActuals[i] || "";
+                containerInputs.innerHTML += `<input type="text" class="input-text-modal" id="input-modal-${i}" value="${val}" placeholder="Text ${i+1}">`;
+            }
+
+            // Preparem cerca
+            let paraulaCerca = el.dataset.original || paraulesActuals[0] || "";
             document.getElementById('input-arasaac').value = paraulaCerca;
             document.getElementById('input-wiki').value = paraulaCerca;
             document.getElementById('input-open').value = paraulaCerca;
             document.getElementById('resultats-traductor').innerHTML = ''; 
+
             document.getElementById('modal-edicio').style.display = 'flex';
             canviarPestanya('tab-arasaac'); 
             if(paraulaCerca) buscarArasaacModal();
         }
-        function tancarModal() { document.getElementById('modal-edicio').style.display = 'none'; elementEditant=null; }
-        
+
         function guardarTancar() {
             if(elementEditant) {
-                const nouText = document.getElementById('input-modal-0').value;
                 const mode = document.getElementById('selector-mode').value;
                 const index = elementEditant.dataset.index;
+                
+                // Recollir textos
+                let nousTextos = [];
+                const inputs = document.querySelectorAll('.input-text-modal');
+                inputs.forEach(inp => {
+                    if(inp.value.trim() !== "") nousTextos.push(inp.value.trim());
+                });
+                
+                // Construir HTML
+                let htmlFinal = nousTextos.map(t => `<div class="fila-paraula">${t}</div>`).join('');
+                if(htmlFinal === "") htmlFinal = `<div class="fila-paraula">&nbsp;</div>`;
+
                 if (mode === 'domino') {
                     const tDiv = elementEditant.querySelector('.text-domino');
-                    tDiv.innerText = nouText; autoMidaText(tDiv);
-                    if(dadesDomino[index]) dadesDomino[index].txt = nouText;
+                    tDiv.innerHTML = htmlFinal; 
+                    autoMidaText(tDiv);
+                    if(dadesDomino[index]) dadesDomino[index].txt = nousTextos.join(' ');
                 } else if (mode === 'targeta') {
                     const tBack = document.getElementById(`text-${index}-back`);
-                    tBack.innerHTML = `<div class="fila-paraula">${nouText}</div>`;
+                    tBack.innerHTML = htmlFinal;
                     autoMidaText(tBack);
-                } else { elementEditant.querySelector('p').innerText = nouText; }
+                } else { 
+                    const p = elementEditant.querySelector('p');
+                    p.innerHTML = htmlFinal; 
+                }
             }
             tancarModal();
         }
+
+        function tancarModal() { document.getElementById('modal-edicio').style.display = 'none'; elementEditant=null; }
         
         function canviarPestanya(id) {
             document.querySelectorAll('.contingut-tab').forEach(e=>e.style.display='none');

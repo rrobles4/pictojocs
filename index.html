@@ -10,7 +10,7 @@
     <style>
         /* --- ESTILS GENERALS --- */
         :root {
-            --color-fons: #f0f8ff;
+            --color-fons: #e0f7fa; /* Blau cel suau */
             --color-principal: #4a90e2;
             --color-secundari: #f39c12; 
             --color-accio: #27ae60;
@@ -24,25 +24,113 @@
 
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: var(--color-fons);
             margin: 0; padding: 20px;
+            
+            /* DISSENY DE FONS (ESTIL ESCOLAR) */
+            background-color: #fdfbf7;
+            /* Patró de quadricula escolar suau */
+            background-image: 
+                linear-gradient(#e1e1e1 1px, transparent 1px),
+                linear-gradient(90deg, #e1e1e1 1px, transparent 1px);
+            background-size: 20px 20px;
+            
+            /* SI VOLS POSAR UNA IMATGE DE FONS (Nens jugant, etc.):
+               1. Guarda la imatge a la carpeta com 'fons.jpg'
+               2. Descomenta (treu els /* i * /) de la línia de sota:
+            */
+            /* background-image: url('fons.jpg'); background-size: cover; */
         }
 
         /* --- CONFIGURACIÓ (NO PRINT) --- */
         .configuracio {
-            background-color: white; padding: 20px; border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 950px;
-            margin: 0 auto 20px auto; border-left: 10px solid var(--color-principal);
+            background-color: rgba(255, 255, 255, 0.95); /* Blanc quasi opac */
+            padding: 25px; 
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); /* Ombra més maca */
+            max-width: 950px;
+            margin: 0 auto 20px auto; 
+            border-left: 12px solid var(--color-principal);
+            border-right: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
         }
 
-        /* Header amb Logo APP (Permanent) */
+        /* Header millorat */
         .header-app {
-            display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            margin-bottom: 30px;
+            text-align: center;
         }
-        .header-app h1 { margin: 0; color: #2c3e50; font-size: 2.2em; letter-spacing: 1px; line-height: 1; }
         
-        /* Estil del logo Pictojocs ajustat a la mida del text */
-        .logo-pictojocs { height: 2.5em; width: auto; object-fit: contain; }
+        .titol-principal-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-app h1 { 
+            margin: 0; 
+            color: #2c3e50; 
+            font-size: 3.5em; /* Títol més gran */
+            letter-spacing: 1px; 
+            line-height: 1; 
+            font-family: 'Fredoka', sans-serif; /* Font més divertida pel títol */
+        }
+        
+        /* Logo Pictojocs més gran */
+        .logo-pictojocs { height: 90px; width: auto; object-fit: contain; }
+
+        .subtitol-descripcio {
+            font-size: 1.1em;
+            color: #555;
+            margin-top: 10px;
+            font-style: italic;
+            max-width: 80%;
+        }
+
+        /* Secció de Suggeriments */
+        .seccio-suggeriments {
+            margin: 40px auto 20px auto;
+            max-width: 700px;
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px dashed #4a90e2;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .seccio-suggeriments h3 { margin-top: 0; color: #2c3e50; }
+        .seccio-suggeriments p { color: #666; margin-bottom: 15px; }
+        .btn-contacte {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+        .btn-contacte:hover { transform: scale(1.05); background-color: #000; }
+
+        /* Footer/Crèdits llegibles */
+        .footer-credits {
+            text-align: center; 
+            margin-top: 40px; 
+            padding: 15px; 
+            font-size: 0.85em; 
+            color: #444; 
+            background-color: rgba(255,255,255,0.8); /* Fons semi-transparent */
+            border-radius: 10px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
         .fila-flex { display: flex; gap: 20px; margin-bottom: 15px; align-items: flex-end; }
         .columna { flex: 1; }
@@ -62,7 +150,6 @@
         }
         .input-logo-wrapper:hover { border-color: var(--color-principal); color: var(--color-principal); }
         
-        /* Estil quan el logo està carregat (Verd i Missatge Fet!) */
         .input-logo-wrapper.feteservir {
             border-style: solid; border-color: var(--color-accio); 
             background-color: #e8f8f5; color: var(--color-accio); font-weight: bold;
@@ -86,7 +173,6 @@
         .btn-generar { background-color: var(--color-principal); flex: 2; }
         .btn-imprimir { background-color: var(--color-accio); flex: 1; }
         
-        /* Botó especial Dominó */
         .btn-domino { 
             background-color: var(--color-secundari); 
             flex: 2; 
@@ -95,13 +181,11 @@
         }
         @keyframes popIn { from {transform: scale(0.8); opacity: 0;} to {transform: scale(1); opacity: 1;} }
 
-        /* Consell Verd */
         .instruccions {
             background-color: #e8f6f3; border: 1px solid #a2d9ce; color: #16a085;
             padding: 8px; border-radius: 8px; margin-top: 15px; font-size: 0.9em; text-align: center;
         }
 
-        /* Avís Impressió - Més compacte */
         .avis-impressio {
             margin-top: 15px; 
             padding: 10px 15px; 
@@ -116,7 +200,6 @@
         .avis-impressio ul { margin: 0; padding-left: 20px; }
         .avis-impressio li { margin-bottom: 2px; }
         
-        /* Ara té el mateix color que la resta */
         .info-doble-cara { display: none; color: inherit; font-weight: normal; }
 
         /* --- ZONA D'IMPRESSIÓ --- */
@@ -130,33 +213,29 @@
             transition: width 0.3s, min-height 0.3s;
         }
 
-        /* Header d'Impressió Reestructurat */
         .header-print {
             display: grid;
-            grid-template-columns: 1fr 2fr 1fr; /* Esquerra (Logo+Curs), Centre (Títol), Dreta (Pictojocs) */
+            grid-template-columns: 1fr 2fr 1fr; 
             align-items: center;
             margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px;
             height: 80px; 
             overflow: hidden;
         }
         
-        /* Contenidor Esquerra: Logo Escola + Curs */
         .left-header-container {
             display: flex; align-items: center; gap: 15px; justify-content: flex-start;
         }
         .logo-escola { height: 100%; width: auto; max-height: 60px; object-fit: contain; display: none; }
         .curs-print { font-size: 1.4em; font-weight: bold; color: #555; white-space: nowrap; }
 
-        /* Contenidor Centre: Títol */
         .titol-print-container { text-align: center; }
         .titol-print-container h2 { margin: 0; font-size: 1.8em; color: #222; }
         
-        /* Contenidor Dreta: Logo PictoJocs Gran */
         .right-header-container {
             display: flex; align-items: center; justify-content: flex-end;
         }
         .big-logo-print {
-            height: 60px; width: auto; opacity: 1; /* Mida igual al logo escola */
+            height: 60px; width: auto; opacity: 1;
         }
 
         .graella {
@@ -196,7 +275,6 @@
             width: 100%; height: 70%; object-fit: contain; pointer-events: none;
         }
 
-        /* Text normal (Frontal) */
         .pictograma p {
             margin: 0; width: 100%; text-align: center;
             font-size: var(--mida-font-base);
@@ -212,13 +290,11 @@
         .mode-targeta-front .pictograma img { height: 100%; }
         .mode-targeta-front .pictograma p { display: none; }
         
-        /* Memory Específic */
         .mode-memory-front .pictograma.nomes-img img { height: 100%; }
         .mode-memory-front .pictograma.nomes-img p { display: none; }
         .mode-memory-front .pictograma.nomes-text img { display: none; }
         .mode-memory-front .pictograma.nomes-text p { height: 100%; font-size: 1.5em; }
 
-        /* Revers General (Text) - Per Targeta Doble Cara */
         .contingut-back {
             width: 100%; height: 100%;
             display: flex; flex-direction: column;
@@ -226,14 +302,12 @@
             padding: 5px; box-sizing: border-box; overflow: hidden;
         }
 
-        /* Revers Memory (Logo PictoJocs Permanent) */
         .contingut-back-logo {
             width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
             background-color: #fff;
             padding: 0;
         }
-        /* Ajust Logo Revers: Màxim possible sense sortir */
         .contingut-back-logo img {
             width: 96%; height: 96%; object-fit: contain;
         }
@@ -293,14 +367,9 @@
         .modal-body { padding: 25px; overflow-y: auto; }
         .grup-titol-modal { margin-bottom: 20px; text-align: center; }
         
-        /* ESTILS DINÀMICS MODAL - CORRECCIÓ FILA/COLUMNA */
         .inputs-container-modal { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; justify-content: center; }
         .input-text-modal { font-size: 1.1em; text-align: center; border: 2px solid #ddd; padding: 8px; border-radius: 6px; box-sizing: border-box; }
-        
-        /* 2 Paraules: Una fila (48% cadascun) */
         .dues-paraules .input-text-modal { width: 48%; }
-        
-        /* 5 Paraules: Dues files (s'ajusten amb flex, 30% width permet 3 dalt i 2 baix o similar) */
         .cinc-paraules .input-text-modal { width: 30%; flex-grow: 1; }
         
         .cerca-wrapper { display: flex; gap: 8px; margin-bottom: 15px; }
@@ -312,7 +381,6 @@
         .resultats-grid img { width: 100%; height: 90px; object-fit: contain; border: 1px solid #eee; border-radius: 8px; cursor: pointer; padding: 5px; }
         .resultats-grid img:hover { transform: scale(1.05); border-color: var(--color-principal); background: #f0f8ff; }
 
-        /* Estils Traducció */
         .grid-traduccions { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
         .item-traduccio { display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 10px; border-radius: 8px; border: 1px solid #eee; cursor: pointer; transition: 0.2s; }
         .item-traduccio:hover { background: #e8f6f3; border-color: #27ae60; }
@@ -324,13 +392,12 @@
         /* --- IMPRESSIÓ NETA --- */
         @media print {
             @page { margin: 0 !important; }
-            body { background: white; padding: 0; margin: 0; -webkit-print-color-adjust: exact; }
+            body { background: white; padding: 0; margin: 0; -webkit-print-color-adjust: exact; background-image: none !important; }
             .configuracio, .no-print, #modal-edicio, .avis-impressio { display: none !important; }
             #zona-impressio { margin: 0 auto; box-shadow: none; padding: 10mm; }
             .graella { gap: 5px; }
             .pictograma { border: 2px solid #000; }
             .zona-revers { padding-top: 15mm !important; margin-top: 0 !important; border: none !important; page-break-before: always; direction: rtl; }
-            /* Ajustos específics Dominó Impressió */
             .mode-domino .pictograma { border: 3px solid #000; }
             .separador-domino { -webkit-print-color-adjust: exact; background-color: #000 !important; }
         }
@@ -353,15 +420,22 @@
 
     <script>
         // --- CONFIGURACIÓ DEL LOGO DE PICTOJOCS ---
-        // Afegeix aquí l'enllaç RAW del teu repositori de GitHub.
+        const RUTA_LOGO_PICTOJOCS = "https://github.com/rrobles4/pictojocs/blob/main/logo%20PictoJocs.png?raw=true"; 
         
-        const RUTA_LOGO_PICTOJOCS = "https://github.com/rrobles4/pictojocs/blob/main/logo%20PictoJocs.png?raw=true"; // <--- MODIFICA AIXÒ
+        // --- CONFIGURACIÓ DEL EMAIL PER SUGGERIMENTS ---
+        // Canvia aquest email pel teu si vols rebre els missatges
+        const EMAIL_CONTACTE = "rrobles4@xtec.cat"; 
     </script>
 
     <div class="configuracio">
         <div class="header-app">
-            <img id="app-logo-header" class="logo-pictojocs" src="" alt="PictoJocs Logo">
-            <h1>PictoJocs</h1>
+            <div class="titol-principal-wrapper">
+                <img id="app-logo-header" class="logo-pictojocs" src="" alt="PictoJocs Logo">
+                <h1>PictoJocs</h1>
+            </div>
+            <p class="subtitol-descripcio">
+                PictoJocs és l'eina definitiva pels qui necessiten fer fitxes i jocs basats en els pictogrames d'ARASAAC
+            </p>
         </div>
         
         <div class="fila-flex">
@@ -403,8 +477,7 @@
                 </select>
             </div>
             <div class="control-estil" style="flex:1;">
-                <label>Mètode</label>
-                <select id="selector-mode" onchange="canviarMode()">
+                <label>Jocs</label> <select id="selector-mode" onchange="canviarMode()">
                     <option value="standard">Imatge + Text</option>
                     <option value="targeta">Targeta (Doble Cara)</option>
                     <option value="memory">Memory</option>
@@ -496,7 +569,15 @@
         </div>
     </div>
 
-    <div class="no-print" style="text-align: center; margin-top: 40px; padding: 20px; font-size: 0.8em; color: #666; border-top: 1px solid #eee;">
+    <div class="seccio-suggeriments no-print">
+        <h3>Tens alguna suggerència?</h3>
+        <p>Vols crear algun altre mena de joc? Estaré encantat de fer-ho possible!</p>
+        <a id="btn-email" href="#" class="btn-contacte">
+            ✉️ Envia'm un missatge
+        </a>
+    </div>
+
+    <div class="footer-credits no-print">
         <p style="margin: 0;">Creat per <b>Rafa Robles Fontanet</b></p>
         <p style="margin: 5px 0;">
             <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" style="color: #4a90e2; text-decoration: none;">
@@ -555,12 +636,18 @@
         let dadesDomino = []; 
         let globalSchoolLogoSrc = ''; 
 
-        // INICIALITZAR LOGO PERMANENT (Enllaç GitHub)
+        // INICIALITZAR LOGO PERMANENT I EMAIL
         window.onload = function() {
             if (typeof RUTA_LOGO_PICTOJOCS !== 'undefined' && RUTA_LOGO_PICTOJOCS.trim() !== '') {
                 document.getElementById('app-logo-header').src = RUTA_LOGO_PICTOJOCS;
                 document.getElementById('print-mini-logo').src = RUTA_LOGO_PICTOJOCS;
                 document.getElementById('print-mini-logo-back').src = RUTA_LOGO_PICTOJOCS;
+            }
+            
+            // Configurar el botó de correu
+            const btnEmail = document.getElementById('btn-email');
+            if(btnEmail && typeof EMAIL_CONTACTE !== 'undefined') {
+                btnEmail.href = `mailto:${EMAIL_CONTACTE}?subject=Suggeriment PictoJocs`;
             }
         };
 
@@ -903,17 +990,14 @@
             let maxInputs = 2; 
             let classeLayout = "dues-paraules";
 
-            // Lògica de selecció de quantitat d'inputs
             if (mode === 'targeta' || mode === 'memory') {
                 maxInputs = 5; 
                 classeLayout = "cinc-paraules";
             } else {
-                // Imatge + Text i Dominó
                 maxInputs = 2; 
                 classeLayout = "dues-paraules";
             }
 
-            // Selecció del text existent
             if (mode === 'domino') {
                 containerTxt = el.querySelector('.text-domino');
             } else if (mode === 'targeta') {
@@ -922,7 +1006,7 @@
                  if (el.classList.contains('nomes-text')) {
                     containerTxt = el.querySelector('p');
                  } else {
-                    containerTxt = el.querySelector('p'); // pot estar amagat però existeix
+                    containerTxt = el.querySelector('p');
                  }
             } else {
                 containerTxt = el.querySelector('p');

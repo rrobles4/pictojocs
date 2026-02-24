@@ -43,7 +43,7 @@
             position: relative;
         }
 
-        /* --- NAVEGACIÓ ENTRE APPS (BOTONS MÉS PETITS) --- */
+        /* --- NAVEGACIÓ ENTRE APPS --- */
         .projecte-controls {
             display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 10px; align-items: center;
         }
@@ -60,7 +60,6 @@
         }
         .btn-mini:hover { background: #d5dbdb; }
 
-        /* HEADER I LOGO (MÉS GRANS) */
         .header-app {
             display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; text-align: center;
         }
@@ -523,16 +522,16 @@
             </div>
 
             <div class="header-app">
-                <h1 style="font-size: 2.8em;">🗣️ PictoTraductor</h1>
+                <h1 style="font-size: 2.6em;">🗣️ PictoTraductor</h1>
             </div>
-            <p class="descripcio-traductor">
+            <p class="descripcio-traductor" id="desc-traductor">
                 Necessites ajuda i no saps com dir-ho? Tria el teu idioma i ho podràs explicar amb pictogrames!
             </p>
 
             <div class="controls-traductor">
                 <div style="display:flex; flex-direction:column; text-align:center; width: 100%; align-items:center;">
-                    <label style="font-size:0.9em; font-weight:bold; margin-bottom:5px;">Escull el teu idioma:</label>
-                    <select id="idioma-input">
+                    <label style="font-size:0.9em; font-weight:bold; margin-bottom:5px;" id="label-idioma-traductor">Escull el teu idioma:</label>
+                    <select id="idioma-input" onchange="canviarIdiomaUI()">
                         <option value="ca">Català (Català)</option>
                         <option value="es">Castellà (Español)</option>
                         <option value="en">Anglès (English)</option>
@@ -575,7 +574,7 @@
                 <div class="caixa-escriptura">
                     <textarea id="text-input" placeholder="Escriu la frase aquí o utilitza el micròfon..." onkeyup="if(event.key==='Enter') executarTraduccio()"></textarea>
                     <div class="botons-accio">
-                        <button id="btn-mic" class="btn-mic-trad" onclick="activarMicrofon()">🎤 Parlar</button>
+                        <button id="btn-mic-trad" class="btn-mic-trad" onclick="activarMicrofon()">🎤 Parlar</button>
                         <button id="btn-trad" class="btn-trad" onclick="executarTraduccio()">➡️ Traduir</button>
                     </div>
                 </div>
@@ -744,6 +743,72 @@
 
     <script>
         // ==========================================
+        // DICCIONARI UI PICTOTRADUCTOR MULTI-IDIOMA
+        // ==========================================
+        const uiDict = {
+            'ca': ["Necessites ajuda i no saps com dir-ho? Tria el teu idioma i ho podràs explicar amb pictogrames!", "Escull el teu idioma:", "Escriu la frase aquí o utilitza el micròfon...", "🎤 Parlar", "➡️ Traduir", "👂 Escoltant..."],
+            'es': ["¿Necesitas ayuda y no sabes cómo decirlo? ¡Elige tu idioma y explícalo con pictogramas!", "Elige tu idioma:", "Escribe la frase aquí o usa el micrófono...", "🎤 Hablar", "➡️ Traducir", "👂 Escuchando..."],
+            'en': ["Need help and don't know how to say it? Choose your language and explain it with pictograms!", "Choose your language:", "Type the phrase here or use the microphone...", "🎤 Speak", "➡️ Translate", "👂 Listening..."],
+            'fr': ["Besoin d'aide et vous ne savez pas comment le dire ? Choisissez votre langue et expliquez-le avec des pictogrammes !", "Choisissez votre langue :", "Écrivez la phrase ici ou utilisez le microphone...", "🎤 Parler", "➡️ Traduire", "👂 En écoute..."],
+            'de': ["Brauchst du Hilfe und weißt nicht, wie du es sagen sollst? Wähle deine Sprache und erkläre es mit Piktogrammen!", "Wähle deine Sprache:", "Schreibe den Satz hier oder benutze das Mikrofon...", "🎤 Sprechen", "➡️ Übersetzen", "👂 Höre zu..."],
+            'it': ["Hai bisogno di aiuto e non sai come dirlo? Scegli la tua lingua e spiegalo con i pittogrammi!", "Scegli la tua lingua:", "Scrivi la frase qui o usa il microfono...", "🎤 Parla", "➡️ Traduci", "👂 Ascoltando..."],
+            'pt': ["Precisa de ajuda e não sabe como dizer? Escolha o seu idioma e explique com pictogramas!", "Escolha o seu idioma:", "Escreva a frase aqui ou use o microfone...", "🎤 Falar", "➡️ Traduzir", "👂 Ouvindo..."],
+            'nl': ["Hulp nodig en je weet niet hoe je het moet zeggen? Kies je taal en leg het uit met pictogrammen!", "Kies je taal:", "Typ hier de zin of gebruik de microfoon...", "🎤 Spreken", "➡️ Vertalen", "👂 Luisteren..."],
+            'ro': ["Ai nevoie de ajutor și nu știi cum să spui? Alege limba ta și explică prin pictograme!", "Alege limba:", "Scrie fraza aici sau folosește microfonul...", "🎤 Vorbește", "➡️ Traduce", "👂 Ascult..."],
+            'pl': ["Potrzebujesz pomocy i nie wiesz, jak to powiedzieć? Wybierz swój język i wyjaśnij to za pomocą piktogramów!", "Wybierz swój język:", "Wpisz tu zdanie lub użyj mikrofonu...", "🎤 Mów", "➡️ Tłumacz", "👂 Słucham..."],
+            'uk': ["Потрібна допомога і не знаєте, як це сказати? Виберіть свою мову і поясніть за допомогою піктограм!", "Виберіть свою мову:", "Напишіть фразу тут або скористайтеся мікрофоном...", "🎤 Говорити", "➡️ Перекласти", "👂 Слухаю..."],
+            'ru': ["Нужна помощь и не знаете, как это сказать? Выберите свой язык и объясните с помощью пиктограмм!", "Выберите свой язык:", "Напишите фразу здесь или используйте микрофон...", "🎤 Говорить", "➡️ Перевести", "👂 Слушаю..."],
+            'bg': ["Нуждаете се от помощ и не знаете как да го кажете? Изберете своя език и го обяснете с пиктограми!", "Изберете своя език:", "Напишете фразата тук или използвайте микрофона...", "🎤 Говори", "➡️ Преведи", "👂 Слушам..."],
+            'ar': ["هل تحتاج إلى مساعدة ولا تعرف كيف تقولها؟ اختر لغتك واشرحها باستخدام الرموز التوضيحية!", "اختر لغتك:", "اكتب العبارة هنا أو استخدم الميكروفون...", "🎤 تحدث", "➡️ ترجمة", "👂 أستمع..."],
+            'zh': ["需要帮助不知道怎么说？选择你的语言，用图画解释吧！", "选择你的语言：", "在这里输入句子或使用麦克风...", "🎤 说话", "➡️ 翻译", "👂 听着..."],
+            'fa': ["کمک می خواهید و نمی دانید چگونه بگویید؟ زبان خود را انتخاب کنید و با پیکتوگرام توضیح دهید!", "زبان خود را انتخاب کنید:", "جمله را اینجا بنویسید یا از میکروفون استفاده کنید...", "🎤 صحبت کن", "➡️ ترجمه", "👂 در حال گوش دادن..."],
+            'he': ["צריך עזרה ולא יודע איך להגיד את זה? בחר את השפה שלך והסבר באמצעות סמלים!", "בחר את השפה שלך:", "הקלד את המשפט כאן או השתמש במיקרופון...", "🎤 דבר", "➡️ תרגם", "👂 מקשיב..."],
+            'el': ["Χρειάζεστε βοήθεια και δεν ξέρετε πώς να το πείτε; Επιλέξτε τη γλώσσα σας και εξηγήστε το με εικονογράμματα!", "Επιλέξτε τη γλώσσα σας:", "Γράψτε τη φράση εδώ ή χρησιμοποιήστε το μικρόφωνο...", "🎤 Μιλήστε", "➡️ Μετάφραση", "👂 Ακούω..."],
+            'eu': ["Laguntza behar duzu eta ez dakizu nola esan? Aukeratu zure hizkuntza eta azaldu piktogramekin!", "Aukeratu zure hizkuntza:", "Idatzi esaldia hemen edo erabili mikrofonoa...", "🎤 Hitz egin", "➡️ Itzuli", "👂 Entzuten..."],
+            'gl': ["Necesitas axuda e non sabes como dicilo? Elixe o teu idioma e explícao con pictogramas!", "Elixe o teu idioma:", "Escribe a frase aquí ou usa o micrófono...", "🎤 Falar", "➡️ Traducir", "👂 Escoitando..."],
+            'val': ["Necessites ajuda i no saps com dir-ho? Tria el teu idioma i ho podràs explicar amb pictogrames!", "Escull el teu idioma:", "Escriu la frase aquí o utilitza el micròfon...", "🎤 Parlar", "➡️ Traduir", "👂 Escoltant..."],
+            'cs': ["Potřebujete pomoci a nevíte, jak to říct? Vyberte si svůj jazyk a vysvětlete to pomocí piktogramů!", "Vyberte si svůj jazyk:", "Napište sem větu nebo použijte mikrofon...", "🎤 Mluvit", "➡️ Přeložit", "👂 Poslouchám..."],
+            'sk': ["Potrebujete pomôcť a neviete, ako to povedať? Vyberte si svoj jazyk a vysvetlite to pomocou piktogramov!", "Vyberte si svoj jazyk:", "Napíšte sem vetu alebo použite mikrofón...", "🎤 Hovoriť", "➡️ Preložiť", "👂 Počúvam..."],
+            'sl': ["Potrebujete pomoč in ne veste, kako bi to povedali? Izberite svoj jezik in razložite s piktogrami!", "Izberite svoj jezik:", "Tukaj vnesite frazo ali uporabite mikrofon...", "🎤 Govori", "➡️ Prevedi", "👂 Poslušam..."],
+            'hr': ["Potrebna vam je pomoć i ne znate kako to reći? Odaberite svoj jezik i objasnite to pomoću piktograma!", "Odaberite svoj jezik:", "Ovdje napišite izraz ili upotrijebite mikrofon...", "🎤 Govori", "➡️ Prevedi", "👂 Slušam..."],
+            'sr': ["Treba vam pomoć i ne znate kako da to kažete? Izaberite svoj jezik i objasnite pomoću piktograma!", "Izaberite svoj jezik:", "Napišite frazu ovde ili koristite mikrofon...", "🎤 Govori", "➡️ Prevedi", "👂 Slušam..."],
+            'mk': ["Имате потреба од помош и не знаете како да го кажете тоа? Изберете го вашиот јазик и објаснете со пиктограми!", "Изберете го вашиот јазик:", "Напишете ја фразата тука или користете го микрофонот...", "🎤 Зборувај", "➡️ Преведи", "👂 Слушам..."],
+            'sq': ["Keni nevojë për ndihmë dhe nuk dini si ta thoni? Zgjidhni gjuhën tuaj dhe shpjegojeni me piktograme!", "Zgjidhni gjuhën tuaj:", "Shkruani frazën këtu ose përdorni mikrofonin...", "🎤 Flisni", "➡️ Përkthe", "👂 Duke dëgjuar..."],
+            'hu': ["Segítségre van szüksége, és nem tudja, hogyan mondja el? Válassza ki a nyelvét, és magyarázza el piktogramokkal!", "Válassza ki a nyelvét:", "Írja be ide a kifejezést, vagy használja a mikrofont...", "🎤 Beszélj", "➡️ Fordítás", "👂 Figyelek..."],
+            'da': ["Brug for hjælp og ved ikke, hvordan man siger det? Vælg dit sprog og forklar det med piktogrammer!", "Vælg dit sprog:", "Skriv sætningen her eller brug mikrofonen...", "🎤 Tal", "➡️ Oversæt", "👂 Lytter..."],
+            'sv': ["Behöver du hjälp och vet inte hur du ska säga det? Välj ditt språk och förklara det med piktogram!", "Välj ditt språk:", "Skriv frasen här eller använd mikrofonen...", "🎤 Tala", "➡️ Översätt", "👂 Lyssnar..."],
+            'fi': ["Tarvitsetko apua etkä tiedä miten sanoa se? Valitse kielesi ja selitä se kuvamerkeillä!", "Valitse kielesi:", "Kirjoita lause tähän tai käytä mikrofonia...", "🎤 Puhu", "➡️ Käännä", "👂 Kuuntelen..."],
+            'et': ["Vajad abi ja ei tea, kuidas seda öelda? Vali oma keel ja selgita piktogrammidega!", "Vali oma keel:", "Kirjuta fraas siia või kasuta mikrofoni...", "🎤 Räägi", "➡️ Tõlgi", "👂 Kuulan..."],
+            'lt': ["Reikia pagalbos ir nežinote, kaip tai pasakyti? Pasirinkite savo kalbą ir paaiškinkite piktogramomis!", "Pasirinkite savo kalbą:", "Įrašykite frazę čia arba naudokite mikrofoną...", "🎤 Kalbėti", "➡️ Išversti", "👂 Klausau..."],
+            'lv': ["Nepieciešama palīdzība un nezināt, kā to pateikt? Izvēlieties savu valodu un izskaidrojiet to ar piktogrammām!", "Izvēlieties savu valodu:", "Ierakstiet frāzi šeit vai izmantojiet mikrofonu...", "🎤 Runāt", "➡️ Tulkot", "👂 Klausos..."],
+            'ko': ["도움이 필요하지만 어떻게 말해야 할지 모르겠나요? 언어를 선택하고 픽토그램으로 설명해 보세요!", "언어 선택:", "여기에 문장을 입력하거나 마이크를 사용하세요...", "🎤 말하기", "➡️ 번역", "👂 듣는 중..."],
+            'ur': ["مدد کی ضرورت ہے اور نہیں جانتے کہ کیسے کہنا ہے؟ اپنی زبان منتخب کریں اور تصویری علامتوں سے سمجھائیں!", "اپنی زبان منتخب کریں:", "یہاں جملہ لکھیں یا مائیکروفون استعمال کریں...", "🎤 بولیں", "➡️ ترجمہ کریں", "👂 سن رہا ہوں..."]
+        };
+
+        let isListening = false;
+        let textSpeak = "🎤 Parlar";
+        let textListen = "👂 Escoltant...";
+
+        function canviarIdiomaUI() {
+            const lang = document.getElementById('idioma-input').value;
+            const texts = uiDict[lang] || uiDict['ca'];
+            
+            document.getElementById('desc-traductor').innerText = texts[0];
+            document.getElementById('label-idioma-traductor').innerText = texts[1];
+            document.getElementById('text-input').placeholder = texts[2];
+            
+            textSpeak = texts[3];
+            textListen = texts[5];
+            
+            if(!isListening) document.getElementById('btn-mic-trad').innerHTML = textSpeak;
+            else document.getElementById('btn-mic-trad').innerHTML = textListen;
+            
+            if(!document.getElementById('btn-trad').disabled) {
+                document.getElementById('btn-trad').innerHTML = texts[4];
+            }
+        }
+
+        // ==========================================
         // VARIABLES GLOBALS
         // ==========================================
         let currentView = 'pictojocs'; 
@@ -881,11 +946,11 @@
             else avisDobleCara.style.display = 'none';
 
             if (mode === 'domino') {
-                btnMix.style.display = 'flex'; instruccions.innerHTML = "Consell: clica a \"Barrejar fitxes\" per reordenar aleatòriament.";
+                btnMix.style.display = 'flex'; 
             } else if (mode === 'memory') {
-                btnMix.style.display = 'none'; instruccions.innerHTML = "Consell: Es generaran parelles separades. El revers serà el logo de PictoJocs.";
+                btnMix.style.display = 'none'; 
             } else {
-                btnMix.style.display = 'none'; instruccions.innerHTML = "Consell: Arrossega per reordenar. Fes clic als dibuixos o noms per editar.";
+                btnMix.style.display = 'none'; 
             }
             generarDocument();
         }
@@ -1131,10 +1196,10 @@ Normes:
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; let recognition;
         if (SpeechRecognition) {
             recognition = new SpeechRecognition(); recognition.continuous = false; recognition.interimResults = false;
-            recognition.onstart = function() { const btn = document.getElementById('btn-mic'); btn.classList.add('escoltant'); btn.innerHTML = "👂 Escoltant..."; document.getElementById('text-input').value = ""; document.getElementById('text-input').placeholder = "Escoltant..."; };
-            recognition.onend = function() { const btn = document.getElementById('btn-mic'); btn.classList.remove('escoltant'); btn.innerHTML = "🎤 Parlar"; document.getElementById('text-input').placeholder = "Escriu la frase aquí o utilitza el micròfon..."; };
+            recognition.onstart = function() { isListening = true; const btn = document.getElementById('btn-mic-trad'); btn.classList.add('escoltant'); btn.innerHTML = textListen; document.getElementById('text-input').value = ""; document.getElementById('text-input').placeholder = "..."; };
+            recognition.onend = function() { isListening = false; const btn = document.getElementById('btn-mic-trad'); btn.classList.remove('escoltant'); btn.innerHTML = textSpeak; canviarIdiomaUI(); };
             recognition.onresult = function(event) { document.getElementById('text-input').value = event.results[0][0].transcript; executarTraduccio(); };
-        } else { document.getElementById('btn-mic').style.display = 'none'; }
+        } else { document.getElementById('btn-mic-trad').style.display = 'none'; }
 
         function activarMicrofon() {
             if (!recognition) return; let idio = document.getElementById('idioma-input').value;
@@ -1147,17 +1212,20 @@ Normes:
 
         async function executarTraduccio() {
             const frase = document.getElementById('text-input').value.trim(); if(!frase) return;
-            const btnTrad = document.getElementById('btn-trad'); btnTrad.innerHTML = `<div class="loader" style="margin:0;"></div> Traduint...`; btnTrad.disabled = true;
+            const btnTrad = document.getElementById('btn-trad'); btnTrad.innerHTML = `<div class="loader" style="margin:0;"></div>`; btnTrad.disabled = true;
             document.getElementById('resultat-pictos').innerHTML = ''; document.getElementById('traduccio-literal-box').style.display = 'none';
             const apiKey = localStorage.getItem('gemini_api_key');
             if (apiKey) { await processarAmbGemini(frase, apiKey); } else { await processarBasic(frase); }
-            btnTrad.innerHTML = `➡️ Traduir`; btnTrad.disabled = false;
+            
+            const lang = document.getElementById('idioma-input').value;
+            const texts = uiDict[lang] || uiDict['ca'];
+            btnTrad.innerHTML = texts[4]; btnTrad.disabled = false;
         }
 
         async function processarAmbGemini(text, apiKey) {
             const langCode = document.getElementById('idioma-input').value;
             const prompt = `Actua com el cervell d'un comunicador augmentatiu escolar. Un alumne ha dit aquesta frase en l'idioma amb codi ISO '${langCode}': "${text}"
-Analitza la frase i retorna ÚNICAMENT un objecte JSON (sense format markdown, només les claus) amb aquesta structure exacta:
+Analitza la frase i retorna ÚNICAMENT un objecte JSON (sense format markdown, només les claus) amb aquesta estructura exacta:
 { "traduccio_literal": "Frase completa i natural traduïda al català", "pictogrames": [ {"cat": "lema en català d'una paraula clau (infinitiu o singular)", "orig": "paraula original que hi correspon"} ] }
 Regles: Extreu NOMÉS conceptes importants (verbs, substantius, adjectius). Ignora modals com 'can', articles, preposicions o 'si us plau'. Màxim 6 pictogrames.`;
             try {
@@ -1199,7 +1267,6 @@ Regles: Extreu NOMÉS conceptes importants (verbs, substantius, adjectius). Igno
         function obrirModal(el) {
             elementEditant = el;
             
-            // Adaptar pestanyes segons vista
             if (currentView === 'pictotraductor') {
                 document.getElementById('modal-colors').style.display = 'none';
                 document.getElementById('tab-btn-traductor').style.display = 'none';
@@ -1220,7 +1287,6 @@ Regles: Extreu NOMÉS conceptes importants (verbs, substantius, adjectius). Igno
             }
             imgOriginalSrcOnOpen = imgTarget ? imgTarget.src : '';
 
-            // Omplir inputs depenent de l'app
             const containerInputs = document.getElementById('camps-text');
             containerInputs.innerHTML = '';
             let paraulaCerca = '';
@@ -1390,4 +1456,3 @@ Regles: Extreu NOMÉS conceptes importants (verbs, substantius, adjectius). Igno
     </script>
 </body>
 </html>
-

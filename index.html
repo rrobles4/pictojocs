@@ -122,7 +122,7 @@
 
         /* --- ZONA D'IMPRESSIÓ PICTOJOCS --- */
         #zona-impressio {
-            background-color: white; padding: 15mm; width: var(--width-paper); min-height: var(--height-paper); margin: 0 auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); box-sizing: border-box; transition: width 0.3s, min-height 0.3s;
+            background-color: white; padding: 15mm; width: var(--width-paper); min-height: var(--height-paper); margin: 0 auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); box-sizing: border-box; 
         }
         .header-print { display: grid; grid-template-columns: 120px 1fr 120px; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px; height: 70px; overflow: hidden; }
         .logo-escola { height: 100%; width: auto; max-height: 60px; object-fit: contain; display: none; }
@@ -138,16 +138,16 @@
         .pictograma {
             border: 4px solid var(--targeta-border); border-radius: 15px; background-color: var(--targeta-bg);
             display: flex; flex-direction: column; align-items: center; justify-content: space-between; 
-            aspect-ratio: 0.85; padding: 8px; cursor: grab; break-inside: avoid; page-break-inside: avoid;
+            aspect-ratio: 0.85; padding: 5px; cursor: grab; break-inside: avoid; page-break-inside: avoid;
             box-sizing: border-box; position: relative; overflow: hidden; 
         }
         .pictograma:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .pictograma.dragging { opacity: 0.4; border: 3px dashed #999; background: #eee; }
 
         .imatge-box {
-            background-color: #ffffff; border-radius: 10px; width: 100%; height: 75%; 
-            display: flex; align-items: center; justify-content: center; padding: 2px; box-sizing: border-box; overflow: hidden;
-            flex-shrink: 1;
+            background-color: #ffffff; border-radius: 10px; width: 100%; height: 80%; 
+            display: flex; align-items: center; justify-content: center; padding: 5px; box-sizing: border-box; overflow: hidden;
+            flex-shrink: 1; position: relative;
         }
         .imatge-box img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
 
@@ -155,7 +155,7 @@
             margin: 0; width: 100%; text-align: center; font-size: var(--mida-font-base); font-family: var(--tipus-font); 
             color: var(--targeta-text); line-height: 1.1; font-weight: bold; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center; flex-direction: column;
-            min-height: 20%; padding-top: 2px;
+            min-height: 15%; padding-top: 2px;
         }
 
         .mode-targeta-front .pictograma .imatge-box { height: 100%; }
@@ -569,35 +569,11 @@
                             <option value="de">Alemany (Deutsch)</option>
                             <option value="it">Italià (Italiano)</option>
                             <option value="pt">Portuguès (Português)</option>
-                            <option value="nl">Neerlandès (Nederlands)</option>
                             <option value="ro">Romanès (Română)</option>
-                            <option value="pl">Polonès (Polski)</option>
                             <option value="uk">Ucraïnès (Українська)</option>
                             <option value="ru">Rus (Русский)</option>
-                            <option value="bg">Búlgar (Български)</option>
                             <option value="ar">Àrab (العربية)</option>
                             <option value="zh">Xinès (中文)</option>
-                            <option value="fa">Persa (فارسی)</option>
-                            <option value="he">Hebreu (עברית)</option>
-                            <option value="el">Grec (Ελληνικά)</option>
-                            <option value="eu">Basc (Euskara)</option>
-                            <option value="gl">Gallec (Galego)</option>
-                            <option value="val">Valencià (Valencià)</option>
-                            <option value="cs">Txec (Čeština)</option>
-                            <option value="sk">Eslovac (Slovenčina)</option>
-                            <option value="sl">Eslovè (Slovenščina)</option>
-                            <option value="hr">Croat (Hrvatski)</option>
-                            <option value="sr">Serbi (Српски)</option>
-                            <option value="mk">Macedoni (Македонски)</option>
-                            <option value="sq">Albanès (Shqip)</option>
-                            <option value="hu">Hongarès (Magyar)</option>
-                            <option value="da">Danès (Dansk)</option>
-                            <option value="sv">Suec (Svenska)</option>
-                            <option value="fi">Finlandès (Suomi)</option>
-                            <option value="et">Estonià (Eesti)</option>
-                            <option value="lt">Lituà (Lietuvių)</option>
-                            <option value="lv">Letó (Latviešu)</option>
-                            <option value="ko">Coreà (한국어)</option>
                             <option value="ur">Urdu (اردو)</option>
                         </select>
                     </div>
@@ -737,12 +713,9 @@
                 </div>
 
                 <div id="tab-ia-img" class="contingut-tab" style="display:none;text-align:center;">
-                    <p style="font-size:0.9em; margin-top:0; text-align:left;">Escriu què vols generar (ex: "un nen bevent aigua d'un got"):</p>
-                    <div style="width: 100%; margin-bottom:15px;">
-                        <input id="ia-img-prompt" placeholder="Descriu la imatge..." style="width:100%; padding:10px; font-size:1.1em; border:2px solid #ddd; border-radius:8px; box-sizing:border-box;" onkeyup="if(event.key==='Enter') generarImatgesIA()">
-                    </div>
-                    <div id="resultats-ia-img" class="resultats-grid"></div>
-                    <button onclick="window.open('https://www.craiyon.com/','_blank','width=400,height=600')" style="background:#333;color:white;margin-top:20px;padding:10px 15px;border-radius:20px;font-size:0.9em;border:none;cursor:pointer;">🚑 Fallada de servidor? Prova amb Craiyon</button>
+                    <p style="font-size:1.1em; margin-bottom:15px; color:#555;">Genera imatges amb Intel·ligència Artificial fent servir l'eina externa gratuïta de Craiyon.</p>
+                    <button onclick="window.open('https://www.craiyon.com/','_blank','width=400,height=600')" style="background:var(--color-accio);color:white;padding:15px 25px;border-radius:30px;font-size:1.1em;border:none;cursor:pointer;font-weight:bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">🎨 Obrir generador Craiyon</button>
+                    <p style="font-size:0.85em; margin-top:20px; color:#999;">Guarda la imatge al teu ordinador i puja-la a la pestanya "Pujar".</p>
                 </div>
                 
                 <div id="tab-dibuix" class="contingut-tab" style="display:none; text-align:center;">
@@ -760,13 +733,13 @@
                     </div>
 
                     <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
-                        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center; background:#eee; padding:10px; border-radius:10px;">
-                            <label style="font-size:0.8em;">Mida: <input type="range" id="ed-scale" min="0.5" max="3" step="0.1" value="1" oninput="drawEditorCanvas()"></label>
-                            <label style="font-size:0.8em;">X: <input type="range" id="ed-x" min="-150" max="150" value="0" oninput="drawEditorCanvas()"></label>
-                            <label style="font-size:0.8em;">Y: <input type="range" id="ed-y" min="-150" max="150" value="0" oninput="drawEditorCanvas()"></label>
-                        </div>
+                        
                         <div class="toolbar-dibuix">
-                            <button id="tool-freehand" class="btn-tool actiu" onclick="setTool('freehand')" title="Dibuix Lliure">〰️</button>
+                            <button id="tool-move-img" class="btn-tool actiu" onclick="setTool('move-img')" title="Moure Dibuix">🖼️</button>
+                            <button id="tool-move-text" class="btn-tool" onclick="setTool('move-text')" title="Moure Lletra">🔤</button>
+                            <div style="width:2px; height:20px; background:#ccc; margin:0 5px;"></div> 
+                            
+                            <button id="tool-freehand" class="btn-tool" onclick="setTool('freehand')" title="Dibuix Lliure">〰️</button>
                             <button id="tool-rect" class="btn-tool" onclick="setTool('rect')" title="Quadrat">🔲</button>
                             <button id="tool-circle" class="btn-tool" onclick="setTool('circle')" title="Cercle">⭕</button>
                             <button id="tool-arrow" class="btn-tool" onclick="setTool('arrow')" title="Fletxa">↗️</button>
@@ -784,7 +757,15 @@
                             
                             <button style="background:#95a5a6; border:none; padding:8px 15px; border-radius:5px; color:white; cursor:pointer; font-size:1.2em; font-weight:bold;" onclick="undoLastDrawing()" title="Desfer últim pas">↩️</button>
                         </div>
-                        <canvas id="canvasEditor" width="300" height="300" style="border:2px dashed #ccc; border-radius:10px; touch-action:none; background:white; cursor:crosshair;"></canvas>
+                        
+                        <div style="background:#eee; padding:5px 15px; border-radius:10px; margin-bottom:5px;">
+                            <label style="font-size:0.9em; font-weight:bold;">🔍 Mida de l'element seleccionat: <input type="range" id="ed-scale" min="0.3" max="3" step="0.1" value="1" oninput="onScaleChange()"></label>
+                        </div>
+
+                        <div id="canvas-wrapper" style="position:relative; width:300px; height:300px; border:2px dashed #ccc; border-radius:10px; overflow:hidden; background:white; margin:0 auto;">
+                            <canvas id="canvasEditor" width="300" height="300" style="touch-action:none; cursor:crosshair;"></canvas>
+                            <div id="preview-text" style="position:absolute; left:150px; top:250px; transform:translate(-50%, -50%); text-align:center; font-weight:bold; cursor:move; user-select:none; pointer-events:auto; width:100%;"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -792,7 +773,6 @@
             <div style="padding:15px;background:#f9f9f9; display:flex; justify-content:space-between; align-items:center;">
                 <button onclick="eliminarTargeta()" style="background:#e74c3c; color:white; display:inline-flex; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; font-weight:bold;">🗑️ Eliminar targeta</button>
                 <div style="display:flex; gap:10px;">
-                    <button id="btn-generar-ia-footer" onclick="generarImatgesIA()" style="display:none; background:#f5b041; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; font-weight:bold; color:white;">🎨 Generar IA</button>
                     <button onclick="guardarTancar()" style="background:var(--color-accio);display:inline-flex; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; font-weight:bold; color:white;">✅ Fet</button>
                     <button onclick="tancarModalSenseGuardar()" style="background:#999;display:inline-flex; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; font-weight:bold; color:white;">Cancel·lar</button>
                 </div>
@@ -879,24 +859,26 @@
         let dadesDomino = []; 
         let globalSchoolLogoSrc = ''; 
         let memoriaEdicions = {}; 
+        let memoriaTransforms = {}; // Guarda posicions Imatge i Text individualitzades
         let currentColorSelected = '#ffffff';
         let imgOriginalSrcOnOpen = ''; 
 
-        // Variables Canvas
+        // Variables Canvas i Moviment
         let editorCanvas, editorCtx;
         let editorImgObj = new Image();
         editorImgObj.crossOrigin = "Anonymous";
         let currentDrawings = [];
         let isDrawing = false;
         let drawColor = '#e74c3c';
-        let currentTool = 'freehand';
+        let currentTool = 'move-img'; // Eina per defecte a l'obrir l'editor
         let startX, startY, currentX, currentY;
         
-        // Variables moviment dibuix
-        let isDraggingShape = false;
+        // Variables moviment dibuix/lletra lliure
+        let imgDx = 0, imgDy = 0, imgScale = 1;
+        let txtDx = 0, txtDy = 0, txtScale = 1;
+        let isDraggingImg = false, isDraggingTxt = false, isDraggingShape = false;
         let draggedShapeIndex = -1;
-        let lastMouseX = 0;
-        let lastMouseY = 0;
+        let lastMouseX = 0, lastMouseY = 0;
 
         window.onload = function() {
             document.getElementById('any-actual').innerText = new Date().getFullYear();
@@ -916,6 +898,21 @@
                 editorCanvas.addEventListener('touchmove', e => { e.preventDefault(); drawCanvas(e); }, {passive: false});
                 window.addEventListener('touchend', stopDrawingCanvas);
             }
+
+            const pText = document.getElementById('preview-text');
+            pText.addEventListener('mousedown', (e) => {
+                if (currentTool !== 'move-text') setTool('move-text');
+                isDraggingTxt = true; lastMouseX = e.clientX; lastMouseY = e.clientY;
+                document.getElementById('ed-scale').value = txtScale;
+                e.stopPropagation();
+            });
+            pText.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (currentTool !== 'move-text') setTool('move-text');
+                isDraggingTxt = true; lastMouseX = e.touches[0].clientX; lastMouseY = e.touches[0].clientY;
+                document.getElementById('ed-scale').value = txtScale;
+                e.stopPropagation();
+            }, {passive: false});
         };
 
         // ==========================================
@@ -928,9 +925,6 @@
             if (view === 'pictotraductor') canviarIdiomaUI();
         }
 
-        // ==========================================
-        // COMUNS
-        // ==========================================
         function enviarSuggeriment() {
             const email = document.getElementById('sugg-email').value;
             const subject = document.getElementById('sugg-assumpte').value;
@@ -950,9 +944,11 @@
                 paraules: document.getElementById('llista-paraules').value,
                 mode: document.getElementById('selector-mode').value,
                 midaPaper: document.getElementById('mida-paper').value,
+                sentit: document.getElementById('sentit-paper').value,
                 columnes: document.getElementById('selector-columnes').value,
                 font: document.getElementById('selector-font').value,
-                memoria: memoriaEdicions
+                memoria: memoriaEdicions,
+                transforms: memoriaTransforms
             };
             const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
             const a = document.createElement('a'); 
@@ -962,7 +958,6 @@
             a.click();
             document.body.removeChild(a);
             
-            // Efecte visual botó "Fet!"
             const btn = document.getElementById('btn-desar');
             const txtOriginal = btn.innerHTML;
             btn.innerHTML = "✅ Fet!";
@@ -987,12 +982,17 @@
                     if (data.paraules !== undefined) document.getElementById('llista-paraules').value = data.paraules;
                     if (data.mode !== undefined) document.getElementById('selector-mode').value = data.mode;
                     if (data.midaPaper !== undefined) document.getElementById('mida-paper').value = data.midaPaper;
+                    if (data.sentit !== undefined) document.getElementById('sentit-paper').value = data.sentit;
+                    
+                    actualitzarOpcionsColumnes(); 
                     if (data.columnes !== undefined) document.getElementById('selector-columnes').value = data.columnes;
                     if (data.font !== undefined) document.getElementById('selector-font').value = data.font;
 
                     memoriaEdicions = data.memoria || {};
-                    actualitzarOpcionsColumnes();
-                    canviarMode(); actualitzarEstils(); 
+                    memoriaTransforms = data.transforms || {};
+                    
+                    canviarMode(); 
+                    actualitzarEstils(); 
                 } catch(err) { alert("Error carregant el projecte"); }
             }; reader.readAsText(file);
         }
@@ -1018,12 +1018,9 @@
             
             if (mode === 'targeta' || mode === 'memory') avisDobleCara.style.display = 'list-item';
             else avisDobleCara.style.display = 'none';
-
-            if (mode === 'domino') {
-                btnMix.style.display = 'flex'; 
-            } else {
-                btnMix.style.display = 'none'; 
-            }
+            if (mode === 'domino') btnMix.style.display = 'flex'; 
+            else btnMix.style.display = 'none'; 
+            
             generarDocument();
         }
 
@@ -1069,6 +1066,8 @@
                         divFront.querySelector('img').src = mem.imgUrl; divFront.querySelector('img').style.opacity = '1'; divBack.querySelector('.contingut-back').innerHTML = mem.htmlFinal;
                     } else { buscarArasaacAuto(paraula, i); }
                     contenidor.appendChild(divFront); contenidorRevers.appendChild(divBack);
+                    aplicarTransformsLliures(paraula, divFront);
+                    aplicarTransformsLliures(paraula, divBack);
                 });
             } else if (mode === 'memory') {
                 wrapperRevers.style.display = 'block'; contenidor.classList.add('mode-memory-front');
@@ -1081,6 +1080,8 @@
                     else { buscarArasaacAuto(paraula, i); }
                     contenidor.appendChild(fitxaImg); contenidor.appendChild(fitxaText);
                     contenidorRevers.appendChild(crearElementReversLogoPictojocs()); contenidorRevers.appendChild(crearElementReversLogoPictojocs());
+                    aplicarTransformsLliures(paraula, fitxaImg);
+                    aplicarTransformsLliures(paraula, fitxaText);
                 });
             } else if (mode === 'domino') {
                 contenidor.classList.add('mode-domino');
@@ -1099,6 +1100,7 @@
                     div.addEventListener('click', () => obrirModal(div)); div.draggable = true;
                     div.addEventListener('dragstart', ()=>div.classList.add('dragging')); div.addEventListener('dragend', ()=>div.classList.remove('dragging'));
                     contenidor.appendChild(div);
+                    aplicarTransformsLliures(paraulaOriginal, div);
                 }
             } else {
                 llista.forEach((paraula, i) => {
@@ -1106,9 +1108,20 @@
                     if(mem) { targeta.querySelector('img').src = mem.imgUrl; targeta.querySelector('img').style.opacity = '1'; targeta.querySelector('p').innerHTML = mem.htmlFinal; } 
                     else { buscarArasaacAuto(paraula, i); }
                     contenidor.appendChild(targeta);
+                    aplicarTransformsLliures(paraula, targeta);
                 });
             }
             actualitzarEstils();
+        }
+        
+        function aplicarTransformsLliures(paraula, targetaElement) {
+            let mt = memoriaTransforms[paraula];
+            if (mt) {
+                const img = targetaElement.querySelector('img');
+                if (img && !img.src.includes('logo%20PictoJocs')) img.style.transform = `translate(${mt.imgDx}px, ${mt.imgDy}px) scale(${mt.imgScale})`;
+                const textContainer = targetaElement.querySelector('p') || targetaElement.querySelector('.text-domino') || targetaElement.querySelector('.contingut-back');
+                if (textContainer) textContainer.style.transform = `translate(${mt.txtDx}px, ${mt.txtDy}px) scale(${mt.txtScale})`;
+            }
         }
 
         function crearElementReversLogoPictojocs() {
@@ -1204,7 +1217,7 @@
                 else if(mode === 'memory') document.querySelectorAll('.nomes-text p').forEach(el => autoMidaText(el));
                 else if(mode === 'domino') document.querySelectorAll('.text-domino').forEach(el => autoMidaText(el));
                 else document.querySelectorAll('.pictograma p').forEach(el => autoMidaText(el));
-            }, 100);
+            }, 50); // Sense transició CSS, podem fer-ho gairebé instantani.
         }
 
         function autoMidaText(container) {
@@ -1213,8 +1226,8 @@
             if (files.length > 0) {
                 let sizes = []; 
                 files.forEach((fila) => { 
-                    fila.style.whiteSpace = 'nowrap'; // Força la paraula a quedar en 1 sola línia
-                    let mida = 60; 
+                    fila.style.whiteSpace = 'nowrap'; 
+                    let mida = 45; 
                     fila.style.fontSize = mida + 'px'; 
                     fila.style.lineHeight = '1.1'; 
                     
@@ -1240,7 +1253,7 @@
                 }
             } else {
                 container.style.whiteSpace = 'nowrap';
-                let mida = 60; container.style.fontSize = mida + 'px'; container.style.lineHeight = '1.1';
+                let mida = 45; container.style.fontSize = mida + 'px'; container.style.lineHeight = '1.1';
                 while (container.scrollWidth > container.clientWidth && mida > 8) { mida--; container.style.fontSize = mida + 'px'; }
                 let limit = 0;
                 while (container.scrollHeight > container.clientHeight && limit < 100 && mida > 8) { mida--; container.style.fontSize = mida + 'px'; limit++; }
@@ -1452,8 +1465,24 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
 
             document.getElementById('input-arasaac').value = paraulaCerca;
             document.getElementById('resultats-traductor').innerHTML = ''; 
+            
+            // Actualitzar text de la vista prèvia al teclejar
+            document.querySelectorAll('.input-text-modal').forEach(inp => {
+                inp.addEventListener('input', updatePreviewText);
+            });
+            
             document.getElementById('modal-edicio').style.display = 'flex';
             canviarPestanya('tab-arasaac'); if(paraulaCerca) buscarArasaacModal();
+        }
+
+        function updatePreviewText() {
+            const pText = document.getElementById('preview-text');
+            pText.style.fontFamily = document.getElementById('selector-font').value.split(',')[0].replace(/'/g, '');
+            pText.style.color = document.getElementById('color-text').value;
+            let displayTexts = [];
+            document.querySelectorAll('.input-text-modal').forEach(inp => { if(inp.value.trim()!=='') displayTexts.push(inp.value.trim()); });
+            pText.innerHTML = displayTexts.map(t => `<div style="white-space:nowrap;">${t}</div>`).join('');
+            pText.style.transform = `translate(calc(-50% + ${txtDx}px), calc(-50% + ${txtDy}px)) scale(${txtScale})`;
         }
 
         function setTargetColor(color) { currentColorSelected = color; document.querySelectorAll('.color-btn').forEach(b => b.style.borderColor = '#ccc'); event.target.style.borderColor = '#333'; }
@@ -1474,13 +1503,17 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
                     if (mode === 'domino') { currentImgUrl = elementEditant.querySelector('img').src; } 
                     else if (mode === 'memory') { const imgCard = document.querySelector(`.mode-memory-front .nomes-img[data-index="${index}"]`); if (imgCard) currentImgUrl = imgCard.querySelector('img').src; } 
                     else { currentImgUrl = elementEditant.querySelector('img') ? elementEditant.querySelector('img').src : null; }
+                    
                     memoriaEdicions[original] = { htmlFinal: htmlFinal, imgUrl: currentImgUrl };
+                    memoriaTransforms[original] = { imgDx: imgDx, imgDy: imgDy, imgScale: imgScale, txtDx: txtDx, txtDy: txtDy, txtScale: txtScale };
 
                     if (mode === 'domino') { elementEditant.querySelector('.text-domino').innerHTML = htmlFinal; autoMidaText(elementEditant.querySelector('.text-domino')); if(dadesDomino[index]) { dadesDomino[index].txt = htmlFinal; dadesDomino[index].isHtml = true; } } 
                     else if (mode === 'targeta') { document.getElementById(`text-${index}-back`).innerHTML = htmlFinal; autoMidaText(document.getElementById(`text-${index}-back`)); } 
                     else if (mode === 'memory') { if(elementEditant.classList.contains('nomes-text')) { elementEditant.querySelector('p').innerHTML = htmlFinal; autoMidaText(elementEditant.querySelector('p')); } else { const p = elementEditant.querySelector('p'); if(p) p.innerHTML = htmlFinal; } } 
                     else { const p = elementEditant.querySelector('p'); p.innerHTML = htmlFinal; autoMidaText(p); }
                     if(currentColorSelected !== '#ffffff') { elementEditant.style.backgroundColor = currentColorSelected; }
+                    
+                    aplicarTransformsLliures(original, elementEditant);
                 }
             }
             tancarModal();
@@ -1506,12 +1539,6 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
             document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('actiu')); 
             document.getElementById(id).style.display='block'; 
             document.querySelectorAll(`.tab-btn[onclick*="${id}"]`).forEach(b=>b.classList.add('actiu')); 
-            
-            const btnIA = document.getElementById('btn-generar-ia-footer');
-            if (btnIA) {
-                if (id === 'tab-ia-img') btnIA.style.display = 'inline-flex';
-                else btnIA.style.display = 'none';
-            }
         }
         function aplicarImatge(src) { 
             if(elementEditant) { 
@@ -1531,54 +1558,6 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
             try { const r = await fetch(`https://api.arasaac.org/api/pictograms/${lang}/search/${encodeURIComponent(q)}`); const d = await r.json(); const urls = d.map(x=>`https://static.arasaac.org/pictograms/${x._id}/${x._id}_300.png`); urls.forEach(url=>{ const i=document.createElement('img'); i.src=url; i.onclick=()=>aplicarImatge(url); div.appendChild(i); }); } catch(e) {}
         }
         function pujarImatge(i) { const r=new FileReader(); r.onload=e=>aplicarImatge(e.target.result); if(i.files[0]) r.readAsDataURL(i.files[0]); }
-
-        /* --- GENERADOR D'IMATGES IA (SENSE CLAU API, VIA POLLINATIONS) --- */
-        async function generarImatgesIA() {
-            const promptUser = document.getElementById('ia-img-prompt').value.trim();
-            if(!promptUser) return;
-            const divRes = document.getElementById('resultats-ia-img');
-            const btnIA = document.getElementById('btn-generar-ia-footer');
-            divRes.innerHTML = "<p style='text-align:center; grid-column: 1 / -1;'>⏳ Pensant i dibuixant... triga uns segons!</p>";
-            btnIA.innerHTML = "⏳ Generant..."; btnIA.disabled = true;
-            
-            let promptEng = promptUser;
-            const apiKey = localStorage.getItem('gemini_api_key');
-            if (apiKey) {
-                try {
-                    const req = `Actua com un expert en generació d'imatges. Tradueix aquesta idea a l'anglès, creant un prompt curt i directe per a generar un pictograma (exemple: "a boy drinking water from a glass"): "${promptUser}"`;
-                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: req }] }] })
-                    });
-                    const data = await response.json();
-                    if(data.candidates && data.candidates[0]) {
-                        promptEng = data.candidates[0].content.parts[0].text.replace(/["\n]/g, '').trim();
-                    }
-                } catch(e) { console.error("Error amb Gemini, utilitzant text original", e); }
-            }
-            
-            const basePrmt = encodeURIComponent(promptEng + ", simple flat vector illustration, pictogram, white background, no text");
-            const realPrmt = encodeURIComponent(promptEng + ", realistic photography, highly detailed, no text, clean background");
-            const ts = Date.now();
-            
-            const urls = [
-                `https://image.pollinations.ai/prompt/${basePrmt}?width=300&height=300&nologo=true&seed=${Math.floor(Math.random()*10000)}&ts=${ts}1`,
-                `https://image.pollinations.ai/prompt/${basePrmt}?width=300&height=300&nologo=true&seed=${Math.floor(Math.random()*10000)}&ts=${ts}2`,
-                `https://image.pollinations.ai/prompt/${basePrmt}?width=300&height=300&nologo=true&seed=${Math.floor(Math.random()*10000)}&ts=${ts}3`,
-                `https://image.pollinations.ai/prompt/${realPrmt}?width=300&height=300&nologo=true&seed=${Math.floor(Math.random()*10000)}&ts=${ts}4`
-            ];
-            
-            divRes.innerHTML = '';
-            urls.forEach(url => {
-                const img = document.createElement('img');
-                img.onerror = function() { this.style.display='none'; }; 
-                img.src = url;
-                img.onclick = () => aplicarImatge(url);
-                divRes.appendChild(img);
-            });
-            btnIA.innerHTML = "🎨 Generar IA"; btnIA.disabled = false;
-        }
 
         /* --- TRADUCTOR MULTI-IDIOMA (TEXT 1) --- */
         async function traduirParaula() {
@@ -1610,12 +1589,28 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
         function copiarText(t) { navigator.clipboard.writeText(t); const o = document.getElementById('toast'); o.style.display='block'; setTimeout(()=>o.style.display='none', 2000); }
 
 
-        /* --- EDITOR CANVAS --- */
-        function setTool(tool) { currentTool = tool; document.querySelectorAll('.btn-tool').forEach(btn => btn.classList.remove('actiu')); document.getElementById('tool-' + tool).classList.add('actiu'); }
+        /* --- EDITOR CANVAS I DRAG LLIURE --- */
+        function setTool(tool) { 
+            currentTool = tool; 
+            document.querySelectorAll('.btn-tool').forEach(btn => btn.classList.remove('actiu')); 
+            document.getElementById('tool-' + tool).classList.add('actiu'); 
+            if (tool === 'move-img') document.getElementById('ed-scale').value = imgScale;
+            if (tool === 'move-text') document.getElementById('ed-scale').value = txtScale;
+        }
         function setDrawColor(c) { drawColor = c; }
         function undoLastDrawing() { if (currentDrawings.length > 0) { currentDrawings.pop(); drawEditorCanvas(); } }
         function getMousePos(e) { const rect = editorCanvas.getBoundingClientRect(); const clientX = e.touches ? e.touches[0].clientX : e.clientX; const clientY = e.touches ? e.touches[0].clientY : e.clientY; return { x: clientX - rect.left, y: clientY - rect.top }; }
         
+        function onScaleChange() {
+            if (currentTool === 'move-text') {
+                txtScale = parseFloat(document.getElementById('ed-scale').value);
+                updatePreviewText();
+            } else {
+                imgScale = parseFloat(document.getElementById('ed-scale').value);
+                drawEditorCanvas();
+            }
+        }
+
         function buildPath(ctx, shape) {
             ctx.beginPath();
             if (shape.type === 'freehand') { shape.points.forEach((p, i) => { if(i===0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y); }); } 
@@ -1631,27 +1626,47 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
         }
 
         function startDrawingCanvas(e) {
-            const pos = getMousePos(e); let hitIdx = getHitShapeIndex(pos.x, pos.y);
-            if (hitIdx !== -1) { isDraggingShape = true; draggedShapeIndex = hitIdx; lastMouseX = pos.x; lastMouseY = pos.y; } 
-            else { isDrawing = true; startX = pos.x; startY = pos.y; currentX = pos.x; currentY = pos.y; if (currentTool === 'freehand') currentDrawings.push({ type: 'freehand', color: drawColor, points: [{x: startX, y: startY}] }); }
+            const pos = getMousePos(e); 
+            if (currentTool === 'move-img') { 
+                isDraggingImg = true; lastMouseX = e.clientX || e.touches[0].clientX; lastMouseY = e.clientY || e.touches[0].clientY; 
+            } else if (currentTool === 'move-text') {
+                isDraggingTxt = true; lastMouseX = e.clientX || e.touches[0].clientX; lastMouseY = e.clientY || e.touches[0].clientY; 
+            } else {
+                let hitIdx = getHitShapeIndex(pos.x, pos.y);
+                if (hitIdx !== -1) { isDraggingShape = true; draggedShapeIndex = hitIdx; lastMouseX = pos.x; lastMouseY = pos.y; } 
+                else { isDrawing = true; startX = pos.x; startY = pos.y; currentX = pos.x; currentY = pos.y; if (currentTool === 'freehand') currentDrawings.push({ type: 'freehand', color: drawColor, points: [{x: startX, y: startY}] }); }
+            }
         }
 
         function drawCanvas(e) {
-            const pos = getMousePos(e);
-            if (isDraggingShape) {
-                let dx = pos.x - lastMouseX; let dy = pos.y - lastMouseY; let shape = currentDrawings[draggedShapeIndex];
-                if (shape.type === 'freehand') shape.points.forEach(pt => { pt.x += dx; pt.y += dy; }); else { shape.start.x += dx; shape.start.y += dy; shape.end.x += dx; shape.end.y += dy; }
-                lastMouseX = pos.x; lastMouseY = pos.y; drawEditorCanvas();
-            } else if (isDrawing) {
-                currentX = pos.x; currentY = pos.y;
-                if (currentTool === 'freehand') currentDrawings[currentDrawings.length-1].points.push({x: currentX, y: currentY});
-                drawEditorCanvas();
-            } else { let hitIdx = getHitShapeIndex(pos.x, pos.y); editorCanvas.style.cursor = hitIdx !== -1 ? 'pointer' : 'crosshair'; }
+            if (isDraggingImg) {
+                const cx = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+                const cy = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+                imgDx += cx - lastMouseX; imgDy += cy - lastMouseY;
+                lastMouseX = cx; lastMouseY = cy; drawEditorCanvas();
+            } else if (isDraggingTxt) {
+                const cx = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+                const cy = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+                txtDx += cx - lastMouseX; txtDy += cy - lastMouseY;
+                lastMouseX = cx; lastMouseY = cy; updatePreviewText();
+            } else if (isDrawing || isDraggingShape) {
+                const pos = getMousePos(e);
+                if (isDraggingShape) {
+                    let dx = pos.x - lastMouseX; let dy = pos.y - lastMouseY; let shape = currentDrawings[draggedShapeIndex];
+                    if (shape.type === 'freehand') shape.points.forEach(pt => { pt.x += dx; pt.y += dy; }); else { shape.start.x += dx; shape.start.y += dy; shape.end.x += dx; shape.end.y += dy; }
+                    lastMouseX = pos.x; lastMouseY = pos.y; drawEditorCanvas();
+                } else if (isDrawing) {
+                    currentX = pos.x; currentY = pos.y;
+                    if (currentTool === 'freehand') currentDrawings[currentDrawings.length-1].points.push({x: currentX, y: currentY});
+                    drawEditorCanvas();
+                } else { let hitIdx = getHitShapeIndex(pos.x, pos.y); editorCanvas.style.cursor = hitIdx !== -1 ? 'pointer' : 'crosshair'; }
+            }
         }
 
         function stopDrawingCanvas() {
             if (isDraggingShape) { isDraggingShape = false; draggedShapeIndex = -1; } 
-            else if (isDrawing) {
+            isDraggingImg = false; isDraggingTxt = false;
+            if (isDrawing) {
                 isDrawing = false;
                 if (currentTool !== 'freehand' && (startX !== currentX || startY !== currentY)) { currentDrawings.push({ type: currentTool, color: drawColor, start: {x: startX, y: startY}, end: {x: currentX, y: currentY} }); }
                 drawEditorCanvas();
@@ -1660,6 +1675,21 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
         
         function obrirTabEdicio() {
             canviarPestanya('tab-dibuix'); let currentSrc = '';
+            
+            imgDx = 0; imgDy = 0; imgScale = 1;
+            txtDx = 0; txtDy = 0; txtScale = 1;
+
+            if (elementEditant && elementEditant.dataset.original) {
+                let mt = memoriaTransforms[elementEditant.dataset.original];
+                if (mt) {
+                    imgDx = mt.imgDx || 0; imgDy = mt.imgDy || 0; imgScale = mt.imgScale || 1;
+                    txtDx = mt.txtDx || 0; txtDy = mt.txtDy || 0; txtScale = mt.txtScale || 1;
+                }
+            }
+
+            setTool('move-img');
+            updatePreviewText();
+
             if (currentView === 'pictotraductor') { currentSrc = elementEditant.querySelector('img').src; }
             else {
                 const mode = document.getElementById('selector-mode').value;
@@ -1669,18 +1699,18 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
             }
             if(currentSrc) {
                 if (currentSrc.indexOf('static.arasaac.org') !== -1 && currentSrc.indexOf('?') === -1) { currentSrc += '?c=' + new Date().getTime(); }
-                editorImgObj.onload = () => { document.getElementById('ed-scale').value = 1; document.getElementById('ed-x').value = 0; document.getElementById('ed-y').value = 0; currentDrawings = []; setTool('freehand'); drawEditorCanvas(); editorImgObj.onload = null; };
+                editorImgObj.onload = () => { currentDrawings = []; drawEditorCanvas(); editorImgObj.onload = null; };
                 editorImgObj.src = currentSrc; if(editorImgObj.complete) editorImgObj.onload();
             }
         }
 
         function drawEditorCanvas() {
-            editorCtx.clearRect(0, 0, 300, 300); const scale = parseFloat(document.getElementById('ed-scale').value); const dx = parseFloat(document.getElementById('ed-x').value); const dy = parseFloat(document.getElementById('ed-y').value);
-            editorCtx.save(); editorCtx.translate(150 + dx, 150 + dy); editorCtx.scale(scale, scale);
-            if (editorImgObj.src) { const aspect = editorImgObj.width / editorImgObj.height; let w = 280, h = 280; if (aspect > 1) h = w / aspect; else w = h * aspect; editorCtx.drawImage(editorImgObj, -w/2, -h/2, w, h); }
+            editorCtx.clearRect(0, 0, 300, 300);
+            editorCtx.save(); editorCtx.translate(150 + imgDx, 120 + imgDy); editorCtx.scale(imgScale, imgScale);
+            if (editorImgObj.src) { const aspect = editorImgObj.width / editorImgObj.height; let w = 260, h = 260; if (aspect > 1) h = w / aspect; else w = h * aspect; editorCtx.drawImage(editorImgObj, -w/2, -h/2, w, h); }
             editorCtx.restore(); editorCtx.lineCap = 'round'; editorCtx.lineJoin = 'round'; 
             currentDrawings.forEach(shape => { editorCtx.strokeStyle = shape.color; editorCtx.lineWidth = 4; buildPath(editorCtx, shape); editorCtx.stroke(); });
-            if(isDrawing && currentTool !== 'freehand') { editorCtx.strokeStyle = drawColor; editorCtx.lineWidth = 4; let tempShape = { type: currentTool, start: {x: startX, y: startY}, end: {x: currentX, y: currentY} }; buildPath(editorCtx, tempShape); editorCtx.stroke(); }
+            if(isDrawing && currentTool !== 'freehand' && currentTool !== 'move-img' && currentTool !== 'move-text') { editorCtx.strokeStyle = drawColor; editorCtx.lineWidth = 4; let tempShape = { type: currentTool, start: {x: startX, y: startY}, end: {x: currentX, y: currentY} }; buildPath(editorCtx, tempShape); editorCtx.stroke(); }
         }
         function aplicarEdicioImatge(canviarTab = true) { const dataUrl = editorCanvas.toDataURL('image/png'); aplicarImatge(dataUrl); if(canviarTab) canviarPestanya('tab-arasaac'); }
     </script>

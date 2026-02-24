@@ -344,64 +344,70 @@
                     <label>Idioma:</label>
                     <select id="idioma">
                         <option value="ca">Català</option>
-                        <option value="es">Castellà</option>
-                        <option value="en">Anglès</option>
-                        <option value="fr">Francès</option>
-                        <option value="de">Alemany</option>
-                        <option value="it">Italià</option>
-                        <option value="pt">Portuguès</option>
-                        <option value="nl">Neerlandès</option>
-                        <option value="ro">Romanès</option>
-                        <option value="pl">Polonès</option>
-                        <option value="uk">Ucraïnès</option>
-                        <option value="ru">Rus</option>
-                        <option value="bg">Búlgar</option>
-                        <option value="ar">Àrab</option>
-                        <option value="zh">Xinès</option>
-                        <option value="fa">Persa</option>
-                        <option value="he">Hebreu</option>
-                        <option value="el">Grec</option>
-                        <option value="eu">Basc</option>
-                        <option value="gl">Gallec</option>
-                        <option value="val">Valencià</option>
-                        <option value="cs">Txec</option>
-                        <option value="sk">Eslovac</option>
-                        <option value="sl">Eslovè</option>
-                        <option value="hr">Croat</option>
-                        <option value="sr">Serbi</option>
-                        <option value="mk">Macedoni</option>
-                        <option value="sq">Albanès</option>
-                        <option value="hu">Hongarès</option>
-                        <option value="da">Danès</option>
-                        <option value="sv">Suec</option>
-                        <option value="fi">Finlandès</option>
-                        <option value="et">Estonià</option>
-                        <option value="lt">Lituà</option>
-                        <option value="lv">Letó</option>
-                        <option value="ko">Coreà</option>
+                        <option value="es">Castellà (Español)</option>
+                        <option value="en">Anglès (English)</option>
+                        <option value="fr">Francès (Français)</option>
+                        <option value="de">Alemany (Deutsch)</option>
+                        <option value="it">Italià (Italiano)</option>
+                        <option value="pt">Portuguès (Português)</option>
+                        <option value="nl">Neerlandès (Nederlands)</option>
+                        <option value="ro">Romanès (Română)</option>
+                        <option value="pl">Polonès (Polski)</option>
+                        <option value="uk">Ucraïnès (Українська)</option>
+                        <option value="ru">Rus (Русский)</option>
+                        <option value="bg">Búlgar (Български)</option>
+                        <option value="ar">Àrab (العربية)</option>
+                        <option value="zh">Xinès (中文)</option>
+                        <option value="fa">Persa (فارسی)</option>
+                        <option value="he">Hebreu (עברית)</option>
+                        <option value="el">Grec (Ελληνικά)</option>
+                        <option value="eu">Basc (Euskara)</option>
+                        <option value="gl">Gallec (Galego)</option>
+                        <option value="val">Valencià (Valencià)</option>
+                        <option value="cs">Txec (Čeština)</option>
+                        <option value="sk">Eslovac (Slovenčina)</option>
+                        <option value="sl">Eslovè (Slovenščina)</option>
+                        <option value="hr">Croat (Hrvatski)</option>
+                        <option value="sr">Serbi (Српски)</option>
+                        <option value="mk">Macedoni (Македонски)</option>
+                        <option value="sq">Albanès (Shqip)</option>
+                        <option value="hu">Hongarès (Magyar)</option>
+                        <option value="da">Danès (Dansk)</option>
+                        <option value="sv">Suec (Svenska)</option>
+                        <option value="fi">Finlandès (Suomi)</option>
+                        <option value="et">Estonià (Eesti)</option>
+                        <option value="lt">Lituà (Lietuvių)</option>
+                        <option value="lv">Letó (Latviešu)</option>
+                        <option value="ko">Coreà (한국어)</option>
+                        <option value="ur">Urdu (اردو)</option>
                     </select>
                 </div>
             </div>
 
             <div class="barra-estils">
-                <div class="control-estil">
+                <div class="control-estil" style="flex:1;">
                     <label>Mida Paper</label>
                     <select id="mida-paper" onchange="actualitzarEstils()">
                         <option value="a4">A4</option>
                         <option value="a3">A3</option>
                     </select>
                 </div>
-                <div class="control-estil">
+                <div class="control-estil" style="flex:1;">
                     <label>Columnes</label>
                     <select id="selector-columnes" onchange="actualitzarEstils()">
-                        <option value="1">1 (Gegant)</option>
-                        <option value="2">2 (Molt Gran)</option>
-                        <option value="3" selected>3 (Gran)</option>
-                        <option value="4">4 (Mitjana)</option>
-                        <option value="5">5 (Petita)</option>
+                        <option value="1">1 columna</option>
+                        <option value="2">2 columnes</option>
+                        <option value="3" selected>3 columnes</option>
+                        <option value="4">4 columnes</option>
+                        <option value="5">5 columnes</option>
+                        <option value="6">6 columnes</option>
+                        <option value="7">7 columnes</option>
+                        <option value="8">8 columnes</option>
+                        <option value="9">9 columnes</option>
+                        <option value="10">10 columnes</option>
                     </select>
                 </div>
-                <div class="control-estil">
+                <div class="control-estil" style="flex:1;">
                     <label>Font</label>
                     <select id="selector-font" onchange="actualitzarEstils()">
                         <option value="'Arial', sans-serif">Arial</option>
@@ -454,35 +460,37 @@
             </div>
         </div>
 
-        <div id="zona-impressio">
-            <div class="header-print">
-                <div style="display:flex; justify-content:flex-start;">
-                    <img id="logo-visual" class="logo-escola" src="" alt="Logo Escola">
-                </div>
-                <div class="titol-print-container">
-                    <h2 id="titol-resultat">Títol del document</h2>
-                </div>
-                <div class="curs-print-wrapper">
-                    <img id="print-mini-logo" class="big-logo-print" src="" alt="PJ">
-                    <span id="curs-resultat" class="curs-print"></span>
-                </div>
-            </div>
-            <div class="graella" id="contenidor-picts"></div>
-
-            <div id="contenidor-revers-wrapper" class="zona-revers">
-                <div class="header-print" style="direction: ltr;">
+        <div class="zona-impressio-wrapper" style="width: 100%; overflow-x: auto;">
+            <div id="zona-impressio">
+                <div class="header-print">
                     <div style="display:flex; justify-content:flex-start;">
-                        <img id="logo-visual-back" class="logo-escola" src="" alt="Logo Escola">
+                        <img id="logo-visual" class="logo-escola" src="" alt="Logo Escola">
                     </div>
                     <div class="titol-print-container">
-                        <h2 id="titol-resultat-back">Títol del document</h2>
+                        <h2 id="titol-resultat">Títol del document</h2>
                     </div>
                     <div class="curs-print-wrapper">
-                        <img id="print-mini-logo-back" class="big-logo-print" src="" alt="PJ">
-                        <span id="curs-resultat-back" class="curs-print"></span>
+                        <img id="print-mini-logo" class="big-logo-print" src="" alt="PJ">
+                        <span id="curs-resultat" class="curs-print"></span>
                     </div>
                 </div>
-                <div class="graella" id="contenidor-revers"></div>
+                <div class="graella" id="contenidor-picts"></div>
+
+                <div id="contenidor-revers-wrapper" class="zona-revers">
+                    <div class="header-print" style="direction: ltr;">
+                        <div style="display:flex; justify-content:flex-start;">
+                            <img id="logo-visual-back" class="logo-escola" src="" alt="Logo Escola">
+                        </div>
+                        <div class="titol-print-container">
+                            <h2 id="titol-resultat-back">Títol del document</h2>
+                        </div>
+                        <div class="curs-print-wrapper">
+                            <img id="print-mini-logo-back" class="big-logo-print" src="" alt="PJ">
+                            <span id="curs-resultat-back" class="curs-print"></span>
+                        </div>
+                    </div>
+                    <div class="graella" id="contenidor-revers"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -509,60 +517,60 @@
                         <label id="label-idioma-traductor" style="font-size:0.9em; font-weight:bold; margin-bottom:5px;">El teu idioma:</label>
                         <select id="idioma-input" onchange="canviarIdiomaUI()">
                             <option value="ca">Català</option>
-                            <option value="es">Castellà</option>
-                            <option value="en">Anglès</option>
-                            <option value="fr">Francès</option>
-                            <option value="de">Alemany</option>
-                            <option value="it">Italià</option>
-                            <option value="pt">Portuguès</option>
-                            <option value="nl">Neerlandès</option>
-                            <option value="ro">Romanès</option>
-                            <option value="pl">Polonès</option>
-                            <option value="uk">Ucraïnès</option>
-                            <option value="ru">Rus</option>
-                            <option value="bg">Búlgar</option>
-                            <option value="ar">Àrab</option>
-                            <option value="zh">Xinès</option>
-                            <option value="fa">Persa</option>
-                            <option value="he">Hebreu</option>
-                            <option value="el">Grec</option>
-                            <option value="eu">Basc</option>
-                            <option value="gl">Gallec</option>
-                            <option value="val">Valencià</option>
-                            <option value="cs">Txec</option>
-                            <option value="sk">Eslovac</option>
-                            <option value="sl">Eslovè</option>
-                            <option value="hr">Croat</option>
-                            <option value="sr">Serbi</option>
-                            <option value="mk">Macedoni</option>
-                            <option value="sq">Albanès</option>
-                            <option value="hu">Hongarès</option>
-                            <option value="da">Danès</option>
-                            <option value="sv">Suec</option>
-                            <option value="fi">Finlandès</option>
-                            <option value="et">Estonià</option>
-                            <option value="lt">Lituà</option>
-                            <option value="lv">Letó</option>
-                            <option value="ko">Coreà</option>
-                            <option value="ur">Urdu</option>
+                            <option value="es">Castellà (Español)</option>
+                            <option value="en">Anglès (English)</option>
+                            <option value="fr">Francès (Français)</option>
+                            <option value="de">Alemany (Deutsch)</option>
+                            <option value="it">Italià (Italiano)</option>
+                            <option value="pt">Portuguès (Português)</option>
+                            <option value="nl">Neerlandès (Nederlands)</option>
+                            <option value="ro">Romanès (Română)</option>
+                            <option value="pl">Polonès (Polski)</option>
+                            <option value="uk">Ucraïnès (Українська)</option>
+                            <option value="ru">Rus (Русский)</option>
+                            <option value="bg">Búlgar (Български)</option>
+                            <option value="ar">Àrab (العربية)</option>
+                            <option value="zh">Xinès (中文)</option>
+                            <option value="fa">Persa (فارسی)</option>
+                            <option value="he">Hebreu (עברית)</option>
+                            <option value="el">Grec (Ελληνικά)</option>
+                            <option value="eu">Basc (Euskara)</option>
+                            <option value="gl">Gallec (Galego)</option>
+                            <option value="val">Valencià (Valencià)</option>
+                            <option value="cs">Txec (Čeština)</option>
+                            <option value="sk">Eslovac (Slovenčina)</option>
+                            <option value="sl">Eslovè (Slovenščina)</option>
+                            <option value="hr">Croat (Hrvatski)</option>
+                            <option value="sr">Serbi (Српски)</option>
+                            <option value="mk">Macedoni (Македонски)</option>
+                            <option value="sq">Albanès (Shqip)</option>
+                            <option value="hu">Hongarès (Magyar)</option>
+                            <option value="da">Danès (Dansk)</option>
+                            <option value="sv">Suec (Svenska)</option>
+                            <option value="fi">Finlandès (Suomi)</option>
+                            <option value="et">Estonià (Eesti)</option>
+                            <option value="lt">Lituà (Lietuvių)</option>
+                            <option value="lv">Letó (Latviešu)</option>
+                            <option value="ko">Coreà (한국어)</option>
+                            <option value="ur">Urdu (اردو)</option>
                         </select>
                     </div>
                     <div style="display:flex; flex-direction:column; align-items:center;">
                         <label id="label-idioma-desti" style="font-size:0.9em; font-weight:bold; margin-bottom:5px;">Tradueix a:</label>
                         <select id="idioma-desti">
                             <option value="ca" selected>Català</option>
-                            <option value="es">Castellà</option>
-                            <option value="en">Anglès</option>
-                            <option value="fr">Francès</option>
-                            <option value="de">Alemany</option>
-                            <option value="it">Italià</option>
-                            <option value="pt">Portuguès</option>
-                            <option value="ro">Romanès</option>
-                            <option value="uk">Ucraïnès</option>
-                            <option value="ru">Rus</option>
-                            <option value="ar">Àrab</option>
-                            <option value="zh">Xinès</option>
-                            <option value="ur">Urdu</option>
+                            <option value="es">Castellà (Español)</option>
+                            <option value="en">Anglès (English)</option>
+                            <option value="fr">Francès (Français)</option>
+                            <option value="de">Alemany (Deutsch)</option>
+                            <option value="it">Italià (Italiano)</option>
+                            <option value="pt">Portuguès (Português)</option>
+                            <option value="ro">Romanès (Română)</option>
+                            <option value="uk">Ucraïnès (Українська)</option>
+                            <option value="ru">Rus (Русский)</option>
+                            <option value="ar">Àrab (العربية)</option>
+                            <option value="zh">Xinès (中文)</option>
+                            <option value="ur">Urdu (اردو)</option>
                         </select>
                     </div>
                 </div>
@@ -701,10 +709,9 @@
                 </div>
 
                 <div id="tab-ia-img" class="contingut-tab" style="display:none;text-align:center;">
-                    <p style="font-size:0.9em; margin-top:0;">Escriu què vols generar (ex: "un nen bevent aigua d'un got"):</p>
-                    <div class="cerca-wrapper">
-                        <input id="ia-img-prompt" placeholder="Descriu la imatge..." onkeyup="if(event.key==='Enter') generarImatgesIA()">
-                        <button class="btn-cerca-modal" style="background:#f5b041;" onclick="generarImatgesIA()">🎨 Generar</button>
+                    <p style="font-size:0.9em; margin-top:0; text-align:left;">Escriu què vols generar (ex: "un nen bevent aigua d'un got"):</p>
+                    <div style="width: 100%; margin-bottom:15px;">
+                        <input id="ia-img-prompt" placeholder="Descriu la imatge..." style="width:100%; padding:10px; font-size:1.1em; border:2px solid #ddd; border-radius:8px; box-sizing:border-box;" onkeyup="if(event.key==='Enter') generarImatgesIA()">
                     </div>
                     <div id="resultats-ia-img" class="resultats-grid"></div>
                 </div>
@@ -756,6 +763,7 @@
             <div style="padding:15px;background:#f9f9f9; display:flex; justify-content:space-between; align-items:center;">
                 <button onclick="eliminarTargeta()" style="background:#e74c3c; color:white; display:inline-flex; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; font-weight:bold;">🗑️ Eliminar targeta</button>
                 <div style="display:flex; gap:10px;">
+                    <button id="btn-generar-ia-footer" onclick="generarImatgesIA()" style="display:none; background:#f5b041; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; font-weight:bold; color:white;">🎨 Generar IA</button>
                     <button onclick="guardarTancar()" style="background:var(--color-accio);display:inline-flex; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; font-weight:bold; color:white;">✅ Fet</button>
                     <button onclick="tancarModalSenseGuardar()" style="background:#999;display:inline-flex; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; font-weight:bold; color:white;">Cancel·lar</button>
                 </div>
@@ -915,13 +923,15 @@
                 midaPaper: document.getElementById('mida-paper').value,
                 columnes: document.getElementById('selector-columnes').value,
                 font: document.getElementById('selector-font').value,
-                colorBg: document.getElementById('color-bg').value,
-                colorBorder: document.getElementById('color-border').value,
-                colorText: document.getElementById('color-text').value,
                 memoria: memoriaEdicions
             };
             const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'pictojocs_projecte.json'; a.click();
+            const a = document.createElement('a'); 
+            a.href = URL.createObjectURL(blob); 
+            a.download = 'pictojocs_projecte.json'; 
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
         function carregarProjecte(e) {
@@ -938,9 +948,6 @@
                     if (data.midaPaper !== undefined) document.getElementById('mida-paper').value = data.midaPaper;
                     if (data.columnes !== undefined) document.getElementById('selector-columnes').value = data.columnes;
                     if (data.font !== undefined) document.getElementById('selector-font').value = data.font;
-                    if (data.colorBg !== undefined) document.getElementById('color-bg').value = data.colorBg;
-                    if (data.colorBorder !== undefined) document.getElementById('color-border').value = data.colorBorder;
-                    if (data.colorText !== undefined) document.getElementById('color-text').value = data.colorText;
 
                     memoriaEdicions = data.memoria || {};
                     canviarMode(); actualitzarEstils(); 
@@ -1123,10 +1130,7 @@
         function actualitzarEstils() {
             const doc = document.documentElement.style;
             doc.setProperty('--tipus-font', document.getElementById('selector-font').value);
-            doc.setProperty('--targeta-bg', document.getElementById('color-bg').value);
-            doc.setProperty('--targeta-border', document.getElementById('color-border').value);
-            doc.setProperty('--targeta-text', document.getElementById('color-text').value);
-
+            
             const paper = document.getElementById('mida-paper').value;
             if (paper === 'a3') { doc.setProperty('--width-paper', '297mm'); doc.setProperty('--height-paper', '420mm'); } 
             else { doc.setProperty('--width-paper', '210mm'); doc.setProperty('--height-paper', '297mm'); }
@@ -1145,13 +1149,41 @@
             if (!container) return;
             const files = container.querySelectorAll('.fila-paraula');
             if (files.length > 0) {
-                let sizes = []; files.forEach(fila => fila.style.whiteSpace = 'nowrap');
-                files.forEach((fila, idx) => { let mida = 60; fila.style.fontSize = mida + 'px'; fila.style.lineHeight = '1.1'; while (fila.scrollWidth > container.clientWidth && mida > 8) { mida--; fila.style.fontSize = mida + 'px'; } sizes.push(mida); });
-                files.forEach(fila => fila.style.whiteSpace = 'normal');
-                while (container.scrollHeight > container.clientHeight) { let reduced = false; files.forEach((fila, idx) => { if (sizes[idx] > 8) { sizes[idx]--; fila.style.fontSize = sizes[idx] + 'px'; reduced = true; } }); if (!reduced) break; }
+                let sizes = []; 
+                files.forEach((fila) => { 
+                    fila.style.whiteSpace = 'normal'; 
+                    fila.style.wordBreak = 'break-word';
+                    let mida = 60; 
+                    fila.style.fontSize = mida + 'px'; 
+                    fila.style.lineHeight = '1.1'; 
+                    
+                    while (fila.scrollWidth > container.clientWidth && mida > 8) { 
+                        mida--; 
+                        fila.style.fontSize = mida + 'px'; 
+                    } 
+                    sizes.push(mida); 
+                });
+                
+                let limit = 0;
+                while (container.scrollHeight > container.clientHeight && limit < 100) { 
+                    let reduced = false; 
+                    files.forEach((fila, idx) => { 
+                        if (sizes[idx] > 8) { 
+                            sizes[idx]--; 
+                            fila.style.fontSize = sizes[idx] + 'px'; 
+                            reduced = true; 
+                        } 
+                    }); 
+                    if (!reduced) break; 
+                    limit++;
+                }
             } else {
+                container.style.whiteSpace = 'normal';
+                container.style.wordBreak = 'break-word';
                 let mida = 60; container.style.fontSize = mida + 'px'; container.style.lineHeight = '1.1';
-                while ((container.scrollWidth > container.clientWidth || container.scrollHeight > container.clientHeight) && mida > 8) { mida--; container.style.fontSize = mida + 'px'; }
+                while (container.scrollWidth > container.clientWidth && mida > 8) { mida--; container.style.fontSize = mida + 'px'; }
+                let limit = 0;
+                while (container.scrollHeight > container.clientHeight && limit < 100 && mida > 8) { mida--; container.style.fontSize = mida + 'px'; limit++; }
             }
         }
 
@@ -1213,6 +1245,18 @@ Normes:
         // ==========================================
         // LÒGICA PICTOXAT
         // ==========================================
+        const stopWords = new Set(["el", "la", "els", "les", "un", "una", "uns", "unes", "a", "al", "als", "de", "del", "dels", "en", "per", "amb", "i", "o", "u", "si", "no", "que", "què", "com", "on", "em", "et", "es", "ens", "us", "meu", "meva", "teu", "teva", "seu", "seva", "si us plau", "sisplau", "hi", "ho", "li", "puc", "podem", "vull", "volem", "los", "las", "unos", "unas", "por", "para", "con", "y", "qué", "como", "donde", "me", "te", "se", "nos", "os", "mi", "tu", "su", "por favor", "puedo", "podemos", "quiero", "queremos", "the", "an", "to", "of", "in", "for", "on", "with", "at", "by", "from", "and", "or", "but", "is", "are", "am", "was", "were", "be", "been", "being", "you", "he", "she", "it", "we", "they", "my", "your", "his", "her", "its", "our", "their", "please", "can", "could", "would", "will", "shall", "should", "may", "might", "must", "do", "does", "did", "have", "has", "had", "ein", "eine", "einer", "eines", "einem", "einen", "der", "die", "das", "den", "dem", "des", "ich", "du", "er", "sie", "es", "wir", "ihr", "mich", "dich", "sich", "uns", "euch", "ist", "sind", "war", "waren", "sein", "haben", "hat", "hatte", "bitte"]);
+        function netejarParaula(paraula) { return paraula.replace(/^[.,?!¡¿()]+|[.,?!¡¿()]+$/g, '').toLowerCase(); }
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; let recognition;
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition(); recognition.continuous = false; recognition.interimResults = false;
+            recognition.onstart = function() { isListening = true; const btn = document.getElementById('btn-mic-trad'); btn.classList.add('escoltant'); btn.innerHTML = textListen; document.getElementById('text-input').value = ""; document.getElementById('text-input').placeholder = "..."; };
+            recognition.onend = function() { isListening = false; const btn = document.getElementById('btn-mic-trad'); btn.classList.remove('escoltant'); btn.innerHTML = textSpeak; canviarIdiomaUI(); };
+            recognition.onresult = function(event) { document.getElementById('text-input').value = event.results[0][0].transcript; executarTraduccio(); };
+        } else { document.getElementById('btn-mic-trad').style.display = 'none'; }
+
+
         function activarMicrofon() {
             if (!recognition) return; let idio = document.getElementById('idioma-input').value;
             const speechLangMap = { 'ca': 'ca-ES', 'es': 'es-ES', 'en': 'en-US', 'fr': 'fr-FR', 'de': 'de-DE', 'it': 'it-IT', 'pt': 'pt-PT', 'nl': 'nl-NL', 'ro': 'ro-RO', 'pl': 'pl-PL', 'uk': 'uk-UA', 'ru': 'ru-RU', 'bg': 'bg-BG', 'ar': 'ar-SA', 'zh': 'zh-CN', 'fa': 'fa-IR', 'he': 'he-IL', 'el': 'el-GR', 'eu': 'eu-ES', 'gl': 'gl-ES', 'val': 'ca-ES', 'cs': 'cs-CZ', 'sk': 'sk-SK', 'sl': 'sl-SI', 'hr': 'hr-HR', 'sr': 'sr-RS', 'mk': 'mk-MK', 'sq': 'sq-AL', 'hu': 'hu-HU', 'da': 'da-DK', 'sv': 'sv-SE', 'fi': 'fi-FI', 'et': 'et-EE', 'lt': 'lt-LT', 'lv': 'lv-LV', 'ko': 'ko-KR' };
@@ -1275,7 +1319,7 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
             }
 
             let textKilled = fraseTraduida.toLowerCase().replace("si us plau", "").replace("por favor", ""); const paraules = textKilled.split(/\s+/);
-            const paraulesOriginals = frase.split(/\s+/); // Intenta emparellar
+            const paraulesOriginals = frase.split(/\s+/); 
 
             for (let i=0; i<paraules.length; i++) {
                 let paraula = paraules[i]; let pNeta = netejarParaula(paraula); if (pNeta.length < 2) continue; if (stopWords.has(pNeta)) continue; 
@@ -1397,7 +1441,18 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
         
         function tancarModal() { document.getElementById('modal-edicio').style.display = 'none'; elementEditant = null; currentColorSelected = '#ffffff'; document.querySelectorAll('.color-btn').forEach(b => b.style.borderColor = '#ccc'); }
         function eliminarTargeta() { if(!elementEditant) return; if(confirm("Segur que vols eliminar aquesta targeta?")) { if (currentView === 'pictotraductor') { elementEditant.remove(); tancarModal(); } else { const original = elementEditant.dataset.original; let llista = document.getElementById('llista-paraules').value.split(',').map(p=>p.trim()).filter(p=>p!==''); const idx = llista.indexOf(original); if(idx > -1) { llista.splice(idx, 1); document.getElementById('llista-paraules').value = llista.join(', '); tancarModal(); generarDocument(); } } } }
-        function canviarPestanya(id) { document.querySelectorAll('.contingut-tab').forEach(e=>e.style.display='none'); document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('actiu')); document.getElementById(id).style.display='block'; document.querySelectorAll(`.tab-btn[onclick*="${id}"]`).forEach(b=>b.classList.add('actiu')); }
+        function canviarPestanya(id) { 
+            document.querySelectorAll('.contingut-tab').forEach(e=>e.style.display='none'); 
+            document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('actiu')); 
+            document.getElementById(id).style.display='block'; 
+            document.querySelectorAll(`.tab-btn[onclick*="${id}"]`).forEach(b=>b.classList.add('actiu')); 
+            
+            const btnIA = document.getElementById('btn-generar-ia-footer');
+            if (btnIA) {
+                if (id === 'tab-ia-img') btnIA.style.display = 'inline-flex';
+                else btnIA.style.display = 'none';
+            }
+        }
         function aplicarImatge(src) { 
             if(elementEditant) { 
                 if (currentView === 'pictotraductor') { const img = elementEditant.querySelector('img'); if(img) img.src = src; }
@@ -1419,13 +1474,32 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
 
         /* --- GENERADOR D'IMATGES IA (SENSE CLAU API, VIA POLLINATIONS) --- */
         async function generarImatgesIA() {
-            const prompt = document.getElementById('ia-img-prompt').value.trim();
-            if(!prompt) return;
+            const promptUser = document.getElementById('ia-img-prompt').value.trim();
+            if(!promptUser) return;
             const divRes = document.getElementById('resultats-ia-img');
-            divRes.innerHTML = "<p style='text-align:center; grid-column: 1 / -1;'>⏳ Dibuixant... triga uns segons!</p>";
+            const btnIA = document.getElementById('btn-generar-ia-footer');
+            divRes.innerHTML = "<p style='text-align:center; grid-column: 1 / -1;'>⏳ Pensant i dibuixant... triga uns segons!</p>";
+            btnIA.innerHTML = "⏳ Generant..."; btnIA.disabled = true;
             
-            const basePrmt = encodeURIComponent(prompt + ", simple flat vector illustration, pictogram, white background, no text");
-            const realPrmt = encodeURIComponent(prompt + ", realistic photography, highly detailed, no text");
+            let promptEng = promptUser;
+            const apiKey = localStorage.getItem('gemini_api_key');
+            if (apiKey) {
+                try {
+                    const req = `Actua com un expert en generació d'imatges. Tradueix aquesta idea a l'anglès, creant un prompt curt i directe per a generar un pictograma (exemple: "a boy drinking water from a glass"): "${promptUser}"`;
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: req }] }] })
+                    });
+                    const data = await response.json();
+                    if(data.candidates && data.candidates[0]) {
+                        promptEng = data.candidates[0].content.parts[0].text.replace(/["\n]/g, '').trim();
+                    }
+                } catch(e) { console.error("Error amb Gemini, utilitzant text original", e); }
+            }
+            
+            const basePrmt = encodeURIComponent(promptEng + ", simple flat vector illustration, pictogram, white background, no text");
+            const realPrmt = encodeURIComponent(promptEng + ", realistic photography, highly detailed, no text");
             
             const urls = [
                 `https://image.pollinations.ai/prompt/${basePrmt}?width=300&height=300&nologo=true&seed=${Math.floor(Math.random()*1000)}`,
@@ -1441,6 +1515,7 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
                 img.onclick = () => aplicarImatge(url);
                 divRes.appendChild(img);
             });
+            btnIA.innerHTML = "🎨 Generar IA"; btnIA.disabled = false;
         }
 
         /* --- TRADUCTOR MULTI-IDIOMA (TEXT 1) --- */
@@ -1464,7 +1539,7 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
                     const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=ca|${langCode}`); 
                     const data = await res.json(); 
                     if(data.responseData && data.responseData.translatedText) { 
-                        html += `<div class="item-traduccio" onclick="copiarText('${data.responseData.translatedText}')"><div><span class="lang-code">${langNom}</span><span class="trad-text">${data.responseData.translatedText}</span></div><span class="copy-hint">📋</span></div>`; 
+                        html += `<div class="item-traduccio" onclick="copiarText('${data.responseData.translatedText.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')"><div><span class="lang-code">${langNom}</span><span class="trad-text">${data.responseData.translatedText}</span></div><span class="copy-hint">📋</span></div>`; 
                     } 
                 } catch(e) {} 
             }

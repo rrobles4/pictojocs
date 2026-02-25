@@ -280,13 +280,14 @@
             #view-pictotraductor .frase-pictos { display: none !important; } 
             .graella { gap: 5px; }
             .pictograma { border: 2px solid var(--targeta-border); } 
-            .zona-revers { padding-top: 15mm !important; margin-top: 0 !important; border: none !important; page-break-before: always; direction: rtl; }
+            .zona-revers { padding-top: 10mm !important; margin-top: 0 !important; border: none !important; page-break-before: always; direction: rtl; }
             .mode-domino .pictograma { border: 3px solid var(--targeta-border); }
             .separador-domino { -webkit-print-color-adjust: exact; background-color: var(--targeta-border) !important; }
             .header-print { height: auto; padding-bottom: 5px; }
             .big-logo-print { height: 70px; }
         }
 
+        /* --- ARREGLOS DE MIDA PANTALLA PETITA --- */
         @media screen and (max-width: 850px) {
             .configuracio { width: auto; margin: 10px; padding: 15px; }
             .fila-flex { flex-direction: column; align-items: stretch; gap: 10px; }
@@ -296,9 +297,14 @@
             .layout-metode-paraules { flex-direction: column; }
             #zona-impressio { width: 100% !important; padding: 10px; box-sizing: border-box; height: auto; min-height: 50vh; }
             body { padding: 0; background-color: #f0f8ff; }
+            
+            /* Correcció de botons estirats a mòbil */
             .btn-container { flex-direction: column; }
-            button { padding: 15px; width: 100%; font-size: 1.1em; }
+            .btn-container button { padding: 15px; width: 100%; font-size: 1.1em; }
+            .botons-accio button { width: 100%; padding: 15px; font-size: 1.1em; }
+            
             .modal-contingut { width: 95%; height: 90vh; max-height: 90vh; }
+            .projecte-controls { justify-content: center; flex-wrap: wrap; }
         }
     </style>
 </head>
@@ -714,7 +720,7 @@
 
                 <div id="tab-ia-img" class="contingut-tab" style="display:none;text-align:center;">
                     <p style="font-size:1.1em; margin-bottom:15px; color:#555;">Genera imatges amb Intel·ligència Artificial fent servir l'eina externa gratuïta de Craiyon.</p>
-                    <button onclick="window.open('https://www.craiyon.com/','_blank','width=400,height=600')" style="background:var(--color-accio);color:white;padding:15px 25px;border-radius:30px;font-size:1.1em;border:none;cursor:pointer;font-weight:bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">🎨 Obrir generador Craiyon</button>
+                    <button onclick="window.open('https://www.craiyon.com/','_blank','width=400,height=600')" style="background:var(--color-accio);color:white;padding:15px 25px;border-radius:30px;font-size:1.1em;border:none;cursor:pointer;font-weight:bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); display:block; margin:0 auto;">🎨 Obrir generador Craiyon</button>
                     <p style="font-size:0.85em; margin-top:20px; color:#999;">Guarda la imatge al teu ordinador i puja-la a la pestanya "Pujar".</p>
                 </div>
                 
@@ -768,7 +774,7 @@
                 </div>
 
             </div>
-            <div style="padding:15px;background:#f9f9f9; display:flex; justify-content:space-between; align-items:center;">
+            <div style="padding:15px;background:#f9f9f9; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                 <button onclick="eliminarTargeta()" style="background:#e74c3c; color:white; display:inline-flex; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; font-weight:bold;">🗑️ Eliminar targeta</button>
                 <div style="display:flex; gap:10px;">
                     <button onclick="guardarTancar()" style="background:var(--color-accio);display:inline-flex; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; font-weight:bold; color:white;">✅ Fet</button>
@@ -995,9 +1001,12 @@
             
             if (mode === 'targeta' || mode === 'memory') avisDobleCara.style.display = 'list-item';
             else avisDobleCara.style.display = 'none';
-            if (mode === 'domino') btnMix.style.display = 'flex'; 
-            else btnMix.style.display = 'none'; 
-            
+
+            if (mode === 'domino') {
+                btnMix.style.display = 'flex'; 
+            } else {
+                btnMix.style.display = 'none'; 
+            }
             generarDocument();
         }
 
@@ -1373,7 +1382,9 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
             const contenidor = document.getElementById('resultat-pictos'); const div = document.createElement('div'); div.className = 'pictograma'; div.dataset.index = numTargetesTrad++;
             let htmlOriginal = ''; if (textCat.toLowerCase() !== textOrig.toLowerCase()) { htmlOriginal = `<span class="fila-paraula text-alumne">(${textOrig})</span>`; }
             div.innerHTML = `<div class="imatge-box"><img src="${imgUrl}"></div><p><span class="fila-paraula text-traduit">${textCat}</span>${htmlOriginal}</p>`;
-            div.onclick = function() { obrirModal(this); }; contenidor.appendChild(div);
+            div.onclick = function() { obrirModal(this); }; 
+            contenidor.appendChild(div);
+            setTimeout(() => autoMidaText(div.querySelector('p')), 50);
         }
 
         // ==========================================
@@ -1444,6 +1455,7 @@ Regles: Extreu NOMÉS conceptes importants per dibuixar (verbs, substantius). Ig
                     let txtCat = document.getElementById('input-modal-0').value.trim(); let txtOrig = document.getElementById('input-modal-1').value.trim();
                     let p = elementEditant.querySelector('p'); let html = `<span class="fila-paraula text-traduit">${txtCat}</span>`; if(txtOrig !== "") html += `<span class="fila-paraula text-alumne">(${txtOrig})</span>`;
                     p.innerHTML = html;
+                    setTimeout(() => autoMidaText(p), 50);
                 } else {
                     const mode = document.getElementById('selector-mode').value; const index = elementEditant.dataset.index; const original = elementEditant.dataset.original;
                     let nousTextos = []; document.querySelectorAll('.input-text-modal').forEach(inp => { if(inp.value.trim() !== "") nousTextos.push(inp.value.trim()); });

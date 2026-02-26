@@ -49,7 +49,7 @@
             height: 100%;
             width: 0;
             position: fixed;
-            z-index: 999;
+            z-index: 1001;
             top: 0;
             left: 0;
             background-color: #ffffff;
@@ -91,7 +91,7 @@
             max-width: 800px;
         }
         .logo-img {
-            max-width: 250px;
+            max-width: 200px;
             height: auto;
             border-radius: 15px;
         }
@@ -107,16 +107,20 @@
             line-height: 1.5;
         }
 
-        /* --- GRAELLA D'APLICACIONS --- */
+        /* --- GRAELLA D'APLICACIONS (3x2 forçat a ordinador) --- */
         .apps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             width: 90%;
-            max-width: 1000px;
+            max-width: 1100px;
             padding: 20px;
             margin-bottom: 50px;
         }
+
+        /* Si la pantalla és petita (tauleta/mòbil), s'adapta */
+        @media (max-width: 900px) { .apps-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .apps-grid { grid-template-columns: 1fr; } }
 
         .app-card {
             background: white;
@@ -162,70 +166,62 @@
         <a href="pictotargetes.html">🃏 PictoTargetes</a>
         <a href="pictoxat.html">💬 PictoXat</a>
         <hr style="width: 80%; border: 0; border-top: 1px solid #eee; margin: 15px auto;">
-        <a href="#" onclick="alert('Estem treballant en el panell de configuració general (idioma, mode fosc, etc.). Aviat estarà disponible!')">⚙️ Configuració</a>
+        <a href="#" onclick="alert('Estem treballant en el panell de configuració general. Aviat estarà disponible!')">⚙️ Configuració</a>
     </div>
 
     <header>
         <img src="https://raw.githubusercontent.com/rrobles4/pictojocs/main/logo%20PictoJocs.png" alt="Logo PictoSuite" class="logo-img">
         <h1>PictoSuite</h1>
-        <p class="subtitol">Un conjunt d'eines digitals basades en pictogrames, dissenyades per a mestres d'educació especial i aules d'acollida. Facilita l'aprenentatge i la comunicació de manera accessible i inclusiva.</p>
+        <p class="subtitol">Eines digitals basades en pictogrames per a educació especial i aules d'acollida.</p>
     </header>
 
     <div class="apps-grid">
-        
         <a href="pictotargetes.html" class="app-card activa">
             <div class="app-icon">🃏</div>
             <h2 class="app-title">PictoTargetes</h2>
-            <p class="app-desc">Crea materials manipulatius, jocs de memòria i dòminos personalitzats amb pictogrames per a la teva aula.</p>
+            <p class="app-desc">Crea materials manipulatius, jocs de memòria i dòminos personalitzats.</p>
             <span class="etiqueta">Disponible</span>
         </a>
 
         <a href="pictoxat.html" class="app-card activa" style="border-top-color: var(--color-accio);">
             <div class="app-icon">💬</div>
             <h2 class="app-title">PictoXat</h2>
-            <p class="app-desc">Sistema de comunicació augmentativa i alternativa (CAA) per estructurar frases i facilitar l'expressió.</p>
+            <p class="app-desc">Sistema de comunicació augmentativa i alternativa (CAA).</p>
             <span class="etiqueta" style="background-color: var(--color-accio);">Disponible</span>
         </a>
 
         <div class="app-card futura">
             <div class="app-icon">📝</div>
             <h2 class="app-title">PictoFitxes</h2>
-            <p class="app-desc">Editor de text adaptat per crear documents i fitxes de treball amb inserció directa de pictogrames.</p>
+            <p class="app-desc">Editor de text per crear documents amb inserció directa de pictogrames.</p>
             <span class="etiqueta proximament">Pròximament</span>
         </div>
 
         <div class="app-card futura">
             <div class="app-icon">📅</div>
             <h2 class="app-title">PictoRutines</h2>
-            <p class="app-desc">Generador de seqüències visuals, horaris i anticipadors d'hàbits diaris (metodologia TEACCH).</p>
+            <p class="app-desc">Generador de seqüències visuals, horaris i anticipadors d'hàbits.</p>
             <span class="etiqueta proximament">Pròximament</span>
         </div>
 
         <div class="app-card futura">
-            <div class="app-card futura">
             <div class="app-icon">📖</div>
             <h2 class="app-title">PictoContes</h2>
-            <p class="app-desc">Crea històries adaptades integrant pictogrames a les paraules clau, amb suport opcional d'IA.</p>
+            <p class="app-desc">Crea històries integrant pictogrames a les paraules clau.</p>
             <span class="etiqueta proximament">Pròximament</span>
         </div>
         
         <div class="app-card futura">
             <div class="app-icon">🎯</div>
             <h2 class="app-title">PictoBingo</h2>
-            <p class="app-desc">Generador automàtic de cartrons de bingo visuals per treballar vocabulari en grup.</p>
+            <p class="app-desc">Generador automàtic de cartrons de bingo visuals.</p>
             <span class="etiqueta proximament">Pròximament</span>
         </div>
-
     </div>
 
     <script>
-        function obrirMenu() {
-            document.getElementById("elMeuMenu").style.width = "250px";
-        }
-
-        function tancarMenu() {
-            document.getElementById("elMeuMenu").style.width = "0";
-        }
+        function obrirMenu() { document.getElementById("elMeuMenu").style.width = "250px"; }
+        function tancarMenu() { document.getElementById("elMeuMenu").style.width = "0"; }
     </script>
 </body>
 </html>

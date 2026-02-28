@@ -660,7 +660,7 @@
             ordreIndex.forEach(idx => { const el = desti.querySelector(`.pictograma[data-index="${idx}"]`); if(el) desti.appendChild(el); });
         }
         
-        const conts = [document.getElementById('contenidor-picts'), document.getElementById('contenidor-revers')];
+        const conts = [document.getElementById('contenidor-picts'), document.getElementById('contenidor-revers')].filter(Boolean);
         conts.forEach(cont => {
             cont.addEventListener('dragover', (e) => {
                 e.preventDefault(); const dragging = document.querySelector('.dragging'); if(!dragging || dragging.parentElement !== cont) return; 
@@ -842,9 +842,21 @@
         } else { document.getElementById('btn-mic-trad').style.display = 'none'; }
 
         function activarMicrofon() {
-            if (!recognition) return; let idio = document.getElementById('idioma-input').value;
+            if (!recognition) return;
+            if (isListening) { recognition.stop(); return; }
+            let idio = document.getElementById('idioma-input').value;
             const speechLangMap = { 'ca': 'ca-ES', 'es': 'es-ES', 'en': 'en-US', 'fr': 'fr-FR', 'de': 'de-DE', 'it': 'it-IT', 'pt': 'pt-PT', 'nl': 'nl-NL', 'ro': 'ro-RO', 'pl': 'pl-PL', 'uk': 'uk-UA', 'ru': 'ru-RU', 'bg': 'bg-BG', 'ar': 'ar-SA', 'zh': 'zh-CN', 'fa': 'fa-IR', 'he': 'he-IL', 'el': 'el-GR', 'eu': 'eu-ES', 'gl': 'gl-ES', 'val': 'ca-ES', 'cs': 'cs-CZ', 'sk': 'sk-SK', 'sl': 'sl-SI', 'hr': 'hr-HR', 'sr': 'sr-RS', 'mk': 'mk-MK', 'sq': 'sq-AL', 'hu': 'hu-HU', 'da': 'da-DK', 'sv': 'sv-SE', 'fi': 'fi-FI', 'et': 'et-EE', 'lt': 'lt-LT', 'lv': 'lv-LV', 'ko': 'ko-KR', 'ur': 'ur-PK', 'pa': 'pa-IN' };
-            recognition.lang = speechLangMap[idio] || idio; recognition.start();
+            recognition.lang = speechLangMap[idio] || idio;
+            try {
+                recognition.start();
+            } catch (e) {
+                try {
+                    recognition.stop();
+                    setTimeout(() => recognition.start(), 120);
+                } catch (e2) {
+                    alert("No s'ha pogut activar el micròfon. Revisa permisos del navegador per al micro.");
+                }
+            }
         }
 
         function obrirSettings() { document.getElementById('gemini-api-key').value = localStorage.getItem('gemini_api_key') || ""; document.getElementById('modal-settings').style.display = 'flex'; }
@@ -866,11 +878,19 @@
             const prompt = `Actua com el cervell d'un comunicador augmentatiu escolar. Un alumne ha escrit o dit aquesta frase en l'idioma amb codi ISO '${langOrigen}': "${text}". Vol traduir-ho a l'idioma amb codi ISO '${langDesti}'.\nPrimer, avalua si la frase té sentit o si és incomprensible. Corregeix petites faltes d'ortografia. Si és incomprensible, posa te_sentit a false.\nRetorna ÚNICAMENT un objecte JSON (sense format markdown) amb aquesta estructura:\n{\n  "te_sentit": true o false,\n  "missatge_error": "Si no té sentit, posa un missatge curt en l'idioma origen.",\n  "traduccio_literal": "Frase completa traduïda a l'idioma destí",\n  "pictogrames": [\n    {"cat": "lema en l'idioma destí", "orig": "paraula original escrita pel nen que hi correspon"}\n  ]\n}\nRegles: Extreu NOMÉS les paraules clau per dibuixar la frase (màxim 6). Pots ometre articles, preposicions o paraules com 'si us plau' a menys que tu, com a IA, consideris que són estrictament necessaris per al sentit del missatge.`;
             try {
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }) });
-                const data = await response.json(); let jsonText = data.candidates[0].content.parts[0].text.replace(/```json/g, '').replace(/```/g, '').trim(); const resultat = JSON.parse(jsonText);
+                const data = await response.json();
+                if (data?.error?.message) throw new Error(data.error.message);
+                const textResposta = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!textResposta) throw new Error("Resposta IA buida o no vàlida.");
+                let jsonText = textResposta.replace(/```json/g, '').replace(/```/g, '').trim();
+                const resultat = JSON.parse(jsonText);
                 if(!resultat.te_sentit) { alert(resultat.missatge_error || "No s'ha entès la frase."); return; }
                 document.getElementById('text-traduit-literal').innerText = resultat.traduccio_literal; document.getElementById('traduccio-literal-box').style.display = 'block';
                 let creades = 0;
-                for (let picto of resultat.pictogrames) { 
+                const pictogrames = Array.isArray(resultat.pictogrames)
+                    ? resultat.pictogrames
+                    : (Array.isArray(resultat.keywords) ? resultat.keywords : []);
+                for (let picto of pictogrames) {
                     try { 
                         const textCat = (picto?.cat || picto?.lemma || picto?.text || picto?.word || '').toString().trim();
                         const textOrig = (picto?.orig || picto?.original || picto?.source || textCat).toString().trim();
@@ -882,7 +902,11 @@
                 if (creades === 0) {
                     await generarPictogramesDesDeText(resultat.traduccio_literal || text, text, langDesti, langOrigen);
                 }
-            } catch(e) { alert("Error amb la IA. Comprova que la teva clau d'API és correcte. Canviant al mode bàsic..."); await processarBasic(text); }
+            } catch(e) {
+                console.error('Error processant IA:', e);
+                alert("Error amb la IA. Canviant al mode bàsic temporalment...");
+                await processarBasic(text);
+            }
         }
 
         async function generarPictogramesDesDeText(fraseTraduida, fraseOriginal, langDesti, langOrigen) {

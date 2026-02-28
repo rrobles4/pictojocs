@@ -98,7 +98,6 @@
         #view-pictotraductor .pictograma p{height:25%; padding-top:2px}
         .text-traduit{font-weight:bold;text-transform:uppercase;color:#000}
         .text-alumne{color:#666;font-style:italic;margin-top:2px;font-weight:normal;text-transform:none;white-space:nowrap}
-        .text-font{color:#7f8c8d;font-size:.72em;margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
         .btn-settings{position:absolute;top:15px;right:15px;background:none;border:none;font-size:28px;cursor:pointer;transition:transform .2s;z-index:100}
         .btn-settings:hover{transform:scale(1.1)}
         .loader{border:4px solid #f3f3f3;border-top:4px solid var(--color-principal);border-radius:50%;width:24px;height:24px;animation:spin 1s linear infinite;display:inline-block;vertical-align:middle;margin-left:10px}
@@ -908,8 +907,7 @@
         function crearTargetaTrad(textCat, textOrig, imgUrl, langCode, source = 'arasaac') {
             const contenidor = document.getElementById('resultat-pictos'); const div = document.createElement('div'); div.className = 'pictograma'; div.dataset.index = numTargetesTrad++;
             let htmlOriginal = ''; if (textCat.toLowerCase() !== textOrig.toLowerCase()) { htmlOriginal = `<span class="fila-paraula text-alumne">(${textOrig})</span>`; }
-            const sourceLabel = source === 'globalsymbols' ? 'GLOBAL' : 'ARASAAC';
-            div.innerHTML = `<div class="imatge-box"><img src="${imgUrl}"></div><p><span class="fila-paraula text-traduit">${textCat}</span>${htmlOriginal}<span class="fila-paraula text-font">${sourceLabel}</span></p>`;
+            div.innerHTML = `<div class="imatge-box"><img src="${imgUrl}"></div><p><span class="fila-paraula text-traduit">${textCat}</span>${htmlOriginal}</p>`;
             div.onclick = function() { obrirModal(this); }; contenidor.appendChild(div);
             setTimeout(() => autoMidaText(div.querySelector('p')), 50);
         }

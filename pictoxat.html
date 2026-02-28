@@ -482,8 +482,6 @@
         let lastMouseX = 0, lastMouseY = 0;
 
         window.onload = function() {
-            const anyActualEl = document.getElementById('any-actual');
-            if (anyActualEl) anyActualEl.innerText = new Date().getFullYear();
             if (typeof RUTA_LOGO_PICTOJOCS !== 'undefined' && RUTA_LOGO_PICTOJOCS.trim() !== '') {
                 document.querySelectorAll('.logo-pictojocs').forEach(el => el.src = RUTA_LOGO_PICTOJOCS);
                 document.querySelectorAll('.big-logo-print').forEach(el => el.src = RUTA_LOGO_PICTOJOCS);

@@ -18,14 +18,42 @@
 
         body {
             font-family: var(--font-text);
-            background-color: var(--color-fons);
+            background-color: #fdfbf7;
+            background-image: linear-gradient(#e1e1e1 1px, transparent 1px), linear-gradient(90deg, #e1e1e1 1px, transparent 1px);
+            background-size: 20px 20px;
             color: var(--color-text);
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: background-color 0.3s, color 0.3s;
         }
+        body.dark-mode {
+            background-color: #1a1a2e;
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            color: #e0e0e0;
+        }
+        body.dark-mode .side-menu { background-color: #16213e; }
+        body.dark-mode .side-menu a { color: #ccc; }
+        body.dark-mode .side-menu a:hover { background-color: #0f3460; color: #4a90e2; }
+        body.dark-mode .app-card { background: #16213e; color: #e0e0e0; }
+        body.dark-mode .app-desc { color: #aaa; }
+        body.dark-mode header { color: #e0e0e0; }
+        body.dark-mode .subtitol { color: #aaa; }
+        body.dark-mode .modal-contacte-box { background: #16213e; color: #e0e0e0; }
+        .toggle-switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .3s; border-radius: 24px; }
+        .toggle-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .toggle-slider { background-color: var(--color-principal); }
+        input:checked + .toggle-slider:before { transform: translateX(22px); }
+        .sidebar-section { padding: 10px 25px; border-top: 1px solid #eee; }
+        .sidebar-section label { font-size: 13px; color: #555; display: block; margin-bottom: 4px; font-family: var(--font-titols); }
+        .sidebar-api-input { width: 100%; padding: 7px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; box-sizing: border-box; }
+        .sidebar-btn-save { margin-top: 5px; background: var(--color-accio); color: white; border: none; padding: 5px 0; border-radius: 6px; cursor: pointer; font-size: 13px; width: 100%; font-weight: bold; }
+        .sidebar-contact-btn { padding: 12px 25px; text-decoration: none; font-size: 17px; color: #333; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s; background: none; border: none; width: 100%; font-family: var(--font-titols); }
+        .sidebar-contact-btn:hover { background-color: #f0f8ff; color: var(--color-principal); }
 
         .menu-btn {
             position: fixed;
@@ -160,12 +188,47 @@
         <a href="index.html">🏠 Inici (PictoSuite)</a>
         <a href="targetes.html">🃏 Targetes</a>
         <a href="pictoxat.html">💬 PictoXat</a>
-        <hr style="width: 80%; border: 0; border-top: 1px solid #eee; margin: 15px auto;">
-        <a href="#" onclick="alert('Estem treballant en el panell de configuració general. Aviat estarà disponible!')">⚙️ Configuració</a>
+        <hr style="width: 80%; border: 0; border-top: 1px solid #eee; margin: 10px auto;">
+        <div class="sidebar-section" style="display:flex; align-items:center; justify-content:space-between; border-top:none; padding-top:5px;">
+            <span style="font-size:15px; font-family:var(--font-titols);">🌙 Mode Fosc</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="toggle-dark-mode" onchange="toggleDarkMode(this.checked)">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+        <div class="sidebar-section">
+            <label>🤖 Clau API OpenRouter:</label>
+            <input type="password" id="sidebar-api-key" class="sidebar-api-input" placeholder="sk-or-...">
+            <button onclick="guardarApiKey()" class="sidebar-btn-save">Guardar</button>
+            <a href="https://openrouter.ai/keys" target="_blank" style="font-size:0.8em; color:var(--color-principal); display:block; margin-top:4px; text-align:center; text-decoration:none;">Obtenir clau gratuïta →</a>
+        </div>
+        <hr style="width: 80%; border: 0; border-top: 1px solid #eee; margin: 5px auto;">
+        <button class="sidebar-contact-btn" onclick="obrirContacte()">✉️ Tens alguna suggerència?</button>
+    </div>
+
+    <!-- Modal Contacte -->
+    <div id="modal-contacte" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.7); z-index:10002; justify-content:center; align-items:center;">
+        <div class="modal-contacte-box" style="background:#fff; border-radius:12px; width:90%; max-width:500px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,0.3);">
+            <div style="background:#f1f1f1; padding:15px; font-weight:bold; border-bottom:2px solid #ddd; text-align:center; font-family:'Fredoka',sans-serif; font-size:1.1em;">✉️ Contacta'ns</div>
+            <div style="padding:20px;">
+                <p style="color:#666; margin:0 0 15px;">Vols crear algun altre tipus de material o consultar dubtes? Estaré encantat de respondre't!</p>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <div style="display:flex; gap:10px;">
+                        <input type="email" id="modal-sugg-email" placeholder="El teu correu" style="flex:1; padding:8px; border:2px solid #ddd; border-radius:6px; font-size:14px;">
+                        <input type="text" id="modal-sugg-assumpte" placeholder="Assumpte" style="flex:1; padding:8px; border:2px solid #ddd; border-radius:6px; font-size:14px;">
+                    </div>
+                    <textarea id="modal-sugg-missatge" placeholder="Escriu el teu missatge aquí..." style="width:100%; min-height:80px; resize:vertical; box-sizing:border-box; padding:8px; border:2px solid #ddd; border-radius:6px; font-size:14px;"></textarea>
+                    <div style="display:flex; gap:10px; justify-content:center;">
+                        <button onclick="enviarContacte()" style="background:#333; color:#fff; padding:10px 20px; border-radius:30px; font-weight:bold; border:none; cursor:pointer;">✉️ Envia'm un missatge</button>
+                        <button onclick="document.getElementById('modal-contacte').style.display='none'" style="background:#999; color:#fff; padding:10px 20px; border-radius:30px; font-weight:bold; border:none; cursor:pointer;">Tancar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <header>
-        <img src="https://raw.githubusercontent.com/rrobles4/pictojocs/main/logo%20PictoJocs.png" alt="Logo PictoSuite" class="logo-img">
+        <img src="logo PictoSuite.png" alt="Logo PictoSuite" class="logo-img">
         <h1>PictoSuite</h1>
         <p class="subtitol">Eines digitals basades en pictogrames per a educació especial i aules d'acollida.</p>
     </header>
@@ -174,49 +237,64 @@
         <a href="targetes.html" class="app-card activa">
             <div class="app-icon">🃏</div>
             <h2 class="app-title">Targetes</h2>
-            <p class="app-desc">Crea materials manipulatius, jocs de memòria i dòminos personalitzats.</p>
+            <p class="app-desc">Crea materials manipulatius, memory i dòminos personalitzats.</p>
             <span class="etiqueta" style="background-color: var(--color-accio);">Disponible</span>
         </a>
 
         <a href="pictoxat.html" class="app-card activa" style="border-top-color: var(--color-accio);">
             <div class="app-icon">💬</div>
             <h2 class="app-title">PictoXat</h2>
-            <p class="app-desc">Sistema de comunicació augmentativa i alternativa (CAA).</p>
+            <p class="app-desc">Necessites ajuda i no saps com dir-ho? Tria el teu idioma i ho podràs explicar amb pictogrames!</p>
             <span class="etiqueta" style="background-color: var(--color-accio);">Disponible</span>
         </a>
 
         <div class="app-card futura">
             <div class="app-icon">📝</div>
-            <h2 class="app-title">PictoFitxes</h2>
+            <h2 class="app-title">Picto</h2>
             <p class="app-desc">Editor de text per crear documents amb inserció directa de pictogrames.</p>
             <span class="etiqueta proximament">Pròximament</span>
         </div>
 
         <div class="app-card futura">
             <div class="app-icon">📅</div>
-            <h2 class="app-title">PictoRutines</h2>
+            <h2 class="app-title">Picto</h2>
             <p class="app-desc">Generador de seqüències visuals, horaris i anticipadors d'hàbits.</p>
             <span class="etiqueta proximament">Pròximament</span>
         </div>
 
         <div class="app-card futura">
             <div class="app-icon">📖</div>
-            <h2 class="app-title">PictoContes</h2>
+            <h2 class="app-title">Picto</h2>
             <p class="app-desc">Crea històries integrant pictogrames a les paraules clau.</p>
             <span class="etiqueta proximament">Pròximament</span>
         </div>
 
         <div class="app-card futura">
             <div class="app-icon">🎯</div>
-            <h2 class="app-title">PictoBingo</h2>
+            <h2 class="app-title">Picto</h2>
             <p class="app-desc">Generador automàtic de cartrons de bingo visuals.</p>
             <span class="etiqueta proximament">Pròximament</span>
         </div>
     </div>
 
     <script>
-        function obrirMenu() { document.getElementById("elMeuMenu").style.width = "250px"; }
+        function obrirMenu() {
+            document.getElementById("elMeuMenu").style.width = "280px";
+            document.getElementById("sidebar-api-key").value = localStorage.getItem('openrouter_api_key') || "";
+            const dm = localStorage.getItem('dark_mode') === '1';
+            document.getElementById("toggle-dark-mode").checked = dm;
+        }
         function tancarMenu() { document.getElementById("elMeuMenu").style.width = "0"; }
+        function toggleDarkMode(on) { document.body.classList.toggle('dark-mode', on); localStorage.setItem('dark_mode', on ? '1' : '0'); }
+        function guardarApiKey() { localStorage.setItem('openrouter_api_key', document.getElementById('sidebar-api-key').value.trim()); alert('Clau API desada!'); }
+        function obrirContacte() { document.getElementById('modal-contacte').style.display = 'flex'; tancarMenu(); }
+        function enviarContacte() {
+            const email = document.getElementById('modal-sugg-email').value;
+            const subject = document.getElementById('modal-sugg-assumpte').value;
+            const msg = document.getElementById('modal-sugg-missatge').value;
+            window.location.href = `mailto:rrobles4@xtec.cat?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("Correu: "+email+"\n\n"+msg)}`;
+        }
+        if (localStorage.getItem('dark_mode') === '1') document.body.classList.add('dark-mode');
     </script>
 </body>
 </html>

@@ -184,7 +184,7 @@
 
     <div id="view-pictotraductor" style="display: block;">
         <div class="configuracio no-print">
-            <div class="projecte-controls" style="justify-content: flex-end; margin-bottom: 15px; display: flex; gap: 8px;">
+            <div class="projecte-controls" style="justify-content: flex-start; margin-bottom: 15px; display: flex; gap: 8px;">
                 <button class="btn-nav-app" style="background:#f5b041;" onclick="obrirSettings()">🤖 Configuració IA</button>
             </div>
             <div class="header-app">
@@ -778,6 +778,13 @@
             return [];
         }
 
+        function extreureResultatsArasaac(data) {
+            if (Array.isArray(data)) return data;
+            if (Array.isArray(data?.value)) return data.value;
+            if (Array.isArray(data?.results)) return data.results;
+            return [];
+        }
+
         function extreureImatgeGlobalSymbols(item) {
             if (!item || typeof item !== 'object') return null;
             return item.image_url || item.imageUrl || item.icon_url || item.iconUrl || item.symbol_url || item.symbolUrl || item.png_url || item.pngUrl || item.svg_url || item.svgUrl || item.url || item?.image?.url || null;
@@ -787,8 +794,9 @@
             try {
                 const r = await fetch(`https://api.arasaac.org/api/pictograms/${lang}/bestsearch/${encodeURIComponent(paraula)}`);
                 const d = await r.json();
-                if (d && d.length > 0) {
-                    const id = d[0]._id;
+                const resultats = extreureResultatsArasaac(d);
+                if (resultats.length > 0) {
+                    const id = resultats[0]._id;
                     return { src: `https://static.arasaac.org/pictograms/${id}/${id}_300.png`, source: 'arasaac' };
                 }
             } catch (e) {}

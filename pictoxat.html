@@ -8,7 +8,7 @@
     <style>
         :root{--color-fons:#f0f8ff;--color-principal:#4a90e2;--color-secundari:#f39c12;--color-accio:#27ae60;--mida-font-base:18px;--tipus-font:'Arial',sans-serif;--color-font:#000000;--num-columnes:3;--width-paper:210mm;--height-paper:297mm;--targeta-bg:#ffffff;--targeta-border:#000000;--targeta-text:#000000}
         body{font-family:'Segoe UI',sans-serif;margin:0;padding:20px;background-color:#fdfbf7;background-image:linear-gradient(#e1e1e1 1px,transparent 1px),linear-gradient(90deg,#e1e1e1 1px,transparent 1px);background-size:20px 20px}
-        .configuracio{background-color:#fff;padding:20px;border-radius:15px;box-shadow:0 4px 15px rgba(0,0,0,.1);max-width:950px;margin:0 auto 20px;border-left:10px solid var(--color-principal);position:relative}
+        .configuracio{background-color:#fff;padding:20px;border-radius:15px;box-shadow:0 4px 15px rgba(0,0,0,.1);max-width:950px;margin:0 auto 20px;border-left:10px solid var(--color-accio);position:relative}
         .projecte-controls{display:flex;justify-content:flex-end;gap:8px;margin-bottom:5px;align-items:center}
         .btn-nav-app{background:#8e44ad;color:#fff;border:none;padding:5px 10px;font-size:.9em;border-radius:6px;cursor:pointer;font-weight:bold;transition:.2s;box-shadow:0 2px 4px rgba(0,0,0,.2)}
         .btn-nav-app:hover{transform:scale(1.05)}
@@ -196,7 +196,7 @@
                         <select id="idioma-input" onchange="canviarIdiomaUI()"></select>
                     </div>
                     <div style="display:flex; flex-direction:column; align-items:center; justify-content:flex-end;">
-                        <button onclick="intercanviarIdiomes()" style="background:#f0f0f0; border:2px solid #ccc; border-radius:50%; width:38px; height:38px; font-size:1.2em; cursor:pointer; line-height:1;" title="Intercanvia idiomes">⇄</button>
+                        <button onclick="intercanviarIdiomes()" style="background:#8e44ad; color:#fff; border:none; border-radius:50%; width:38px; height:38px; font-size:1.2em; cursor:pointer; line-height:1;" title="Intercanvia idiomes">⇄</button>
                     </div>
                     <div style="display:flex; flex-direction:column; align-items:center;">
                         <label id="label-idioma-desti" style="font-size:0.9em; font-weight:bold; margin-bottom:5px;">Tradueix a:</label>
@@ -391,6 +391,7 @@
             const idiomaDesti = document.getElementById('idioma-desti');
             if (idiomaInput) idiomaInput.innerHTML = opts;
             if (idiomaDesti) idiomaDesti.innerHTML = opts;
+            if (idiomaDesti) idiomaDesti.value = 'en';
         }
         initLangs();
 
@@ -1320,7 +1321,7 @@
             .side-menu a:hover { background-color: #f0f8ff; color: var(--color-principal); }
             .side-menu .close-btn { position: absolute; top: 10px; right: 20px; font-size: 30px; background: none; border: none; cursor: pointer; color: #999; }
             .nova-capsalera { text-align: center; margin-bottom: 10px; padding-top: 20px; }
-            .nova-capsalera h1 { font-family: 'Fredoka', sans-serif; color: var(--color-principal); margin: 10px 0 0 0; font-size: 2.5rem;}
+            .nova-capsalera h1 { font-family: 'Fredoka', sans-serif; color: var(--color-accio); margin: 10px 0 0 0; font-size: 2.5rem;}
             .nova-capsalera p { color: #666; font-family: 'Andika', sans-serif; margin-top: 5px;}
         </style>
 

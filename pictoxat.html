@@ -189,9 +189,7 @@
             <div class="projecte-controls" style="justify-content: flex-start; margin-bottom: 15px; display: flex; gap: 8px;">
                 <button class="btn-nav-app" style="background:#f5b041;" onclick="obrirSettings()">🤖 Configuració IA</button>
             </div>
-            <div class="header-app">
-                <h1 style="font-size: 3em;">🗣️ PictoXat</h1>
-            </div>
+
             <div class="controls-traductor">
                 <div style="display:flex; gap: 15px; width: 100%; justify-content: center; align-items: flex-end; flex-wrap: wrap; margin-bottom: 15px;">
                     <div style="display:flex; flex-direction:column; align-items:center;">
@@ -1053,7 +1051,7 @@
         async function processarAmbGemini(text, apiKey) {
             const langOrigen = document.getElementById('idioma-input').value; 
             const langDesti = document.getElementById('idioma-desti').value;
-            const prompt = `Actua com el cervell d'un comunicador augmentatiu escolar. Un alumne ha escrit o dit aquesta frase en l'idioma amb codi ISO '${langOrigen}': "${text}". Vol traduir-ho a l'idioma amb codi ISO '${langDesti}'.\nPrimer, corregeix errors ortogràfics o de transcripció per entendre bé el missatge (sense canviar la intenció). Si la frase és incomprensible, posa te_sentit a false.\nRetorna ÚNICAMENT un objecte JSON (sense markdown) amb aquesta estructura:\n{\n  "te_sentit": true o false,\n  "missatge_error": "Si no té sentit, missatge curt en idioma origen.",\n  "traduccio_literal": "Frase completa traduïda a l'idioma destí",\n  "pictogrames": [\n    {"cat": "lema a l'idioma destí", "orig": "terme original corresponent", "negada": true o false}\n  ]\n}\nRegles de qualitat: \n- Prioritza comprensió completa del missatge.\n- Dona entre 4 i 8 pictogrames si la frase ho permet.\n- Evita articles/preposicions que no aportin significat, però mantén negacions, temps, lloc i accions essencials.\n- Mantén cobertura semàntica equivalent independentment de l'idioma origen (àrabs, ciríl·lics, etc.).`;
+            const prompt = `Actua com el cervell d'un comunicador augmentatiu escolar. Un alumne ha escrit o dit aquesta frase en l'idioma amb codi ISO '${langOrigen}': "${text}". Vol traduir-ho a l'idioma amb codi ISO '${langDesti}'.\nPrimer, corregeix errors ortogràfics o de transcripció per entendre bé el missatge (sense canviar la intenció). Si la frase és incomprensible, posa te_sentit a false.\nRetorna ÚNICAMENT un objecte JSON (sense markdown) amb aquesta estructura:\n{\n  "te_sentit": true o false,\n  "missatge_error": "Si no té sentit, missatge curt en idioma origen.",\n  "traduccio_literal": "Frase completa traduïda a l'idioma destí",\n  "pictogrames": [\n    {"cat": "lema a l'idioma destí", "orig": "terme original corresponent", "negada": true o false}\n  ]\n}\nRegles de qualitat:\n- Prioritza comprensió completa del missatge i preserva el seu significat.\n- Dona entre 4 i 8 pictogrames si la frase ho permet.\n- Evita articles/preposicions que no aportin significat, però mantén negacions, temps, lloc i accions essencials.\n- El camp "cat" ha de contenir paraules simples en forma base (infinitiu pels verbs, singular pels noms) fàcils de trobar en bases de pictogrames com ARASAAC.\n- Prefereix conceptes concrets i visuals que es puguin representar fàcilment amb un pictograma.\n- Mantén cobertura semàntica equivalent independentment de l'idioma origen (àrabs, ciríl·lics, etc.).`;
             try {
                 const data = await fetchGeminiJson(prompt, apiKey);
                 const textResposta = data?.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -1108,7 +1106,6 @@
                 return true;
             } catch(e) {
                 console.error('Error processant IA:', e);
-                alert("Error amb la IA. Canviant al mode bàsic temporalment...");
                 return false;
             }
         }

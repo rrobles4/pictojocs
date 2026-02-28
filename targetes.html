@@ -162,6 +162,7 @@
         .sidebar-input{width:100%;box-sizing:border-box;padding:7px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.85em}
         .sidebar-btn{margin-top:5px;background:var(--color-accio);color:white;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-size:0.85em;width:100%;font-weight:bold}
         body.dark-mode .sidebar-label{color:#a6adc8}
+        body.dark-mode label{color:#a6adc8}
         body.dark-mode .sidebar-input{background:#1e1e2e;color:#cdd6f4;border-color:#555}
         @media print{
             @page{margin:0 !important}
@@ -191,6 +192,8 @@
         .graella.mode-rutines{display:flex;flex-direction:row;gap:0;grid-template-columns:none;flex-wrap:wrap}
         .graella.mode-rutines.dir-vertical{flex-direction:column;flex-wrap:nowrap}
         .graella.mode-rutines .pictograma{width:100px;height:100px;aspect-ratio:1;flex:none;border-radius:0;break-inside:avoid;page-break-inside:avoid}
+        .rutines-resize-wrap{display:inline-block;resize:both;overflow:auto;min-width:100px;min-height:100px;border:2px dashed #bdc3c7;border-radius:6px;padding:4px;box-sizing:border-box;}
+        @media print { .rutines-resize-wrap{border:none;resize:none;overflow:visible;display:block;} }
         .rutines-dir-wrap{display:none;align-items:center;gap:10px;padding:8px 0;flex-wrap:wrap}
         .btn-dir-rutines{background:#ecf0f1;border:2px solid #bdc3c7;padding:5px 14px;border-radius:20px;cursor:pointer;font-size:.9em;font-weight:bold;color:#333;transition:.2s}
         .btn-dir-rutines.actiu{background:var(--color-principal);color:#fff;border-color:var(--color-principal)}
@@ -224,6 +227,7 @@
         <a href="index.html">🏠 Inici (PictoSuite)</a>
         <a href="targetes.html">🃏 Targetes</a>
         <a href="pictoxat.html">💬 PictoXat</a>
+        <a href="bingo.html">🎯 Bingo</a>
         <hr style="width:80%;border:0;border-top:1px solid #eee;margin:15px auto;">
         <div class="toggle-wrap">
             <span style="font-size:16px;" data-i18n="mode_fosc">🌙 Mode Fosc</span>
@@ -233,7 +237,7 @@
             </label>
         </div>
         <div class="sidebar-section">
-            <span class="sidebar-label" data-i18n="idioma_ui">🌐 Idioma interfície:</span>
+            <span class="sidebar-label" data-i18n="idioma_ui">🌐 Idioma de l'aplicació</span>
             <select id="ui-lang-select" class="sidebar-input" onchange="canviarIdiomaInterficie(this.value)">
                 <option value="ca">Català</option>
                 <option value="es">Castellà</option>
@@ -332,7 +336,7 @@
                         <option value="targeta">Targeta (Doble Cara)</option>
                         <option value="memory">Memory</option>
                         <option value="domino">Dominó</option>
-                        <option value="rutines">Rutines (Tira)</option>
+                        <option value="rutines">Rutines</option>
                     </select>
                     <div id="rutines-dir-wrap" class="rutines-dir-wrap" style="margin-top:10px;">
                         <span style="font-size:0.85em;font-weight:bold;color:#555;" data-i18n="direccio">Direcció:</span>
@@ -378,7 +382,9 @@
                         <span id="curs-resultat" class="curs-print"></span>
                     </div>
                 </div>
+                <div id="rutines-wrap">
                 <div class="graella" id="contenidor-picts"></div>
+                </div>
 
                 <div id="contenidor-revers-wrapper" class="zona-revers">
                     <div class="header-print" style="direction: ltr;">
@@ -546,13 +552,13 @@
 
     <script>
         const i18nUI = {
-            ca: { mode_fosc:"🌙 Mode Fosc", idioma_ui:"🌐 Idioma interfície:", clau_api:"🤖 Clau API Google AI Studio:", desar_clau:"💾 Desar clau", aconseguir_clau:"👉 Aconseguir clau gratis", suggerencia:"✉️ Tens alguna suggerència?", logo_escola:"Logo Escola:", titol:"Títol:", curs:"Curs:", idioma_picts:"Idioma:", mida_paper:"Mida Paper", sentit:"Sentit", columnes:"Columnes", font:"Font", mode_impressio:"⭐ Mode d'impressió", llista_paraules:"Llista de paraules (separades amb comes):", generar:"⚡ Generar", mode_ia:"🤖 Mode IA", imprimir:"🖨️ Imprimir", barrejar:"Barrejar fitxes", direccio:"Direcció:", horitzontal:"↔ Horitzontal", vertical:"↕ Vertical" },
-            es: { mode_fosc:"🌙 Modo Oscuro", idioma_ui:"🌐 Idioma interfaz:", clau_api:"🤖 Clave API Google AI Studio:", desar_clau:"💾 Guardar clave", aconseguir_clau:"👉 Obtener clave gratis", suggerencia:"✉️ ¿Alguna sugerencia?", logo_escola:"Logo Escuela:", titol:"Título:", curs:"Curso:", idioma_picts:"Idioma:", mida_paper:"Tamaño Papel", sentit:"Orientación", columnes:"Columnas", font:"Fuente", mode_impressio:"⭐ Modo de impresión", llista_paraules:"Lista de palabras (separadas por comas):", generar:"⚡ Generar", mode_ia:"🤖 Modo IA", imprimir:"🖨️ Imprimir", barrejar:"Mezclar fichas", direccio:"Dirección:", horitzontal:"↔ Horizontal", vertical:"↕ Vertical" },
-            en: { mode_fosc:"🌙 Dark Mode", idioma_ui:"🌐 Interface language:", clau_api:"🤖 Google AI Studio API Key:", desar_clau:"💾 Save key", aconseguir_clau:"👉 Get free key", suggerencia:"✉️ Any suggestion?", logo_escola:"School Logo:", titol:"Title:", curs:"Course:", idioma_picts:"Language:", mida_paper:"Paper Size", sentit:"Orientation", columnes:"Columns", font:"Font", mode_impressio:"⭐ Print Mode", llista_paraules:"Word list (comma-separated):", generar:"⚡ Generate", mode_ia:"🤖 AI Mode", imprimir:"🖨️ Print", barrejar:"Shuffle cards", direccio:"Direction:", horitzontal:"↔ Horizontal", vertical:"↕ Vertical" },
-            fr: { mode_fosc:"🌙 Mode Sombre", idioma_ui:"🌐 Langue interface :", clau_api:"🤖 Clé API Google AI Studio :", desar_clau:"💾 Enregistrer", aconseguir_clau:"👉 Obtenir une clé", suggerencia:"✉️ Une suggestion ?", logo_escola:"Logo École :", titol:"Titre :", curs:"Cours :", idioma_picts:"Langue :", mida_paper:"Format Papier", sentit:"Orientation", columnes:"Colonnes", font:"Police", mode_impressio:"⭐ Mode d'impression", llista_paraules:"Liste de mots (séparés par des virgules) :", generar:"⚡ Générer", mode_ia:"🤖 Mode IA", imprimir:"🖨️ Imprimer", barrejar:"Mélanger les fiches", direccio:"Direction :", horitzontal:"↔ Horizontal", vertical:"↕ Vertical" },
-            ar: { mode_fosc:"🌙 الوضع المظلم", idioma_ui:"🌐 لغة الواجهة:", clau_api:"🤖 مفتاح API جوجل:", desar_clau:"💾 حفظ المفتاح", aconseguir_clau:"👉 احصل على مفتاح مجاني", suggerencia:"✉️ هل لديك اقتراح؟", logo_escola:"شعار المدرسة:", titol:"العنوان:", curs:"الصف:", idioma_picts:"اللغة:", mida_paper:"حجم الورق", sentit:"الاتجاه", columnes:"الأعمدة", font:"الخط", mode_impressio:"⭐ وضع الطباعة", llista_paraules:"قائمة الكلمات (مفصولة بفواصل):", generar:"⚡ إنشاء", mode_ia:"🤖 وضع AI", imprimir:"🖨️ طباعة", barrejar:"خلط البطاقات", direccio:"الاتجاه:", horitzontal:"↔ أفقي", vertical:"↕ عمودي" },
-            zh: { mode_fosc:"🌙 暗黑模式", idioma_ui:"🌐 界面语言：", clau_api:"🤖 谷歌AI Studio密钥：", desar_clau:"💾 保存密钥", aconseguir_clau:"👉 获取免费密钥", suggerencia:"✉️ 有什么建议？", logo_escola:"学校徽标：", titol:"标题：", curs:"课程：", idioma_picts:"语言：", mida_paper:"纸张大小", sentit:"方向", columnes:"列数", font:"字体", mode_impressio:"⭐ 打印模式", llista_paraules:"词语列表（逗号分隔）：", generar:"⚡ 生成", mode_ia:"🤖 AI模式", imprimir:"🖨️ 打印", barrejar:"打乱卡片", direccio:"方向：", horitzontal:"↔ 横向", vertical:"↕ 纵向" },
-            ur: { mode_fosc:"🌙 ڈارک موڈ", idioma_ui:"🌐 انٹرفیس زبان:", clau_api:"🤖 گوگل AI Studio کی کلید:", desar_clau:"💾 کی محفوظ کریں", aconseguir_clau:"👉 مفت کی لیں", suggerencia:"✉️ کوئی تجویز؟", logo_escola:"اسکول لوگو:", titol:"عنوان:", curs:"کورس:", idioma_picts:"زبان:", mida_paper:"کاغذ کا سائز", sentit:"سمت", columnes:"کالم", font:"فونٹ", mode_impressio:"⭐ پرنٹ موڈ", llista_paraules:"الفاظ کی فہرست (کاما سے الگ):", generar:"⚡ بنائیں", mode_ia:"🤖 AI موڈ", imprimir:"🖨️ پرنٹ", barrejar:"کارڈز ملائیں", direccio:"سمت:", horitzontal:"↔ افقی", vertical:"↕ عمودی" }
+            ca: { mode_fosc:"🌙 Mode Fosc", idioma_ui:"🌐 Idioma de l'aplicació", clau_api:"🤖 Clau API Google AI Studio:", desar_clau:"💾 Desar clau", aconseguir_clau:"👉 Aconseguir clau gratis", suggerencia:"✉️ Tens alguna suggerència?", logo_escola:"Logo Escola:", titol:"Títol:", curs:"Curs:", idioma_picts:"Idioma:", mida_paper:"Mida Paper", sentit:"Sentit", columnes:"Columnes", font:"Font", mode_impressio:"⭐ Mode d'impressió", llista_paraules:"Llista de paraules (separades amb comes):", generar:"⚡ Generar", mode_ia:"🤖 Mode IA", imprimir:"🖨️ Imprimir", barrejar:"Barrejar fitxes", direccio:"Direcció:", horitzontal:"↔ Horitzontal", vertical:"↕ Vertical" },
+            es: { mode_fosc:"🌙 Modo Oscuro", idioma_ui:"🌐 Idioma de la aplicación", clau_api:"🤖 Clave API Google AI Studio:", desar_clau:"💾 Guardar clave", aconseguir_clau:"👉 Obtener clave gratis", suggerencia:"✉️ ¿Alguna sugerencia?", logo_escola:"Logo Escuela:", titol:"Título:", curs:"Curso:", idioma_picts:"Idioma:", mida_paper:"Tamaño Papel", sentit:"Orientación", columnes:"Columnas", font:"Fuente", mode_impressio:"⭐ Modo de impresión", llista_paraules:"Lista de palabras (separadas por comas):", generar:"⚡ Generar", mode_ia:"🤖 Modo IA", imprimir:"🖨️ Imprimir", barrejar:"Mezclar fichas", direccio:"Dirección:", horitzontal:"↔ Horizontal", vertical:"↕ Vertical" },
+            en: { mode_fosc:"🌙 Dark Mode", idioma_ui:"🌐 Application language", clau_api:"🤖 Google AI Studio API Key:", desar_clau:"💾 Save key", aconseguir_clau:"👉 Get free key", suggerencia:"✉️ Any suggestion?", logo_escola:"School Logo:", titol:"Title:", curs:"Course:", idioma_picts:"Language:", mida_paper:"Paper Size", sentit:"Orientation", columnes:"Columns", font:"Font", mode_impressio:"⭐ Print Mode", llista_paraules:"Word list (comma-separated):", generar:"⚡ Generate", mode_ia:"🤖 AI Mode", imprimir:"🖨️ Print", barrejar:"Shuffle cards", direccio:"Direction:", horitzontal:"↔ Horizontal", vertical:"↕ Vertical" },
+            fr: { mode_fosc:"🌙 Mode Sombre", idioma_ui:"🌐 Langue de l'application", clau_api:"🤖 Clé API Google AI Studio :", desar_clau:"💾 Enregistrer", aconseguir_clau:"👉 Obtenir une clé", suggerencia:"✉️ Une suggestion ?", logo_escola:"Logo École :", titol:"Titre :", curs:"Cours :", idioma_picts:"Langue :", mida_paper:"Format Papier", sentit:"Orientation", columnes:"Colonnes", font:"Police", mode_impressio:"⭐ Mode d'impression", llista_paraules:"Liste de mots (séparés par des virgules) :", generar:"⚡ Générer", mode_ia:"🤖 Mode IA", imprimir:"🖨️ Imprimer", barrejar:"Mélanger les fiches", direccio:"Direction :", horitzontal:"↔ Horizontal", vertical:"↕ Vertical" },
+            ar: { mode_fosc:"🌙 الوضع المظلم", idioma_ui:"🌐 لغة التطبيق", clau_api:"🤖 مفتاح API جوجل:", desar_clau:"💾 حفظ المفتاح", aconseguir_clau:"👉 احصل على مفتاح مجاني", suggerencia:"✉️ هل لديك اقتراح؟", logo_escola:"شعار المدرسة:", titol:"العنوان:", curs:"الصف:", idioma_picts:"اللغة:", mida_paper:"حجم الورق", sentit:"الاتجاه", columnes:"الأعمدة", font:"الخط", mode_impressio:"⭐ وضع الطباعة", llista_paraules:"قائمة الكلمات (مفصولة بفواصل):", generar:"⚡ إنشاء", mode_ia:"🤖 وضع AI", imprimir:"🖨️ طباعة", barrejar:"خلط البطاقات", direccio:"الاتجاه:", horitzontal:"↔ أفقي", vertical:"↕ عمودي" },
+            zh: { mode_fosc:"🌙 暗黑模式", idioma_ui:"🌐 应用语言", clau_api:"🤖 谷歌AI Studio密钥：", desar_clau:"💾 保存密钥", aconseguir_clau:"👉 获取免费密钥", suggerencia:"✉️ 有什么建议？", logo_escola:"学校徽标：", titol:"标题：", curs:"课程：", idioma_picts:"语言：", mida_paper:"纸张大小", sentit:"方向", columnes:"列数", font:"字体", mode_impressio:"⭐ 打印模式", llista_paraules:"词语列表（逗号分隔）：", generar:"⚡ 生成", mode_ia:"🤖 AI模式", imprimir:"🖨️ 打印", barrejar:"打乱卡片", direccio:"方向：", horitzontal:"↔ 横向", vertical:"↕ 纵向" },
+            ur: { mode_fosc:"🌙 ڈارک موڈ", idioma_ui:"🌐 ایپ کی زبان", clau_api:"🤖 گوگل AI Studio کی کلید:", desar_clau:"💾 کی محفوظ کریں", aconseguir_clau:"👉 مفت کی لیں", suggerencia:"✉️ کوئی تجویز؟", logo_escola:"اسکول لوگو:", titol:"عنوان:", curs:"کورس:", idioma_picts:"زبان:", mida_paper:"کاغذ کا سائز", sentit:"سمت", columnes:"کالم", font:"فونٹ", mode_impressio:"⭐ پرنٹ موڈ", llista_paraules:"الفاظ کی فہرست (کاما سے الگ):", generar:"⚡ بنائیں", mode_ia:"🤖 AI موڈ", imprimir:"🖨️ پرنٹ", barrejar:"کارڈز ملائیں", direccio:"سمت:", horitzontal:"↔ افقی", vertical:"↕ عمودی" }
         };
 
         function canviarIdiomaInterficie(lang) {
@@ -764,6 +770,7 @@
 
             contenidor.innerHTML = ''; contenidorRevers.innerHTML = '';
             contenidor.classList.remove('mode-targeta-front', 'mode-domino', 'mode-memory-front', 'mode-rutines', 'dir-vertical');
+            document.getElementById('rutines-wrap').classList.remove('rutines-resize-wrap');
             contenidorRevers.classList.remove('mode-targeta-back'); wrapperRevers.style.display = 'none';
 
             if (!textParaules.trim()) return; 
@@ -812,6 +819,7 @@
             } else if (mode === 'rutines') {
                 contenidor.classList.add('mode-rutines');
                 if (rutinesDir === 'vertical') contenidor.classList.add('dir-vertical');
+                document.getElementById('rutines-wrap').classList.add('rutines-resize-wrap');
                 llista.forEach((paraula, i) => {
                     let mem = memoriaEdicions[paraula]; const targeta = crearElementTargeta(paraula, i, 'front');
                     if(mem) { targeta.querySelector('img').src = mem.imgUrl; targeta.querySelector('img').style.opacity = '1'; targeta.querySelector('p').innerHTML = mem.htmlFinal; } else { buscarArasaacAuto(paraula, i); }

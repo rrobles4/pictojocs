@@ -195,6 +195,7 @@
         <a href="index.html">🏠 Inici (PictoSuite)</a>
         <a href="targetes.html">🃏 Targetes</a>
         <a href="pictoxat.html">💬 PictoXat</a>
+        <a href="bingo.html">🎯 Bingo</a>
         <hr style="width:80%;border:0;border-top:1px solid #eee;margin:15px auto;">
         <div class="toggle-wrap">
             <span style="font-size:16px;" data-i18n="mode_fosc">🌙 Mode Fosc</span>
@@ -204,7 +205,7 @@
             </label>
         </div>
         <div class="sidebar-section">
-            <span class="sidebar-label" data-i18n="idioma_ui">🌐 Idioma interfície:</span>
+            <span class="sidebar-label" data-i18n="idioma_ui">🌐 Idioma de l'aplicació</span>
             <select id="ui-lang-select" class="sidebar-input" onchange="canviarIdiomaInterficie(this.value)">
                 <option value="ca">Català</option>
                 <option value="es">Castellà</option>
@@ -248,43 +249,43 @@
     <header>
         <img src="logo PictoSuite.png" alt="Logo PictoSuite" class="logo-img">
         <h1>PictoSuite</h1>
-        <p class="subtitol">Eines digitals basades en pictogrames per a educació especial i aules d'acollida.</p>
+        <p class="subtitol" data-i18n="subtitol">Eines digitals basades en pictogrames per a educació especial i aules d'acollida.</p>
     </header>
 
     <div class="apps-grid">
         <a href="targetes.html" class="app-card activa">
             <div class="app-icon">🃏</div>
             <h2 class="app-title">Targetes</h2>
-            <p class="app-desc">Crea materials manipulatius, memory i dòminos personalitzats.</p>
-            <span class="etiqueta" style="background-color: var(--color-accio);">Disponible</span>
+            <p class="app-desc" data-i18n="desc_targetes">Crea materials manipulatius, memory i dòminos personalitzats.</p>
+            <span class="etiqueta" style="background-color: var(--color-accio);" data-i18n="disponible">Disponible</span>
         </a>
 
         <a href="pictoxat.html" class="app-card activa" style="border-top-color: var(--color-accio);">
             <div class="app-icon">💬</div>
             <h2 class="app-title">PictoXat</h2>
-            <p class="app-desc">Necessites ajuda i no saps com dir-ho? Tria el teu idioma i ho podràs explicar amb pictogrames!</p>
-            <span class="etiqueta" style="background-color: var(--color-accio);">Disponible</span>
+            <p class="app-desc" data-i18n="desc_pictoxat">Necessites ajuda i no saps com dir-ho? Tria el teu idioma i ho podràs explicar amb pictogrames!</p>
+            <span class="etiqueta" style="background-color: var(--color-accio);" data-i18n="disponible">Disponible</span>
+        </a>
+
+        <a href="bingo.html" class="app-card activa" style="border-top-color: #e67e22;">
+            <div class="app-icon">🎯</div>
+            <h2 class="app-title">Bingo</h2>
+            <p class="app-desc" data-i18n="desc_bingo">Genera cartrons de bingo personalitzats amb pictogrames o paraules.</p>
+            <span class="etiqueta" style="background-color: var(--color-accio);" data-i18n="disponible">Disponible</span>
         </a>
 
         <div class="app-card futura">
             <div class="app-icon">📝</div>
             <h2 class="app-title">Fitxes</h2>
-            <p class="app-desc">Editor de text per crear documents amb inserció directa de pictogrames.</p>
-            <span class="etiqueta proximament">Pròximament</span>
+            <p class="app-desc" data-i18n="desc_fitxes">Editor de text per crear documents amb inserció directa de pictogrames.</p>
+            <span class="etiqueta proximament" data-i18n="proximament">Pròximament</span>
         </div>
 
         <div class="app-card futura">
             <div class="app-icon">📖</div>
             <h2 class="app-title">Contes</h2>
-            <p class="app-desc">Crea històries integrant pictogrames a les paraules clau.</p>
-            <span class="etiqueta proximament">Pròximament</span>
-        </div>
-
-        <div class="app-card futura">
-            <div class="app-icon">🎯</div>
-            <h2 class="app-title">Bingo</h2>
-            <p class="app-desc">Generador automàtic de cartrons de bingo visuals.</p>
-            <span class="etiqueta proximament">Pròximament</span>
+            <p class="app-desc" data-i18n="desc_contes">Crea històries integrant pictogrames a les paraules clau.</p>
+            <span class="etiqueta proximament" data-i18n="proximament">Pròximament</span>
         </div>
     </div>
 
@@ -294,13 +295,13 @@
 
     <script>
         const i18nUI = {
-            ca: { mode_fosc:"🌙 Mode Fosc", idioma_ui:"🌐 Idioma interfície:", clau_api:"🤖 Clau API Google AI Studio:", desar_clau:"💾 Desar clau", aconseguir_clau:"👉 Aconseguir clau gratis", suggerencia:"✉️ Tens alguna suggerència?" },
-            es: { mode_fosc:"🌙 Modo Oscuro", idioma_ui:"🌐 Idioma interfaz:", clau_api:"🤖 Clave API Google AI Studio:", desar_clau:"💾 Guardar clave", aconseguir_clau:"👉 Obtener clave gratis", suggerencia:"✉️ ¿Alguna sugerencia?" },
-            en: { mode_fosc:"🌙 Dark Mode", idioma_ui:"🌐 Interface language:", clau_api:"🤖 Google AI Studio API Key:", desar_clau:"💾 Save key", aconseguir_clau:"👉 Get free key", suggerencia:"✉️ Any suggestion?" },
-            fr: { mode_fosc:"🌙 Mode Sombre", idioma_ui:"🌐 Langue interface :", clau_api:"🤖 Clé API Google AI Studio :", desar_clau:"💾 Enregistrer", aconseguir_clau:"👉 Obtenir une clé", suggerencia:"✉️ Une suggestion ?" },
-            ar: { mode_fosc:"🌙 الوضع المظلم", idioma_ui:"🌐 لغة الواجهة:", clau_api:"🤖 مفتاح API جوجل:", desar_clau:"💾 حفظ المفتاح", aconseguir_clau:"👉 احصل على مفتاح مجاني", suggerencia:"✉️ هل لديك اقتراح؟" },
-            zh: { mode_fosc:"🌙 暗黑模式", idioma_ui:"🌐 界面语言：", clau_api:"🤖 谷歌AI Studio密钥：", desar_clau:"💾 保存密钥", aconseguir_clau:"👉 获取免费密钥", suggerencia:"✉️ 有什么建议？" },
-            ur: { mode_fosc:"🌙 ڈارک موڈ", idioma_ui:"🌐 انٹرفیس زبان:", clau_api:"🤖 گوگل AI Studio کی کلید:", desar_clau:"💾 کی محفوظ کریں", aconseguir_clau:"👉 مفت کی لیں", suggerencia:"✉️ کوئی تجویز؟" }
+            ca: { mode_fosc:"🌙 Mode Fosc", idioma_ui:"🌐 Idioma de l'aplicació", clau_api:"🤖 Clau API Google AI Studio:", desar_clau:"💾 Desar clau", aconseguir_clau:"👉 Aconseguir clau gratis", suggerencia:"✉️ Tens alguna suggerència?", subtitol:"Eines digitals basades en pictogrames per a educació especial i aules d'acollida.", desc_targetes:"Crea materials manipulatius, memory i dòminos personalitzats.", desc_pictoxat:"Necessites ajuda i no saps com dir-ho? Tria el teu idioma i ho podràs explicar amb pictogrames!", desc_bingo:"Genera cartrons de bingo personalitzats amb pictogrames o paraules.", desc_fitxes:"Editor de text per crear documents amb inserció directa de pictogrames.", desc_contes:"Crea històries integrant pictogrames a les paraules clau.", disponible:"Disponible", proximament:"Pròximament" },
+            es: { mode_fosc:"🌙 Modo Oscuro", idioma_ui:"🌐 Idioma de la aplicación", clau_api:"🤖 Clave API Google AI Studio:", desar_clau:"💾 Guardar clave", aconseguir_clau:"👉 Obtener clave gratis", suggerencia:"✉️ ¿Alguna sugerencia?", subtitol:"Herramientas digitales basadas en pictogramas para educación especial y aulas de acogida.", desc_targetes:"Crea materiales manipulativos, memory y dominós personalizados.", desc_pictoxat:"¿Necesitas ayuda y no sabes cómo decirlo? ¡Elige tu idioma y explícalo con pictogramas!", desc_bingo:"Genera cartones de bingo personalizados con pictogramas o palabras.", desc_fitxes:"Editor de texto para crear documentos con inserción directa de pictogramas.", desc_contes:"Crea historias integrando pictogramas en las palabras clave.", disponible:"Disponible", proximament:"Próximamente" },
+            en: { mode_fosc:"🌙 Dark Mode", idioma_ui:"🌐 Application language", clau_api:"🤖 Google AI Studio API Key:", desar_clau:"💾 Save key", aconseguir_clau:"👉 Get free key", suggerencia:"✉️ Any suggestion?", subtitol:"Digital tools based on pictograms for special education and newcomer classrooms.", desc_targetes:"Create manipulative materials, memory games and custom dominoes.", desc_pictoxat:"Need help and don't know how to say it? Choose your language and explain it with pictograms!", desc_bingo:"Generate customised bingo cards with pictograms or words.", desc_fitxes:"Text editor to create documents with direct pictogram insertion.", desc_contes:"Create stories integrating pictograms into key words.", disponible:"Available", proximament:"Coming soon" },
+            fr: { mode_fosc:"🌙 Mode Sombre", idioma_ui:"🌐 Langue de l'application", clau_api:"🤖 Clé API Google AI Studio :", desar_clau:"💾 Enregistrer", aconseguir_clau:"👉 Obtenir une clé", suggerencia:"✉️ Une suggestion ?", subtitol:"Outils numériques basés sur des pictogrammes pour l'éducation spécialisée.", desc_targetes:"Créez des matériaux manipulatifs, des memory et des dominos personnalisés.", desc_pictoxat:"Besoin d'aide ? Choisissez votre langue et expliquez-le avec des pictogrammes !", desc_bingo:"Générez des cartons de bingo personnalisés avec pictogrammes ou mots.", desc_fitxes:"Éditeur de texte pour créer des documents avec insertion directe de pictogrammes.", desc_contes:"Créez des histoires en intégrant des pictogrammes dans les mots clés.", disponible:"Disponible", proximament:"Bientôt" },
+            ar: { mode_fosc:"🌙 الوضع المظلم", idioma_ui:"🌐 لغة التطبيق", clau_api:"🤖 مفتاح API جوجل:", desar_clau:"💾 حفظ المفتاح", aconseguir_clau:"👉 احصل على مفتاح مجاني", suggerencia:"✉️ هل لديك اقتراح؟", subtitol:"أدوات رقمية مبنية على الرموز التوضيحية للتعليم الخاص.", desc_targetes:"أنشئ مواد تعليمية، ألعاب الذاكرة والدومينو المخصصة.", desc_pictoxat:"تحتاج إلى مساعدة؟ اختر لغتك وشرح بالرموز التوضيحية!", desc_bingo:"أنشئ بطاقات بينغو مخصصة بالرموز أو الكلمات.", desc_fitxes:"محرر نصوص لإنشاء وثائق مع إدراج مباشر للرموز.", desc_contes:"أنشئ قصصاً بدمج الرموز التوضيحية في الكلمات المفتاحية.", disponible:"متاح", proximament:"قريباً" },
+            zh: { mode_fosc:"🌙 暗黑模式", idioma_ui:"🌐 应用语言", clau_api:"🤖 谷歌AI Studio密钥：", desar_clau:"💾 保存密钥", aconseguir_clau:"👉 获取免费密钥", suggerencia:"✉️ 有什么建议？", subtitol:"基于图片符号的特殊教育数字工具。", desc_targetes:"创建操作材料、记忆游戏和自定义多米诺骨牌。", desc_pictoxat:"需要帮助但不知道怎么说？选择语言用图示说明！", desc_bingo:"生成带有图示或文字的宾果卡。", desc_fitxes:"文本编辑器，可直接插入图示创建文档。", desc_contes:"通过在关键词中整合图示来创建故事。", disponible:"可用", proximament:"即将推出" },
+            ur: { mode_fosc:"🌙 ڈارک موڈ", idioma_ui:"🌐 ایپ کی زبان", clau_api:"🤖 گوگل AI Studio کی کلید:", desar_clau:"💾 کی محفوظ کریں", aconseguir_clau:"👉 مفت کی لیں", suggerencia:"✉️ کوئی تجویز؟", subtitol:"خصوصی تعلیم کے لیے تصویری علامتوں پر مبنی ڈیجیٹل ٹولز۔", desc_targetes:"جوڑ توڑ مواد، یادداشت کھیل اور ڈومینو بنائیں۔", desc_pictoxat:"مدد چاہیے لیکن کہنا نہیں آتا؟ زبان منتخب کریں اور تصویروں سے سمجھائیں!", desc_bingo:"تصویری یا الفاظ کے ساتھ بنگو کارڈ بنائیں۔", desc_fitxes:"براہ راست تصویری علامتیں داخل کر کے دستاویزات بنائیں۔", desc_contes:"اہم الفاظ میں تصویریں جوڑ کر کہانیاں بنائیں۔", disponible:"دستیاب", proximament:"جلد آ رہا ہے" }
         };
 
         function canviarIdiomaInterficie(lang) {

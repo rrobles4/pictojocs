@@ -869,11 +869,34 @@
             return null;
         }
 
-        async function buscarPictogramaAmbFallback(paraula, lang) {
-            const arasaac = await buscarPictogramaArasaac(paraula, lang);
-            if (arasaac) return arasaac;
-            const globalSymbols = await buscarPictogramaGlobalSymbols(paraula, lang);
-            return globalSymbols;
+        async function buscarPictogramaAmbFallback(paraula, lang, opts = {}) {
+            const variants = [paraula, ...(opts.variants || [])]
+                .map(v => (v || '').toString().trim())
+                .filter(Boolean);
+            const seen = new Set();
+            const variantsUnics = variants.filter(v => {
+                const k = netejarParaula(v);
+                if (!k || seen.has(k)) return false;
+                seen.add(k);
+                return true;
+            });
+
+            const langsArasaac = opts.langsArasaac || [lang, 'ca', 'es', 'en'];
+            const langsGlobal = opts.langsGlobal || [lang, 'en', 'es'];
+
+            for (const variant of variantsUnics) {
+                for (const idioma of langsArasaac) {
+                    const arasaac = await buscarPictogramaArasaac(variant, idioma);
+                    if (arasaac) return arasaac;
+                }
+            }
+            for (const variant of variantsUnics) {
+                for (const idioma of langsGlobal) {
+                    const globalSymbols = await buscarPictogramaGlobalSymbols(variant, idioma);
+                    if (globalSymbols) return globalSymbols;
+                }
+            }
+            return null;
         }
 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition; let recognition;
@@ -961,6 +984,72 @@
             return data;
         }
 
+        async function fetchGeminiText(prompt, apiKey) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: { temperature: 0.2 }
+                })
+            });
+            const data = await response.json();
+            if (data?.error?.message) throw new Error(data.error.message);
+            const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (!text) throw new Error('Resposta textual buida de Gemini');
+            return text.toString().trim();
+        }
+
+        async function processarAmbGeminiRescat(text, apiKey, langOrigen, langDesti) {
+            try {
+                const promptTraduccio = `Tradueix aquesta frase de '${langOrigen}' a '${langDesti}' corregint possibles errors de transcripció o ortografia, sense canviar la intenció. Retorna NOMÉS la frase final traduïda, sense cap explicació: ${text}`;
+                const traduccioLiteral = await fetchGeminiText(promptTraduccio, apiKey);
+                document.getElementById('text-traduit-literal').innerText = traduccioLiteral;
+                document.getElementById('traduccio-literal-box').style.display = 'block';
+
+                const promptKeywords = `A partir de la frase "${traduccioLiteral}" en idioma '${langDesti}', retorna entre 4 i 8 paraules clau útils per pictogrames, separades només per comes. Mantén la negació amb prefix NO: davant la paraula negada quan calgui. Sense explicacions.`;
+                const keywordsRaw = await fetchGeminiText(promptKeywords, apiKey);
+                const negadesOriginal = extreureParaulesNegades(text);
+                const pictosAfegits = new Set();
+                let creades = 0;
+
+                const terms = keywordsRaw
+                    .replace(/\n/g, ',')
+                    .split(',')
+                    .map(t => t.trim())
+                    .filter(Boolean);
+
+                for (const termRaw of terms) {
+                    const negadaPrefix = /^NO\s*:\s*/i.test(termRaw);
+                    const term = termRaw.replace(/^NO\s*:\s*/i, '').trim();
+                    const key = netejarParaula(term);
+                    if (!key || pictosAfegits.has(key)) continue;
+                    const pictograma = await buscarPictogramaAmbFallback(term, langDesti, { variants: [key] });
+                    if (pictograma) {
+                        const negada = negadaPrefix || negadesOriginal.has(key);
+                        crearTargetaTrad(term, term, pictograma.src, langOrigen, pictograma.source, negada);
+                        pictosAfegits.add(key);
+                        creades++;
+                    }
+                }
+
+                const minim = obtenirMinimPictogrames(traduccioLiteral);
+                if (creades < minim) {
+                    await generarPictogramesDesDeText(traduccioLiteral, text, langDesti, langOrigen, {
+                        maxAfegir: Math.max(1, minim - creades),
+                        pictosAfegits,
+                        negadesOriginal,
+                        modeAgressiu: true
+                    });
+                }
+                return true;
+            } catch (e) {
+                console.error('Error al rescat IA:', e);
+                return false;
+            }
+        }
+
         async function processarAmbGemini(text, apiKey) {
             const langOrigen = document.getElementById('idioma-input').value; 
             const langDesti = document.getElementById('idioma-desti').value;
@@ -970,7 +1059,11 @@
                 const textResposta = data?.candidates?.[0]?.content?.parts?.[0]?.text;
                 if (!textResposta) throw new Error("Resposta IA buida o no vàlida.");
                 const resultat = parseRespostaGemini(textResposta);
-                if(!resultat) throw new Error("No s'ha pogut interpretar la resposta de la IA.");
+                if(!resultat) {
+                    const rescatOk = await processarAmbGeminiRescat(text, apiKey, langOrigen, langDesti);
+                    if (rescatOk) return true;
+                    throw new Error("No s'ha pogut interpretar la resposta de la IA.");
+                }
                 if(!resultat.te_sentit) { alert(resultat.missatge_error || "No s'ha entès la frase."); return true; }
                 const traduccioLiteral = (resultat.traduccio_literal || resultat.traduccio || text).toString();
                 document.getElementById('text-traduit-literal').innerText = traduccioLiteral; document.getElementById('traduccio-literal-box').style.display = 'block';
@@ -987,7 +1080,10 @@
                         if (!textCat) continue;
                         const key = netejarParaula(textCat);
                         if (!key || pictosAfegits.has(key)) continue;
-                        const pictograma = await buscarPictogramaAmbFallback(textCat, langDesti);
+                        const arasaacHint = (picto?.arasaac || picto?.base || picto?.root || '').toString().trim();
+                        const pictograma = await buscarPictogramaAmbFallback(textCat, langDesti, {
+                            variants: [arasaacHint, textOrig, key]
+                        });
                         const negada = Boolean(picto?.negada || picto?.negat || picto?.negative || negadesOriginal.has(netejarParaula(textOrig)) || negadesOriginal.has(key));
                         if (pictograma) { crearTargetaTrad(textCat, textOrig, pictograma.src, langOrigen, pictograma.source, negada); pictosAfegits.add(key); creades++; }
                     } catch(e) {} 
